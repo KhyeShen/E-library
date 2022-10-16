@@ -2,7 +2,7 @@
 
 //submit_rating.php
 session_start();
-$connect = new PDO("mysql:host=localhost;dbname=elibrary", "root", "");
+$connect = new PDO("mysql:host=my;dbname=bscfypwb_E-library", "bscfypwb_khyeshen", "G^MPB##NaAf7");
 
 if(isset($_POST["rating_data"]))
 {
