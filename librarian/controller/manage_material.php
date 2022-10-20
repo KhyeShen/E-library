@@ -55,6 +55,10 @@ if ($conn->connect_error) {
 
                 if (!mysqli_query($conn, $sql))
                 {
+                    echo '<script>alert("not update")</script>'; 
+                    header('Location: ../upload_form.php');
+                }else if (!mysqli_query($conn, $sql))
+                {
                     echo '<script>alert("update")</script>'; 
                     header('Location: ../upload_form.php');
                 }
