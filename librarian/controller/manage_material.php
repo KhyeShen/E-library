@@ -53,7 +53,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
   }else{echo "Connected successfully";}
 
-                if (mysqli_query($conn, $sql))
+                if (!mysqli_query($conn, $sql))
                 {
                     echo '<script>alert("update")</script>'; 
                     header('Location: ../upload_form.php');
