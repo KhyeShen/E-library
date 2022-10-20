@@ -48,6 +48,11 @@
                     WHERE material_ID = '".$material_ID."'
                     ";
                     echo '<script>alert("'.$material_ID.'")</script>'; 
+                    // Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+  }echo "Connected successfully";
+
                 if (mysqli_query($conn, $sql))
                 {
                     header('Location: ../upload_form.php');
