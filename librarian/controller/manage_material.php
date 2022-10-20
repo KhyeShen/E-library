@@ -47,14 +47,15 @@
                     description = '".$description."'
                     WHERE material_ID = '".$material_ID."'
                     ";
-                    echo '<script>alert("'.$material_ID.'")</script>'; 
+                    //echo '<script>alert("'.$material_ID.'")</script>'; 
                     // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
-  }echo "Connected successfully";
+  }else{echo "Connected successfully";}
 
                 if (mysqli_query($conn, $sql))
                 {
+                    echo '<script>alert("update")</script>'; 
                     header('Location: ../upload_form.php');
                 }
         }
