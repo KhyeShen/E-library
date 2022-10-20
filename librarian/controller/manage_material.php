@@ -48,7 +48,7 @@
                     WHERE material_ID = '".$material_ID."'
                     ";
                     echo '<script>alert("'.$material_ID.'")</script>'; 
-                if ($conn->query($sql) === TRUE)
+                if (mysqli_query($conn, $sql))
                 {
                     header('Location: ../upload_form.php');
                 }
