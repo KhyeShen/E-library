@@ -24,7 +24,7 @@
         $cover_name = "";
         $material_ID = $_POST['update'];
 
-        echo '<script>alert("'.$material_ID.'")</script>';
+        
 
         if(!empty(array_filter($_FILES['cover']['name'])))
             {
@@ -34,7 +34,7 @@
             }else{
                 $cover_name = "N/A";
             }
-                
+            echo '<script>alert("'.$material_ID.'")</script>';    
             $uploadfile =   new ImageUploadAndResize();
             $uploadfile->uploadMultiFiles('files', '../../material/file', $material_ID, 0756);
             $sql = "UPDATE material SET 
