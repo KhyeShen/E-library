@@ -34,7 +34,7 @@
             }else{
                 $cover_name = "N/A";
             }
-            echo '<script>alert("'.$material_ID.'")</script>';    
+               
             $uploadfile =   new ImageUploadAndResize();
             $uploadfile->uploadMultiFiles('files', '../../material/file', $material_ID, 0756);
             $sql = "UPDATE material SET 
@@ -47,7 +47,7 @@
                     description = '".$description."'
                     WHERE material_ID = '".$material_ID."'
                     ";
-
+                    echo '<script>alert("'.$material_ID.'")</script>'; 
                 if ($conn->query($sql) === TRUE)
                 {
                     header('Location: ../upload_form.php');
