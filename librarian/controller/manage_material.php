@@ -1,6 +1,6 @@
 <?php 
     session_start();
-    $conn = mysqli_connect("localhost", "root", "","elibrary");
+    include('../controller/conn.php');
     include_once __DIR__.'/../../vendor/az.multi.upload.class.php';
     
     if(isset($_POST['edit']))
