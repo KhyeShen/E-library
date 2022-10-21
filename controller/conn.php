@@ -1,6 +1,6 @@
 <?php
- $conn = mysqli_connect("my","bscfypwb_khyeshen","G^MPB##NaAf7","bscfypwb_E-library");
-//$conn = mysqli_connect("localhost","root","","elibrary");
+//  $conn = mysqli_connect("my","bscfypwb_khyeshen","G^MPB##NaAf7","bscfypwb_E-library");
+$conn = mysqli_connect("localhost","root","","elibrary");
  
 if (mysqli_connect_errno())
   {

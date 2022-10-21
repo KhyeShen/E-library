@@ -248,7 +248,7 @@ ul{
                     <li><i class="fa fa-send"></i><b>High Quality Material:</b></li>
                     <li><i class="fa fa-cloud"></i> Journal</li>
                     <li><i class="fa fa-database"></i> Exam Paper</li>
-                </ul><a href="#" class="view-more">Subscribe</a></div>
+                </ul><a href="card_details.php" class="view-more">Subscribe</a></div>
         </div>
     </div>
 </div>
