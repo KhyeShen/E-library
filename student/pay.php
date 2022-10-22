@@ -15,7 +15,7 @@ $ordStatus = 'error';
 // Check whether stripe token is not empty 
 if(!empty($_POST['stripeToken'])){ 
 
-	$product = $_SESSION['product'];
+	//$product = $_SESSION['product'];
     // Retrieve stripe token and payer info from the submitted form data 
     $token  = $_POST['stripeToken']; 
     $name 	= $_POST['name']; 
@@ -111,8 +111,8 @@ if(!empty($_POST['stripeToken'])){
                     $planinterval = 1; 
                     //$planIntervalCount = $subsData['plan']['interval_count']; 
                     $created = date("Y-m-d H:i:s", $subsData['created']); 
-                    $current_period_start = date("Y-m-d H:i:s", $subsData['current_period_start']); 
-                    $current_period_end   = date("Y-m-d H:i:s", $subsData['current_period_end']); 
+                    $current_period_start = date("Y-m-d", $subsData['current_period_start']); 
+                    $current_period_end   = date("Y-m-d", $subsData['current_period_end']); 
                     $status = $subsData['status']; 
          
 					
@@ -130,8 +130,9 @@ if(!empty($_POST['stripeToken'])){
 					}
 					
                     // Insert transaction data into the database 
-                    $sql = "INSERT INTO subscription(student_ID,stripe_subscription_id,montly_price,payer_email,plan_period_start,plan_period_end,datetime_created) VALUES
-					('SCPG1800369','".$subscrID."','".$planAmount."','khye143914@gmail.com','".$current_period_start."','".$current_period_end."','".$created."')"; 
+                    $sql = "INSERT INTO subscription(student_ID,stripe_subscription_ID,monthly_price,billing_email,plan_start,plan_end,payment_datetime) VALUES
+					('SCPG1800369','".$subscrID."',".$planAmount.",'khye143914@gmail.com','".$current_period_start."','".$current_period_end."','".$created."')";
+                    
                     $insert = $conn->query($sql); 
 
                     // Insert transaction data into the database 

@@ -2,10 +2,10 @@
 	session_start();
 	if($_SESSION['task'] != 'resetpwd')
 	{
-		header('location:loginpage.php');
+		header('location:index.php');
 	}
 	unset($_SESSION['task']);
-	include('conn.php');
+	include('../controller/conn.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,7 +16,7 @@
 </head>
 <body>
 	<div>
-	<?php echo '<script>alert("'.$_SESSION['task'].'")</script>'; 
+	<?php
 	if(isset($_POST['confirm']))
 	{
 		$password	= $_POST['password'];

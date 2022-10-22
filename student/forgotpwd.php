@@ -1,7 +1,7 @@
 <?php
 	session_start();
-	include('conn.php');
-	include __DIR__.'/sendVerificationCode.php';
+	include('../controller/conn.php');
+	include __DIR__.'/../vendor/sendVerificationCode.php';
 ?>
 <!DOCTYPE html>
 <html>

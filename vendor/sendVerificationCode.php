@@ -14,6 +14,7 @@
     $_SESSION['otp'] = $otp;
     $_SESSION['mail'] = $email;
     $mail = new PHPMailer();
+    $mail -> SMTPDebug=3;
     $mail->IsSMTP();
 
     //$mail->SMTPDebug  = 0;  
@@ -22,7 +23,7 @@
     $mail->Port       = 587;
     $mail->Host       = "smtp.gmail.com";
     $mail->Username   = "scpgelibrary@gmail.com"; //sender mail(gmail)
-    $mail->Password   = "Elibrary$123"; //sender gmail password
+    $mail->Password   = "uudgxyayfxwkephc"; //sender gmail password
 
     $mail->IsHTML(true);
     $mail->AddAddress($reciveEmail); //receive user email , user name
@@ -41,7 +42,7 @@
       echo '<script>alert("Please enter the OTP code received by '.$reciveEmail.' to verify your account.")</script>';
 
         
-        header('location:verification.php');
+        header('location:../student/verification.php');
       
       //var_dump($mail);
     } else {
