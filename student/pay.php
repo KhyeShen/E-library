@@ -114,7 +114,9 @@ if(!empty($_POST['stripeToken'])){
                     $current_period_start = date("Y-m-d", $subsData['current_period_start']); 
                     $current_period_end   = date("Y-m-d", $subsData['current_period_end']); 
                     $status = $subsData['status']; 
-         
+                    
+                    date_default_timezone_set("Asia/Kuala_Lumpur");
+                    $currentDT = date("Y-m-d h:i:s");
 					
 					$current = date("Y-m-d h:i:s");
 					$date 	 = date("Y-m-d");
@@ -130,10 +132,15 @@ if(!empty($_POST['stripeToken'])){
 					}
 					
                     // Insert transaction data into the database 
-                    $sql = "INSERT INTO subscription(student_ID,stripe_subscription_ID,monthly_price,billing_email,plan_start,plan_end,payment_datetime) VALUES
-					('SCPG1800369','".$subscrID."',".$planAmount.",'khye143914@gmail.com','".$current_period_start."','".$current_period_end."','".$created."')";
+                    $sql = "INSERT INTO subscription(stripe_subscription_ID,student_ID,monthly_price,billing_email,plan_start,plan_end,status) VALUES
+					('".$subscrID."','SCPG1800369',".$planAmount.",'khye143914@gmail.com','".$current_period_start."','".$current_period_end."','".$status."')";
                     
-                    $insert = $conn->query($sql); 
+                    $insert_subsription = $conn->query($sql); 
+                    
+                    $sql2 = "INSERT INTO payment(student_ID,stripe_subscription_ID,amount,payment_datetime,status) VALUES
+					('SCPG1800369','sub_1LvY5UEYRt4577ibifZxWEHt',".$planAmount.",'".$currentDT."','Suceed')";
+                    
+                    $insert_payment = $conn->query($sql2); 
 
                     // Insert transaction data into the database 
                     // $sql = "INSERT INTO user_subscriptions(client_id,stripe_subscription_id,stripe_customer_id,stripe_plan_id,plan_amount,plan_amount_currency,plan_interval,plan_interval_count,payer_email,created,plan_period_start,plan_period_end,status) VALUES

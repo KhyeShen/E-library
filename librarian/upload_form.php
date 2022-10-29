@@ -38,8 +38,14 @@ $result = mysqli_query($conn,"select * from `material` order by download_times D
     <script src="../src/js/jquery.dataTables.js"></script>    
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../src/css/bootstrap.min.css">
-    <!-- Local CSS -->
-    <link rel="stylesheet" href="../src/css/styles.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+</script>
+    <!-- Local CSS
+    <link rel="stylesheet" href="../src/css/styles.css"> -->
 </head>
 <body>
 <div class="container" style="height: auto;">
@@ -77,19 +83,31 @@ $result = mysqli_query($conn,"select * from `material` order by download_times D
                         <b>Description</b>
                         <input class="form-control" type="text" name="description" placeholder="Description" style="margin-top: 3px;" required>
                     </div>
-                    <div class="row">
-                        <select id="ddlYears" name="publish_year" class="btn btn-secondary dropdown-toggle" style="border:1px solid grey;width:28%;" required>
+                    <div class="row" style="margin-bottom:10px;">
+                        <select id="ddlYears" name="publish_year" class="btn btn-secondary dropdown-toggle" style="border:1px solid grey;width:49%;" required>
                         <option value="">-YEARS-</option>
                         <option value="Unknown">Unknown</option>
                         </select>
-                        <select id="type" name="genre" class="btn btn-secondary dropdown-toggle" style="border:1px solid grey;width:28%;" required>
+                        <!-- <select id="type" name="genre" class="btn btn-secondary dropdown-toggle" style="border:1px solid grey;width:49%; float: right;" multiple required>
                             <option value="">-GENRE-</option>
                             <option value="Horror">Horror</option>
                             <option value="Romance">Romance</option>
                             <option value="HQ Material">High Quality Material</option>
-                        </select>
-                        <button class="btn btn-primary" type="submit" name="btn" style="padding-top: 5px;background: #a31f37;float:right;">UPLOAD</button>
+                        </select><br> -->
+                        <select size="5" class="btn btn-secondary dropdown-toggle" name="current_select[]" style="border:1px solid grey;width:49%; float: right;" multiple="multiple" id="current_select">
+ <option value="current1">current1</option>
+ <option value="current2">current2</option>
+ <option value="current3">current3</option>
+ <option value="current4">current4</option>
+ <option value="current5">current5</option>
+ </select>
+<label class="form-label select-label">Example label</label>
                     </div>
+                    <div class="row">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked/>
+                        <label class="form-check-label" for="flexCheckChecked">High Quality Material</label>
+                        <button class="btn btn-primary" type="submit" name="btn" style="padding-top: 5px;background: #a31f37;float:right;">UPLOAD</button>
+</div>
                 </div>
             </form>
         </div>
