@@ -1,9 +1,10 @@
 <?php
 
 //submit_rating.php
-session_start();
-$connect = new PDO("mysql:host=my;dbname=bscfypwb_E-library", "bscfypwb_khyeshen", "G^MPB##NaAf7");
-
+// session_start();
+//$connect = new PDO("mysql:host=my;dbname=bscfypwb_E-library", "bscfypwb_khyeshen", "G^MPB##NaAf7");
+// $connect = new PDO("mysql:host=localhost;dbname=elibrary", "root", "");
+include('../controller/conn.php');
 if(isset($_POST["rating_data"]))
 {
 	$currentDT = date("Y-m-d h:i:s");
@@ -14,8 +15,16 @@ if(isset($_POST["rating_data"]))
 		':comment'			=>	$_POST["user_reviews"],
 		':datetime'			=>	$currentDT
 	);
-
-	$query = "
+	
+	if($_POST['review_ID'])
+	{
+		$sql = "UPDATE review SET score=".$_POST["rating_data"].", comment='".$_POST["user_reviews"]."' WHERE review_ID=".$_POST['review_ID'];
+		if ($conn->query($sql) === TRUE) {
+			echo "Record updated successfully";
+		}
+	}
+	else{
+		$query = "
 	INSERT INTO review
 	(student_ID, material_ID, score, comment, created_datetime, updated_datetime) 
 	VALUES (:student_ID, :material_ID, :score, :comment, :datetime, :datetime)
@@ -26,6 +35,8 @@ if(isset($_POST["rating_data"]))
 	$statement->execute($data);
 
 	echo "Your Review & Rating Successfully Submitted";
+	}
+	
 
 }
 
@@ -41,21 +52,38 @@ if(isset($_POST["action"]))
 	$total_user_rating = 0;
 	$review_content = array();
 
+	
+	
 	$query = "
 	SELECT * FROM review 
 	WHERE material_ID = '".$_POST['material_ID']."' ORDER BY review_id DESC
 	";
-
+	if($_POST['student_ID'])
+	{
+		$query1 = "
+	SELECT * FROM review 
+	WHERE student_ID = '".$_POST['student_ID'];
+	}
 	$result = $connect->query($query, PDO::FETCH_ASSOC);
+	
+	
+	
 
 	foreach($result as $row)
 	{
+		//check if student review before
+		$review = false;
+		if($row["student_ID"] == $_POST['student_ID'])
+		{
+			$review = true;
+		}
 		$review_content[] = array(
 			'student_ID'	=>	$row["student_ID"],
 			'material_ID'	=>	$row["material_ID"],
 			'rating'			=>	$row["score"],
 			'user_review'		=>	$row["comment"],
-			'datetime'		=>	$row["updated_datetime"]
+			'datetime'		=>	$row["updated_datetime"],
+			'review_before' => 	$review
 		);
 
 		if($row["score"] == '5')
@@ -105,5 +133,4 @@ if(isset($_POST["action"]))
 	echo json_encode($output);
 
 }
-
 ?>

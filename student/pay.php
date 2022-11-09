@@ -19,29 +19,13 @@ if(!empty($_POST['stripeToken'])){
     // Retrieve stripe token and payer info from the submitted form data 
     $token  = $_POST['stripeToken']; 
     $name 	= $_POST['name']; 
-    //$email 	= $_POST['email']; 
+    $email 	= $_POST['email']; 
 	
     // Plan info 
     $planInfo = 1; 
     $planName = 'Premium'; 
     $planPrice = 10; 
     $planInterval = 'month'; 
-
-    // $planID = $_SESSION['subscr_plan']; 
-	// if($_SESSION['plantype'] == 100 || $_SESSION['plantype'] == 1200)
-	// {
-    // $planInfo = $plans[$planID]; 
-    // $planName = $planInfo['name']; 
-    // $planPrice = $planInfo['price']; 
-    // $planInterval = $planInfo['interval']; 
-	// }
-	// else if($_SESSION['plantype'] == 150 || $_SESSION['plantype'] == 1800)
-	// {
-    // $planInfo = $smartplans[$planID]; 
-    // $planName = $planInfo['name']; 
-    // $planPrice = $planInfo['price']; 
-    // $planInterval = $planInfo['interval']; 
-	// }
      
     // Include Stripe PHP library 
     require_once '../vendor/stripe/stripe-php/init.php'; 
@@ -52,7 +36,8 @@ if(!empty($_POST['stripeToken'])){
     // Add customer to stripe 
     try {  
         $customer = \Stripe\Customer::create(array( 
-            //'email' => $email, 
+            'name' => $name,
+            'email' => $email, 
             'source'  => $token 
         )); 
     }catch(Exception $e) {  
@@ -132,8 +117,8 @@ if(!empty($_POST['stripeToken'])){
 					}
 					
                     // Insert transaction data into the database 
-                    $sql = "INSERT INTO subscription(stripe_subscription_ID,student_ID,monthly_price,billing_email,plan_start,plan_end,status) VALUES
-					('".$subscrID."','SCPG1800369',".$planAmount.",'khye143914@gmail.com','".$current_period_start."','".$current_period_end."','".$status."')";
+                    $sql = "INSERT INTO subscription(stripe_subscription_ID,student_ID,monthly_price,billing_email,plan_start,plan_end,status,created_datetime, updated_datetime) VALUES
+					('".$subscrID."','SCPG1800369',".$planAmount.",'khye143914@gmail.com','".$current_period_start."','".$current_period_end."','".$status."','".$current."','".$current."')";
                     
                     $insert_subsription = $conn->query($sql); 
                     
@@ -161,7 +146,7 @@ if(!empty($_POST['stripeToken'])){
                     // $insert2 = $conn->query($sql2);
 					
                     $ordStatus = 'success'; 
-                    $statusMsg = 'Your Payment has been Successful!'; 
+                    $statusMsg = 'Payment Successful!'; 
                 }else{ 
                     $statusMsg = "Subscription activation failed!"; 
                 } 
@@ -181,7 +166,7 @@ if(!empty($_POST['stripeToken'])){
 <!DOCTYPE html>
 <html>
 <head>
-<style>
+<!-- <style>
 .container{
 	width: 100%;
 }
@@ -197,23 +182,35 @@ button{
 	padding: 10px 20px;
 	margin-right: 20px;
 }
-</style>
+</style> -->
+<!-- Font Awesome -->
+<link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+    <!-- MDB -->
+    <link rel="stylesheet" href="../src/css/mdb.min.css"/>
 </head>
 <body>
-<div class="container">
-<h1 class="<?php echo $ordStatus; ?>" style="text-align:center;"><?php echo $statusMsg; ?></h1>
-    <div class="status">
+<div style="background:#1aff1a;"><h1 class="<?php echo $ordStatus; ?>" style="text-align:center;"><?php echo $statusMsg; ?></h1></div>
+    <div class="modal-content" style="width:400px; margin: 5% auto; padding:10px; text-align:center; border: 1px solid;">
         <?php if(!empty($subscrID)){ ?>
-            <h4 style="text-align:center;">Payment Information</h4>
-            <p><b>Transaction ID:</b> <?php echo $subscrID; ?></p>
-            <p><b>Insurance plan:</b> <?php echo $_SESSION['product']; ?></p>
-            <p><b>Amount:</b> <?php echo $planPrice.' '.$currency; ?></p>
-            <p><b>Payment Interval:</b> <?php echo $planInterval; ?></p>
-            <p><b>Period Start:</b> <?php echo $current_period_start; ?></p>
-            <p><b>Period End:</b> <?php echo $current_period_end; ?></p>
-            <p><b>Status:</b> <?php echo $status; ?></p>
+            <div class="row" style="margin:0 2px;"><h3 style="text-align:center;"><b>Payment Information</b></h3></div>
+            <div class="content" margin:30px 0; style="float:left;">
+                <p><b>Transaction ID:</b> <?php echo $subscrID; ?></p>
+                <p><b>Subscription Plan:</b> Premium</p>
+                <p><b>Amount:</b> <?php echo $planPrice.' '.$currency; ?></p>
+                <p><b>Period Start:</b> <?php echo $current_period_start; ?></p>
+                <p><b>Period End:</b> <?php echo $current_period_end; ?></p>
+                <p><b>Status:</b> <?php echo $status; ?></p>
+            </div>
         <?php } ?>
-		<button onclick="location.href='card_details.php'" class="btn-link" style="float: right;">Done</button>
+        <button onclick="location.href='subscription_details.php'" class="btn btn-primary" style="float: right;">Done</button>
     </div>
 </div>
 </body>

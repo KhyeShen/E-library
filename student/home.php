@@ -2,13 +2,15 @@
 session_start();
 if (!isset($_SESSION['studentID']) ||(trim ($_SESSION['studentID']) == '') || $_SESSION['loginstatus'] != 'active') {
 	$_SESSION['message'] = 'Please Login!!';
+    $_SESSION['page'] = 'home.php';
 	header('location:loginpage.php');
 	exit();
 }
 include('../controller/conn.php');
 //query
-$result = mysqli_query($conn,"select * from `material` order by created_datetime DESC LIMIT 15");
-	
+$recent_added = mysqli_query($conn,"select * from `material` order by created_datetime DESC LIMIT 15");
+$trending = mysqli_query($conn,"select * from `material` INNER JOIN download ON material.material_ID=download.material_ID group by material.material_ID ORDER by COUNT(download.material_ID) DESC");
+
 // Include configuration file  
 ?>
 <!DOCTYPE html>
@@ -26,6 +28,7 @@ $result = mysqli_query($conn,"select * from `material` order by created_datetime
 </head>
 <body>
     <?php include 'nav.php' ?>
+    <!-- Recently Added Material -->
     <section class="product" style="margin-top:14px;"> 
         <h2 class="product-category" style="display: inline-block;padding-right:10px;"><b>recently added</b></h2>
         <a href="more_materials.php?type=type&value=Recent Added" style="display: inline-block;">(See All)</a>
@@ -35,24 +38,46 @@ $result = mysqli_query($conn,"select * from `material` order by created_datetime
             
             <?php
                 $i=0;
-                foreach($result as $row){
+                foreach($recent_added as $row_recent){
                 $actives='';
                 if($i==0){
                 $actives='active';
                 }
+                $average_rating = 0;
+                $download_times = 0;
+                $total_review = 0;
+                $total_user_rating = 0;
+                $query1 = "SELECT * FROM review WHERE material_ID = '".$row_recent['material_ID']."'";
+                $result = mysqli_query($conn, $query1);
+
+                if (mysqli_num_rows($result) > 0)
+                {
+                    while($row = mysqli_fetch_assoc($result)) {
+                        $total_review++;
+
+                        $total_user_rating = $total_user_rating + $row["score"];
+                    }
+                }
+                if($total_user_rating > 0)
+                {
+                    $average_rating = $total_user_rating / $total_review;
+                }
+                $query_download = "SELECT * FROM download WHERE material_ID = '".$row_recent['material_ID']."'";
+                $download = mysqli_query($conn, $query_download);
+                $download_times = mysqli_num_rows($download);
               ?>
               <div class="product-card <?php echo $actives;?>">
                 <div class="product-image" style="height:375px;">
-                    <a href="" target="_blank">
-                      <img class="product-thumb" src="../material/cover/<?php echo $row['cover_name'];?>" onerror=this.src="../src/image/placeholder.jpg" alt="">
+                    <a href="material_details.php?material_ID=<?php echo $row_recent['material_ID']; ?>" target="_blank">
+                      <img class="product-thumb" src="../material/cover/<?php echo $row_recent['cover_name'];?>" onerror=this.src="../src/image/placeholder.jpg" alt="">
                     </a>
                 </div>
                 <div class="product-info">
-                    <b><?php echo $row['material_title'];?></b>
-                    <p class="product-short-description"><?php echo $row['author_name'];?></p>
+                    <b><?php echo $row_recent['material_title'];?></b>
+                    <p class="product-short-description"><?php echo $row_recent['author_name'];?></p>
                     <!-- <span class="price">4.0</span> downloaded -->
-                    <b>4.0<i class="fas fa-star" style="color:#e6e600;"></i></b>
-                    <b>&nbsp;<?php echo $row['download_times'];?>&nbsp;<i class="fas fa-cloud-download-alt" ></i></b>
+                    <b><?php echo number_format($average_rating, 1); ?>&nbsp;<i class="fas fa-star" style="color:#e6e600;"></i></b>
+                    <b>&nbsp;&nbsp;<?php echo $download_times;?>&nbsp;<i class="fas fa-cloud-download-alt" ></i></b>
                 </div>
               </div>
               <?php 
@@ -60,6 +85,7 @@ $result = mysqli_query($conn,"select * from `material` order by created_datetime
               ?>
         </div>
     </section>
+    <!-- Trending Material -->
     <section class="product" style="margin-top:14px;"> 
         <h2 class="product-category" style="display: inline-block;padding-right:10px;"><b>trending</b></h2>
         <a href="more_materials.php?type=type&value=Recent Added" style="display: inline-block;">(See All)</a>
@@ -69,179 +95,50 @@ $result = mysqli_query($conn,"select * from `material` order by created_datetime
             
             <?php
                 $i=0;
-                foreach($result as $row){
+                foreach($trending as $row_trending){
                 $actives='';
                 if($i==0){
                 $actives='active';
                 }
+                $average_rating = 0;
+                $download_times = 0;
+                $total_review = 0;
+                $total_user_rating = 0;
+                $query1 = "SELECT * FROM review WHERE material_ID = '".$row_trending['material_ID']."'";
+                $result = mysqli_query($conn, $query1);
+
+                if (mysqli_num_rows($result) > 0)
+                {
+                    while($row = mysqli_fetch_assoc($result)) {
+                        $total_review++;
+
+                        $total_user_rating = $total_user_rating + $row["score"];
+                    }
+                }
+                if($total_user_rating > 0)
+                {
+                    $average_rating = $total_user_rating / $total_review;
+                }
+                $query_download = "SELECT * FROM download WHERE material_ID = '".$row_trending['material_ID']."'";
+                $download = mysqli_query($conn, $query_download);
+                $download_times = mysqli_num_rows($download);
               ?>
               <div class="product-card <?php echo $actives;?>">
                 <div class="product-image" style="height:375px;">
-                    <a href="" target="_blank">
-                      <img class="product-thumb" src="../material/cover/<?php echo $row['cover_name'];?>" onerror=this.src="../src/image/placeholder.jpg" alt="">
+                    <a href="material_details.php?material_ID=<?php echo $row_trending['material_ID']; ?>" target="_blank">
+                      <img class="product-thumb" src="../material/cover/<?php echo $row_trending['cover_name'];?>" onerror=this.src="../src/image/placeholder.jpg" alt="">
                     </a>
                 </div>
                 <div class="product-info">
-                    <b><?php echo $row['material_title'];?></b>
-                    <p class="product-short-description"><?php echo $row['author_name'];?></p>
+                    <b><?php echo $row_trending['material_title'];?></b>
+                    <p class="product-short-description"><?php echo $row_trending['author_name'];?></p>
                     <!-- <span class="price">4.0</span> downloaded -->
-                    <b>4.0<i class="fas fa-star" style="color:#e6e600;"></i></b>
-                    <b>&nbsp;<?php echo $row['download_times'];?>&nbsp;<i class="fas fa-cloud-download-alt" ></i></b>
+                    <b><?php echo number_format($average_rating, 1); ?>&nbsp;<i class="fas fa-star" style="color:#e6e600;"></i></b>
+                    <b>&nbsp;&nbsp;<?php echo $download_times;?>&nbsp;<i class="fas fa-cloud-download-alt" ></i></b>
                 </div>
               </div>
               <?php 
               $i++;}
-              ?>
-        </div>
-    </section>
-    <section class="product" style="margin-top:14px;"> 
-        <h2 class="product-category">trending</h2>
-        
-        <div class="product-container">
-            <button class="pre-btn"><img src="images/arrow.png" alt=""></button>
-            <button class="nxt-btn"><img src="images/arrow.png" alt=""></button>
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="images/card1.jpg" class="product-thumb" alt="">
-                    <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                    <b>Alice in the wonderland the river at night</b>
-                    <p class="product-short-description">Author Name</p>
-                    <span class="product-short-description">15 downloaded</span><b style="float:right;">4.0<i class="fas fa-star" style="color:#e6e600;"></i></b>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="discount-tag">50% off</span>
-                    <img src="images/card2.jpg" class="product-thumb" alt="">
-                    <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                    <b>Alice in the wonderland the </b>
-                    <p class="product-short-description">Author Name</p>
-                    <b style="margin-right: 100px;">4.0</b><span class="product-short-description">0 downloaded</span>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="discount-tag">50% off</span>
-                    <img src="images/card3.jpg" class="product-thumb" alt="">
-                    <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                    <h2 class="product-brand">brand</h2>
-                    <p class="product-short-description">a short line about the cloth..</p>
-                    <span class="price">$20</span><span class="actual-price">$40</span>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="discount-tag">50% off</span>
-                    <img src="images/card4.jpg" class="product-thumb" alt="">
-                    <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                    <h2 class="product-brand">brand</h2>
-                    <p class="product-short-description">a short line about the cloth..</p>
-                    <span class="price">$20</span><span class="actual-price">$40</span>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="discount-tag">50% off</span>
-                    <img src="images/card5.jpg" class="product-thumb" alt="">
-                    <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                    <h2 class="product-brand">brand</h2>
-                    <p class="product-short-description">a short line about the cloth..</p>
-                    <span class="price">$20</span><span class="actual-price">$40</span>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="discount-tag">50% off</span>
-                    <img src="images/card6.jpg" class="product-thumb" alt="">
-                    <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                    <h2 class="product-brand">brand</h2>
-                    <p class="product-short-description">a short line about the cloth..</p>
-                    <span class="price">$20</span><span class="actual-price">$40</span>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="discount-tag">50% off</span>
-                    <img src="images/card7.jpg" class="product-thumb" alt="">
-                    <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                    <h2 class="product-brand">brand</h2>
-                    <p class="product-short-description">a short line about the cloth..</p>
-                    <span class="price">$20</span><span class="actual-price">$40</span>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="discount-tag">50% off</span>
-                    <img src="images/card8.jpg" class="product-thumb" alt="">
-                    <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                    <h2 class="product-brand">brand</h2>
-                    <p class="product-short-description">a short line about the cloth..</p>
-                    <span class="price">$20</span><span class="actual-price">$40</span>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="discount-tag">50% off</span>
-                    <img src="images/card9.jpg" class="product-thumb" alt="">
-                    <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                    <h2 class="product-brand">brand</h2>
-                    <p class="product-short-description">a short line about the cloth..</p>
-                    <span class="price">$20</span><span class="actual-price">$40</span>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="discount-tag">50% off</span>
-                    <img src="images/card10.jpg" class="product-thumb" alt="">
-                    <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                    <h2 class="product-brand">brand</h2>
-                    <p class="product-short-description">a short line about the cloth..</p>
-                    <span class="price">$20</span><span class="actual-price">$40</span>
-                </div>
-            </div>
-            <?php
-                $i=0;
-                foreach($result as $row){
-                $actives='';
-                if($i==0){
-                $actives='active';
-                }
-              ?>
-              <div class="product-card <?php echo $actives;?>">
-                <div class="product-image">
-                    <a href="https://www.youtube.com/c/devbanban" target="_blank">
-                      <img class="product-thumb" src="../material/cover/<?php echo $row['cover_name'];?>" alt="">
-                    </a>
-                </div>
-                <div class="product-info">
-                    <h2 class="product-brand"><?php echo $row['material_title'];?></h2>
-                    <p class="product-short-description"><?php echo $row['material_genre'];?></p>
-                    <span class="price">4.0</span><?php echo $row['download_times'];?> downloaded
-                </div>
-              </div>
-              <?php 
-              $i++;}
-              mysqli_close($conn);
               ?>
         </div>
     </section>

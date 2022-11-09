@@ -1,33 +1,23 @@
 <?php 
-session_start();
-if (!isset($_SESSION['studentID']) ||(trim ($_SESSION['studentID']) == '') || $_SESSION['loginstatus'] != 'active') {
-	$_SESSION['message'] = 'Please Login!!';
-	header('location:loginpage.php');
-	exit();
-}
-include('../controller/conn.php');
-$search_value = "";
-// $sql='';
-// $type="";
-// $value="";
+    session_start();
+    if (!isset($_SESSION['studentID']) ||(trim ($_SESSION['studentID']) == '') || $_SESSION['loginstatus'] != 'active') {
+        $_SESSION['message'] = 'Please Login!!';
+        header('location:loginpage.php');
+        exit();
+    }
+    include('../controller/conn.php');
+    $search_value = "";
 
-// //determine what should be displayed
-// if (!isset($_GET['type'])) {
-//     $type = "All Materials";
-// } else if(isset($_GET['type']) & isset($_GET['value'])){
-//     $type = $_GET['type'];
-//     $value = $_GET['value'];
-// } 
-if(isset($_GET['search_value']))
-{
-    $_SESSION['search_value'] = $_GET['search_value'];
-}
-    $filtervalues = $_SESSION['search_value'];
-    $sql="SELECT * FROM material WHERE CONCAT(material_title,author_name) LIKE '%$filtervalues%' ";
+    //determine what should be displayed
+    if(isset($_GET['type'])){
+        $_SESSION['type'] = $_GET['type'];
+    } 
+    $filtervalues = $_SESSION['type'];
+    $sql="SELECT * FROM material WHERE material_genre = '".$filtervalues."'";
 
-$result = mysqli_query($conn, $sql);
-$number_of_results = mysqli_num_rows($result);
-$results_per_page = 8; 
+    $result = mysqli_query($conn, $sql);
+    $number_of_results = mysqli_num_rows($result);
+    $results_per_page = 8; 
 
 // determine number of total pages available
 $number_of_pages = ceil($number_of_results/$results_per_page);
@@ -43,7 +33,7 @@ if (!isset($_GET['page'])) {
 $this_page_first_result = ($page-1)*$results_per_page;
 
 // retrieve selected results from database and display them on page
-$sql='SELECT * FROM material WHERE CONCAT(material_title,author_name) LIKE "%'.$filtervalues.'%" LIMIT ' . $this_page_first_result . ',' .  $results_per_page ;
+$sql='SELECT * FROM material WHERE  material_genre = "'.$filtervalues.'" LIMIT ' . $this_page_first_result . ',' .  $results_per_page ;
 $pageresult = mysqli_query($conn, $sql);
 $count = mysqli_num_rows($pageresult);
 ?>
@@ -116,10 +106,10 @@ $count = mysqli_num_rows($pageresult);
         <nav aria-label="Page navigation example" style="float:right;">
             <ul class="pagination pagination-circle">
                 <li class="page-item">
-                    <a class="page-link" href="search_result.php?page=1">First</a>
+                    <a class="page-link" href="genre.php?page=1">First</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="search_result.php?page=<?php if($page==1){echo $page;}else{echo ($page-1);} ?>" aria-label="Previous">
+                    <a class="page-link" href="genre.php?page=<?php if($page==1){echo $page;}else{echo ($page-1);} ?>" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -139,11 +129,11 @@ $count = mysqli_num_rows($pageresult);
                             {
                                 if($page_num == $page)
                                 {
-                                    echo '<li class="page-item active" aria-current="page"> <a class="page-link" href="search_result.php?page='
+                                    echo '<li class="page-item active" aria-current="page"> <a class="page-link" href="genre.php?page='
                                     .$page_num.'">'.$page_num.'<span class="visually-hidden">(current)</span></a></li>';
                                 }
                                 else{
-                                    echo '<li class="page-item"><a class="page-link" href="search_result.php?page='.$page_num.'">' . $page_num . '</a></li>';
+                                    echo '<li class="page-item"><a class="page-link" href="genre.php?page='.$page_num.'">' . $page_num . '</a></li>';
                                 }
                             }
                         }
@@ -156,22 +146,22 @@ $count = mysqli_num_rows($pageresult);
                             {
                                 if($page_num == $page)
                                 {
-                                    echo '<li class="page-item active" aria-current="page"> <a class="page-link" href="search_result.php?page='.$page_num.'">'.$page_num.'<span class="visually-hidden">(current)</span></a></li>';
+                                    echo '<li class="page-item active" aria-current="page"> <a class="page-link" href="genre.php?page='.$page_num.'">'.$page_num.'<span class="visually-hidden">(current)</span></a></li>';
                                 }
                                 else{
-                                    echo '<li class="page-item"><a class="page-link" href="search_result.php?page='.$page_num.'">' . $page_num . '</a></li>';
+                                    echo '<li class="page-item"><a class="page-link" href="genre.php?page='.$page_num.'">' . $page_num . '</a></li>';
                                 }
                             }
                         }
                     }
                 ?>
                 <li class="page-item">
-                    <a class="page-link" href="search_result.php?page=<?php if($page==$number_of_pages){echo $page;}else{echo ($page+1);} ?>" aria-label="Next">
+                    <a class="page-link" href="genre.php?page=<?php if($page==$number_of_pages){echo $page;}else{echo ($page+1);} ?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="search_result.php?page=<?php echo $number_of_pages; ?>">Last</a>
+                    <a class="page-link" href="genre.php?page=<?php echo $number_of_pages; ?>">Last</a>
                 </li>
             </ul>
         </nav>

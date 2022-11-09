@@ -6,52 +6,86 @@ session_start();
 // 	exit();
 // }
 include('../controller/conn.php');
-	
-if(isset($_POST['usersbm'])){
-	$_SESSION['subscr_plan'] = $_POST['subscr_plan'];
-}
 
 // Include configuration file  
 require_once 'config.php'; 
+
+
 ?>
 <!DOCTYPE html>
-<html lang="en-US">
-<head>
-<meta charset="utf-8">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Material Design for Bootstrap</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <!-- MDB icon -->
+    <!-- <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" /> -->
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+    <!-- MDB -->
+    <link rel="stylesheet" href="../src/css/mdb.min.css"/>
+    
+  </head>
+  <body>
+    <!-- <div class="row">
+    <div class="col-md-4 col-sm-6 mx-auto" margin="auto auto";>
+            Modal content
+            <div class="modal-content" style="width:400px; margin: 5% auto ; padding: 30px; text-align:center;">
+                <b style="font-size: 27px;">Bank Card Details</b><br/>
+                <form action="pay.php" method="POST" id="paymentFrm">
+                Payment form
+                <div class="form-group">
+                    <label>NAME</label>
+                    <input type="text" name="name" id="name" class="field" placeholder="Enter name" required="" autofocus="">
+                </div><br/>
+                <div class="form-group">
+                    <label>EMAIL</label>
+                    <input type="email" name="email" id="email" class="field" placeholder="Enter email" required="">
+                </div><br/>
+                <div class="form-group">
+                    <label>CARD NUMBER</label>
+                    <div id="card_number" class="field" style="width: 150px; margin-left: auto; margin-right: auto;"></div>
+                </div><br/>
+                <div class="row">
+                    <div class="left">
+                        <div class="form-group">
+                            <label>EXPIRY DATE</label>
+                            <div id="card_expiry" class="field" style="width: 60px; margin-left: auto; margin-right: auto;"></div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="form-group">
+                            <label>CVC CODE</label>
+                            <div id="card_cvc" class="field" style="width: 30px; margin-left: auto; margin-right: auto;"></div>
+                        </div>
+                    </div>
+                </div><br/>
+                <input type="checkbox" id="agree" name="vehicle1" value="agree" required>
+                <label for="agree">Agree T&C</label><br/><br/>
 
-<script src="https://js.stripe.com/v3/"></script>
-<link rel="stylesheet" href="css/style.css">
-<style>
-.container{
-	height: 470px;
-	width: 100%;
-	padding-top: 150px;
-}
-.panel{
-	text-align: center;
-	width: 500px;
-	height: 420px;
-	margin-left:auto;
-	margin-right:auto;
-	font-size: 20px;
-	border: 2px solid black;
-	padding: 20px;
-}
-button{
-  padding: 10px 20px;
-}
-</style>
-</head>
-<body>
-<div class="container">
-<!-- Display errors returned by createToken -->
-<div id="paymentResponse" style="text-align:center; color:red;"></div>
-<div class="panel">
+                <button type="submit" class="btn btn-success" id="payBtn" style="float: left; padding: 10px 20px;">Pay</button>
+                <button type="button" onclick="location.href='home.php'" class="btn btn-secondary" style="float: right;">Cancel</button>
+                </form>
+            </div>
+</div> -->
+<!-- </div> -->
+<!-- <div class="panel"> -->
+<div class="" style="text-align: center;"><img src="../img/stripe.png"></div>
     <form action="pay.php" method="POST" id="paymentFrm">
 	
-        <div class="panel-body">
+        <div class="modal-content" style="width:400px; margin: 2% auto; padding:10px; text-align:center; border: 1px solid;">
             
-			<b style="font-size: 27px;">Bank Card Details</b><br/><br/>
+			<b style="font-size: 27px;">Bank Card Details</b><br/>
 			
             <!-- Payment form -->
             <div class="form-group">
@@ -65,7 +99,7 @@ button{
             <div class="form-group">
                 <label>CARD NUMBER</label>
                 <div id="card_number" class="field" style="width: 150px; margin-left: auto; margin-right: auto;"></div>
-            </div><br/>
+            </div>
             <div class="row">
                 <div class="left">
                     <div class="form-group">
@@ -80,14 +114,18 @@ button{
                     </div>
                 </div>
             </div><br/>
-			<input type="checkbox" id="agree" name="vehicle1" value="agree" required>
-			<label for="agree">Agree to make payment</label><br/><br/>
-            <button type="submit" class="btn btn-success" id="payBtn" style="float: right; padding: 10px 20px;">Submit Payment</button>
+            <div class="form-check mx-auto">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" required/>
+            <label class="form-check-label" for="flexCheckChecked">Agree T&C</label>
+            </div>
+            <div class="">    
+            <button type="submit" class="btn btn-success" id="payBtn" style="float: left;">Pay</button>
+            <button type="button" onclick="history.back()" class="btn btn-secondary" style="float: right;">Cancel</button>
+            </div>
         </div>
     </form>
-	<button type="button" onclick="location.href='home.php'" class="btn-link" style="float: left;">Cancel</button>
-</div>
-</div>
+	
+<!-- </div> -->
 <script>
 // Create an instance of the Stripe object
 // Set your publishable API key

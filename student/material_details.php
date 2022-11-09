@@ -15,13 +15,13 @@ if (mysqli_num_rows($query) != 0)
 		{
 			$row = mysqli_fetch_array($query);
 			$material_ID = $row['material_ID'];
-      $material_title = $row['material_title'];
-      $cover_name = $row['cover_name'];
-      $author_name = $row['author_name'];
-      $description = $row['description'];
-      $genre = $row['material_genre'];
-      $page_num = $row['page_num'];
-      $publish_year = $row['publish_year'];
+            $material_title = $row['material_title'];
+            $cover_name = $row['cover_name'];
+            $author_name = $row['author_name'];
+            $description = $row['description'];
+            $genre = $row['material_genre'];
+            $page_num = $row['page_num'];
+            $publish_year = $row['publish_year'];
     }
 else if(mysqli_num_rows($query) == 0){
   header("Location: home.php");
@@ -56,62 +56,58 @@ if (mysqli_num_rows($review) != 0)
     <script src="../src/js/jquery-3.6.0.min.js"></script>
     <script src="../src/js/popper.min.js"></script>
     <script src="../src/js/bootstrap.min.js"></script>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/> -->
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
-    
 </head>
 <body>
     <?php include 'nav.php' ?>
+    <button onclick="topFunction()" class="fas fa-angle-double-up" id="myBtn" title="Go to top"></button>
     <div class="container" style="margin:30px auto ;">
         <div class="row" style="margin-bottom:30px;">
-            <div class="col-md-5" style="text-align:center;">
+          <div class="col-md-1">
+          </div>
+          <div class="col-md-3" style="text-align:center; padding-bottom:20px;">
             <div class="product-image">
                 <img src="../material/cover/<?php echo $cover_name; ?>" alt="" class="agent-avatar img-fluid" style="height:330px;width: 220px;">
             </div>
-            <b id="average_score"></b><i class="fas fa-star" style="color:#e6e600;"></i>
-            <b id="download_times">&nbsp;&nbsp;<i class="fas fa-cloud-download-alt" ></i></b>
-            <!-- <div> -->
-            
-            <!-- </div> -->
-            </div>
-            <div class="col-md-7 section-md-t3" style="padding:0 0px 0 30px;">
+            <b id="average_score"></b>&nbsp;<i class="fas fa-star" style="color:#e6e600;">&nbsp;&nbsp;</i>
+            <b id="download_times"></b>&nbsp;<i class="fas fa-cloud-download-alt" ></i>
+          </div>
+          <div class="col-md-7" style="padding:0 0 0 30px;">
             <div class="agent-info-box">
                 <div class="agent-title">
-                <div class="title-box-d">
-                    <h3 class="title-d"><b><?php echo $material_title; ?> </b>
-                    </h3>
-                </div>
+                  <div class="title-box-d">
+                      <h3 class="title-d"><b><?php echo $material_title; ?> </b>
+                      </h3>
+                  </div>
                 </div>
                 <div class="agent-content mb-3">
-                <p class="content-d color-text-a" style="text-align:justify;">
-                    <?php echo $description; ?>
-                </p>
-                <div class="info-agents color-a">
-                    <p>
-                    <strong>Author: </strong>
-                    <span class="color-text-a"><a href="#"><?php echo $author_name; ?></a></span>
-                    </p>
-                    <p>
-                    <strong>Genre: </strong>
-                    <span class="color-text-a"><a href="#"><?php echo $genre; ?></a></span>
-                    </p>
-                    <p>
-                    <strong>Pages: </strong>
-                    <span class="color-text-a"><?php echo $page_num; ?></span>
-                    </p>
-                    <p>
-                    <strong>Published Year: </strong>
-                    <span class="color-text-a"><?php echo $publish_year; ?></span>
-                    </p>
-                    <button type="button" class="btn btn-primary" onclick="location.href='../material/file/161.pdf';">View</button>
-                    <button type="button" class="btn btn-primary" onclick="location.href='../controller/download.php?materialID=<?php echo $material_ID; ?>&title=<?php echo $material_title; ?>';">Download</button>
-                </div>
+                  <div style="margin-right:30px;">
+                  <p class="content-d color-text-a" style="text-align:justify;">
+                      <?php echo $description; ?>
+                  </p>
+                  </div>
+                  <div class="info-agents color-a">
+                      <p>
+                      <strong>Author: </strong>
+                      <span class="color-text-a"><a href="#"><?php echo $author_name; ?></a></span>
+                      </p>
+                      <p>
+                      <strong>Genre: </strong>
+                      <span class="color-text-a"><a href="genre.php?type=<?php echo $genre; ?>"><?php echo $genre; ?></a></span>
+                      </p>
+                      <p>
+                      <strong>Pages: </strong>
+                      <span class="color-text-a"><?php echo $page_num; ?></span>
+                      </p>
+                      <p>
+                      <strong>Published Year: </strong>
+                      <span class="color-text-a"><?php echo $publish_year; ?></span>
+                      </p>
+                      <button type="button" class="btn btn-primary" onclick="location.href='../controller/view.php?materialID=<?php echo $material_ID; ?>';">View</button>&nbsp;&nbsp;
+                      <button type="button" class="btn btn-primary" onclick="location.href='../controller/download.php?materialID=<?php echo $material_ID; ?>&title=<?php echo $material_title; ?>';">Download</button>
+                  </div>
                 </div>
             </div>
-            </div>
+          </div>
         </div>
         <div class="card" style="background-color:#e6e6e6;">
             <div class="card-body">
@@ -242,6 +238,25 @@ if (mysqli_num_rows($review) != 0)
     {
         background-color: #f2f2f2;
     }
+    #myBtn {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 30px;
+      z-index: 99;
+      font-size: 18px;
+      border: none;
+      outline: none;
+      background-color: #A31F37;
+      color: white;
+      cursor: pointer;
+      padding: 15px;
+      border-radius: 4px;
+    }
+
+    #myBtn:hover {
+      background-color: black;
+    }
     </style>
     
     <script>
@@ -363,6 +378,7 @@ if (mysqli_num_rows($review) != 0)
                 success:function(data)
                 {
                     $('#average_score').text(data.average_rating);
+                    $('#download_times').text(data.download_times);
                     $('#average_rating').text(data.average_rating);
                     $('#total_review').text(data.total_review);
                     user_rating = data.user_rating;
@@ -459,6 +475,30 @@ if (mysqli_num_rows($review) != 0)
 
     });
 
+    // Get the button
+    let mybutton = document.getElementById("myBtn");
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+        mybutton.style.display = "block";
+      } else {
+        mybutton.style.display = "none";
+      }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
     </script>
+    <?php if($_SESSION['message'] != "")
+{
+  echo '<script>alert("'.$_SESSION['message'].'")</script>';
+    $_SESSION['message'] = "";
+}?>
 </body>
 </html>

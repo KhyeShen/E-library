@@ -23,13 +23,18 @@
 				$_SESSION['student_name'] = $row['student_name'];
 				$_SESSION['student_email'] = $row['email'];
 				$_SESSION['loginstatus'] = "active"; 
-				header("Location: ../student/home.php");
-				echo '<script>alert("Welcome")</script>';
+
+				if(isset($_SESSION['page']) && $_SESSION['page'] != "")
+				{
+					header("Location: ../student/".$_SESSION['page']);
+				}
+				else{
+					header("Location: ../student/home.php");
+					echo '<script>alert("Welcome")</script>';
+				}
 			}
 			else 
 			{
-				//header("Location: loginpage.php");
-				// $_SESSION['message'] = "Login Failed. Wrong password!";
 				echo '<script>alert("'.$hashed_pass.','.$password.'")</script>'; 
 			}	
 		}

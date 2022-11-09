@@ -1,129 +1,146 @@
+<?php 
+require('../controller/conn.php');
+//query
+$recent_added = mysqli_query($conn,"select * from `material` order by created_datetime DESC LIMIT 15");
+$trending = mysqli_query($conn,"select * from `material` INNER JOIN download ON material.material_ID=download.material_ID group by material.material_ID ORDER by COUNT(download.material_ID) DESC");
+
+// Include configuration file  
+?>
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Material Design for Bootstrap</title>
-    <!-- MDB icon -->
-    <!-- <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" /> -->
+<head>
+    <meta charset="utf-8">
+    <title>Homepage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="style.css">
     <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <!-- Google Fonts Roboto -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
     <!-- MDB -->
     <link rel="stylesheet" href="../src/css/mdb.min.css"/>
-  </head>
-  <body>
-    <div id="myModal" class="modal" style="padding-top: 10%; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0,0.4);">
-        <!-- Modal content -->
-        <div class="modal-content" style="width:250px; margin: auto auto ; padding: 30px;">
-            <form method="POST" action="../controller/login.php">
-            <h2 style="margin:0 0 6% 0; text-align:center;">Login Form</h2>
-            <!-- Email input -->
-            <div class="form-outline mb-4">
-                <input type="text" id="form1Example1" value="<?php if (isset($_COOKIE["student_ID"])){echo $_COOKIE["studentID"];}?>" name="student_ID" class="form-control" required/>
-                <label class="form-label" for="form1Example1">Student ID</label>
-            </div>
 
-            <!-- Password input -->
-            <div class="form-outline mb-4" >
-                <input type="password" id="form1Example2" value="<?php if (isset($_COOKIE["pass"])){echo $_COOKIE["pass"];}?>" name="password" class="form-control" required/>
-                <label class="form-label" for="form1Example2">Password</label>
-            </div>
+</head>
+<body>
+    <?php include 'index_nav.php' ?>
+    <!-- Recently Added Material -->
+    <section class="product" style="margin-top:14px;"> 
+        <h2 class="product-category" style="display: inline-block;padding-right:10px;"><b>recently added</b></h2>
+        <a href="more_materials.php?type=type&value=Recent Added" style="display: inline-block;">(See All)</a>
+        <div class="product-container">
+            <button class="pre-btn"><img src="../src/image/arrow.png" alt=""></button>
+            <button class="nxt-btn"><img src="../src/image/arrow.png" alt=""></button>
+            
+            <?php
+                $i=0;
+                foreach($recent_added as $row_recent){
+                $actives='';
+                if($i==0){
+                $actives='active';
+                }
+                $average_rating = 0;
+                $download_times = 0;
+                $total_review = 0;
+                $total_user_rating = 0;
+                $query1 = "SELECT * FROM review WHERE material_ID = '".$row_recent['material_ID']."'";
+                $result = mysqli_query($conn, $query1);
 
-            <!-- 2 column grid layout for inline styling -->
-            <div class="row mb-4" style="text-align:center;">
-                <div class="col">
-                <!-- Simple link -->
-                <a href="#!" style="text-decoration: underline;">Sign up</a>
+                if (mysqli_num_rows($result) > 0)
+                {
+                    while($row = mysqli_fetch_assoc($result)) {
+                        $total_review++;
+
+                        $total_user_rating = $total_user_rating + $row["score"];
+                    }
+                }
+                if($total_user_rating > 0)
+                {
+                    $average_rating = $total_user_rating / $total_review;
+                }
+                $query_download = "SELECT * FROM download WHERE material_ID = '".$row_recent['material_ID']."'";
+                $download = mysqli_query($conn, $query_download);
+                $download_times = mysqli_num_rows($download);
+              ?>
+              <div class="product-card <?php echo $actives;?>">
+                <div class="product-image" style="height:375px;">
+                    <a href="material_details.php?material_ID=<?php echo $row_recent['material_ID']; ?>" target="_blank">
+                      <img class="product-thumb" src="../material/cover/<?php echo $row_recent['cover_name'];?>" onerror=this.src="../src/image/placeholder.jpg" alt="">
+                    </a>
                 </div>
-
-                <div class="col">
-                <!-- Simple link -->
-                <a href="#!" style="text-decoration: underline;">Forgot password?</a>
+                <div class="product-info">
+                    <b><?php echo $row_recent['material_title'];?></b>
+                    <p class="product-short-description"><?php echo $row_recent['author_name'];?></p>
+                    <!-- <span class="price">4.0</span> downloaded -->
+                    <b><?php echo number_format($average_rating, 1); ?>&nbsp;<i class="fas fa-star" style="color:#e6e600;"></i></b>
+                    <b>&nbsp;&nbsp;<?php echo $download_times;?>&nbsp;<i class="fas fa-cloud-download-alt" ></i></b>
                 </div>
-            </div>
-
-            <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-block" value="login" name="login">LOGIN</button>
-            </form>
+              </div>
+              <?php 
+              $i++;}
+              ?>
         </div>
-    </div>
-<nav class="navbar navbar-expand-lg navbar-dark " style="background: #a31f37;">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="index.php" style="color:white; margin:0 3%;">SCPG E-library</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-mdb-toggle="collapse"
-      data-mdb-target="#navbarTogglerDemo02"
-      aria-controls="navbarTogglerDemo02"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <i class="fas fa-bars" style="color:white;"></i>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item" style="margin-left:3%;">
-          <form class="d-flex input-group w-auto">
-            <input
-              type="search"
-              class="form-control rounded"
-              placeholder="Search"
-              aria-label="Search"
-              aria-describedby="search-addon"
-            />
-            <span class="input-group-text border-0" id="search-addon">
-              <i class="fas fa-search"  style="color:white;"><button type="submit" style="display:none;"></button></i>
-            </span>
-          </form>
-        </li>
-      </ul>
-      <div class="row"  style="margin: 0 3% 0 0;">
-        <div class="col-6">
-        <a class="fas fa-home" href="loginpage.php" style="color:white;"></a>
+    </section>
+    <!-- Trending Material -->
+    <section class="product" style="margin-top:14px;"> 
+        <h2 class="product-category" style="display: inline-block;padding-right:10px;"><b>trending</b></h2>
+        <a href="more_materials.php?type=type&value=Recent Added" style="display: inline-block;">(See All)</a>
+        <div class="product-container">
+            <button class="pre-btn"><img src="../src/image/arrow.png" alt=""></button>
+            <button class="nxt-btn"><img src="../src/image/arrow.png" alt=""></button>
+            
+            <?php
+                $i=0;
+                foreach($trending as $row_trending){
+                $actives='';
+                if($i==0){
+                $actives='active';
+                }
+                $average_rating = 0;
+                $download_times = 0;
+                $total_review = 0;
+                $total_user_rating = 0;
+                $query1 = "SELECT * FROM review WHERE material_ID = '".$row_trending['material_ID']."'";
+                $result = mysqli_query($conn, $query1);
+
+                if (mysqli_num_rows($result) > 0)
+                {
+                    while($row = mysqli_fetch_assoc($result)) {
+                        $total_review++;
+
+                        $total_user_rating = $total_user_rating + $row["score"];
+                    }
+                }
+                if($total_user_rating > 0)
+                {
+                    $average_rating = $total_user_rating / $total_review;
+                }
+                $query_download = "SELECT * FROM download WHERE material_ID = '".$row_trending['material_ID']."'";
+                $download = mysqli_query($conn, $query_download);
+                $download_times = mysqli_num_rows($download);
+              ?>
+              <div class="product-card <?php echo $actives;?>">
+                <div class="product-image" style="height:375px;">
+                    <a href="material_details.php?material_ID=<?php echo $row_trending['material_ID']; ?>" target="_blank">
+                      <img class="product-thumb" src="../material/cover/<?php echo $row_trending['cover_name'];?>" onerror=this.src="../src/image/placeholder.jpg" alt="">
+                    </a>
+                </div>
+                <div class="product-info">
+                    <b><?php echo $row_trending['material_title'];?></b>
+                    <p class="product-short-description"><?php echo $row_trending['author_name'];?></p>
+                    <!-- <span class="price">4.0</span> downloaded -->
+                    <b><?php echo number_format($average_rating, 1); ?>&nbsp;<i class="fas fa-star" style="color:#e6e600;"></i></b>
+                    <b>&nbsp;&nbsp;<?php echo $download_times;?>&nbsp;<i class="fas fa-cloud-download-alt" ></i></b>
+                </div>
+              </div>
+              <?php 
+              $i++;}
+              ?>
         </div>
-        <div class="col-6" >
-        <button type="button" onclick="openModal()" href="#myBtn"class="btn btn-light btn-rounded" style="padding: 5px 8px;">Login</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</nav>
-<?php include 'footer.php' ?>
-<!-- Navbar -->
-<!-- Navbar -->
+    </section>
+    <?php include 'footer.php' ?>
+    <!-- Carousel wrapper -->
+    <script src="../src/js/carousel.js"></script>
 
-    <!-- MDB -->
-    <script type="text/javascript" src="../src/js/mdb.min.js"></script>
-    <!-- Custom scripts -->
-    <script type="text/javascript"></script>
-<script>
-    // Get the modal
-    var modal = document.getElementById("myModal");
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks the button, open the modal 
-    function openModal() {
-    modal.style.display = "block";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-    }
-</script>
-  </body>
+    
+</body>
 </html>

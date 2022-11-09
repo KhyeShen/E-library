@@ -74,7 +74,7 @@ $count = mysqli_num_rows($pageresult);
             <div class="col-md-3">
                 <div class="" style="margin-bottom:15px;">
                     <div class="product-image" style="height: 459px;">
-                        <a href="material_detail.php?material_ID=<?php echo $row['material_ID'];?>" target="_blank">
+                        <a href="material_details.php?material_ID=<?php echo $row['material_ID'];?>" target="_blank">
                             <img class="product-thumb" src="../material/cover/<?php echo $row['cover_name'];?>" alt="">
                         </a>
                     </div>

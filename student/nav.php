@@ -1,3 +1,16 @@
+<?php
+include('../controller/conn.php');
+$search_value = "";
+
+if(isset($_GET['search_value']))
+{
+  $search_value = $_GET['search_value'];
+}
+else if(isset($_GET['type']))
+{
+  $search_value = $_GET['type'];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -28,7 +41,7 @@
         </div>
     </div>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark " style="margin:0 0; width: 100%;background: #a31f37;">
+    <nav class="navbar navbar-expand-lg navbar-dark " style="margin:0 0; width: 100%;background: #a31f37; margin-bottom:30px;">
       <div class="container-fluid">
         <a class="navbar-brand" href="home.php" style="color:white; margin:0 3%;">SCPG E-library</a>
         <button
@@ -45,7 +58,7 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item" style="margin-left:3%;">
-              <form class="d-flex input-group w-auto" method="POSt" action="search_result.php">
+              <form class="d-flex input-group w-auto" method="POSt" action="../controller/search.php">
                 <input
                   type="search"
                   class="form-control rounded"
@@ -53,9 +66,12 @@
                   aria-label="Search"
                   aria-describedby="search-addon"
                   name="search"
-                />
+                  value="<?php echo $search_value; ?>"
+                /><?php $search_value = ""; ?>
                 <span class="input-group-text border-0" id="search-addon">
-                <i class="fas fa-search"  style="color:white;"></i>
+                <button type="submit" name="search_btn" style="background-color:transparent; border:none;">
+                <i class="fas fa-search" style="color:white;"></i>
+                </button>
                 </span>
               </form>
             </li>
@@ -124,7 +140,7 @@
                     <a class="dropdown-item" onclick="openModal()" href="#">My profile</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">Settings</a>
+                    <a class="dropdown-item" href="subscription_details.php">Subscription</a>
                   </li>
                   <li>
                     <a class="dropdown-item" href="../controller/logout.php">Logout</a>
