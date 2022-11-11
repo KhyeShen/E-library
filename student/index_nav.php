@@ -1,5 +1,6 @@
 <?php
 include('../controller/conn.php');
+include('../controller/login.php');
 $search_value = "";
 
 if(isset($_GET['search_value']))
@@ -33,6 +34,23 @@ else if(isset($_GET['type']))
     <link rel="stylesheet" href="../src/css/mdb.min.css"/>
   </head>
   <body>
+    <!-- Forgot Password Modal -->
+    <div id="forgotModal" class="modal" style="padding-top: 10%; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0,0.4);">
+        <!-- Modal content -->
+        <div class="modal-content" style="width:250px; margin: auto auto ; padding: 30px;">
+            <form method="POST" action="../controller/forgotpwd.php">
+            <h2 style="margin:0 0 6% 0; text-align:center;">Forgot Password</h2>
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+                <input type="text" id="form1Example1" name="studentID" value="<?php if (isset($_COOKIE["student_ID"])){echo $_COOKIE["studentID"];}?>" name="student_ID" class="form-control" required/>
+                <label class="form-label" for="form1Example1">Student ID</label>
+            </div>
+
+            <!-- Confirm button -->
+            <button type="submit" class="btn btn-primary btn-block" value="login" name="confirm">CONFIRM</button>
+            </form>
+        </div>
+    </div>
     <div id="myModal" class="modal" style="padding-top: 10%; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0,0.4);">
         <!-- Modal content -->
         <div class="modal-content" style="width:250px; margin: auto auto ; padding: 30px;">
@@ -52,14 +70,10 @@ else if(isset($_GET['type']))
 
             <!-- 2 column grid layout for inline styling -->
             <div class="row mb-4" style="text-align:center;">
-                <div class="col">
-                <!-- Simple link -->
-                <a href="#!" style="text-decoration: underline;">Sign up</a>
-                </div>
 
                 <div class="col">
                 <!-- Simple link -->
-                <a href="#!" style="text-decoration: underline;">Forgot password?</a>
+                <a onclick="forgotpwd()" href="#" style="text-decoration: underline;">Forgot password?</a>
                 </div>
             </div>
 
@@ -68,7 +82,7 @@ else if(isset($_GET['type']))
             </form>
         </div>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-dark " style="background: #a31f37;">
+    <nav class="navbar navbar-expand-lg navbar-dark " style="background: #a31f37; margin-bottom:30px;">
       <div class="container-fluid">
         <a class="navbar-brand" href="index.php" style="color:white; margin:0 3%;">SCPG E-library</a>
         <button
@@ -122,6 +136,7 @@ else if(isset($_GET['type']))
     <script>
         // Get the modal
         var modal = document.getElementById("myModal");
+        var forgotmodal = document.getElementById("forgotModal");
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
@@ -131,11 +146,20 @@ else if(isset($_GET['type']))
         modal.style.display = "block";
         }
 
+        // When the user clicks the button, open the modal 
+        function forgotpwd() {
+          modal.style.display = "none";
+          forgotmodal.style.display = "block";
+        }
+
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
+          if (event.target == modal) {
+              modal.style.display = "none";
+          }
+          if (event.target == forgotmodal) {
+              forgotmodal.style.display = "none";
+          }
         }
     </script>
   </body>

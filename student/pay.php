@@ -126,24 +126,6 @@ if(!empty($_POST['stripeToken'])){
 					('SCPG1800369','sub_1LvY5UEYRt4577ibifZxWEHt',".$planAmount.",'".$currentDT."','Suceed')";
                     
                     $insert_payment = $conn->query($sql2); 
-
-                    // Insert transaction data into the database 
-                    // $sql = "INSERT INTO user_subscriptions(client_id,stripe_subscription_id,stripe_customer_id,stripe_plan_id,plan_amount,plan_amount_currency,plan_interval,plan_interval_count,payer_email,created,plan_period_start,plan_period_end,status) VALUES
-					// ('".$_SESSION['clientid']."','".$subscrID."','".$custID."','".$planID."','".$planAmount."','".$planCurrency."','".$planinterval."','".$planIntervalCount."','".$email."','".$created."','".$current_period_start."','".$current_period_end."','".$status."')"; 
-                    // $insert = $conn->query($sql);  
-                     
-					// Update previous payment record
-					// $check = mysqli_query($conn,"select * from payment where productid='".$_SESSION['productid']."' and clientid='".$_SESSION['clientid']."'");
-					// if (mysqli_num_rows($check) >= 1)
-					// {
-					// 	$update = "update payment set status='renewed',updatedBy='$current' WHERE clientid='".$_SESSION['clientid']."' and productid='".$_SESSION['productid']."'";
-					// 	mysqli_query($conn,$update);
-					// }
-							
-					// Insert into payment table
-					// $sql2 = "INSERT INTO payment(stripe_subscription_id,clientid,agentid,productid,productname,insurance_type,plan_interval,price,month,date,expiry_date,createdBy,updatedBy,status) VALUES
-					// ('".$subscrID."','".$_SESSION['clientid']."','".$_SESSION['agentid']."','".$_SESSION['productid']."','".$_SESSION['product']."','".$_SESSION['insurance_type']."','$planinterval','$planAmount','$month','$date','$newexpiry','$current','$current','$status')"; 
-                    // $insert2 = $conn->query($sql2);
 					
                     $ordStatus = 'success'; 
                     $statusMsg = 'Payment Successful!'; 

@@ -11,11 +11,25 @@
 <html>
 <head>
 <title>Reset Password</title>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="css/resetp.css">
+<!-- Font Awesome -->
+<link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+    <!-- MDB -->
+    <link rel="stylesheet" href="../src/css/mdb.min.css"/>
 </head>
+<style>
+	body {
+  background: #eee;
+}
+</style>
 <body>
-	<div>
 	<?php
 	if(isset($_POST['confirm']))
 	{
@@ -29,7 +43,7 @@
 				
 			$hash = password_hash($conp, PASSWORD_DEFAULT);
 			
-			$sql = "update student_acc set password='$hash',updated_datetime='$current' where student_ID ='$studentID'";
+			$sql = "update student set password='$hash',updated_datetime='$current' where student_ID ='$studentID'";
 	
 			if(!mysqli_query($conn,$sql))
 			{
@@ -44,8 +58,8 @@
 					setcookie("email", '', time() - (3600));
 					setcookie("password", '', time() - (3600));
 				}
-				
-				header('location:loginpage.php');
+				echo "<script>if(confirm('Your Record Sucessfully Inserted. Now Login')){document.location.href='index.php'};</script>";
+				//header('location:index.php');
 			}
 		}
 		
@@ -54,24 +68,26 @@
 		}
 	}
 	?>
-	</div>
-	<h1 style="text-align: center;"><b>Malaysian Protection<b></h1>
-	<div class="content">
-	<div class="box">
-	<form method="POST" action="resetpwd.php">
-		<b><strong>Reset Password</strong></b><br><br><br>
-		
-		<div class="row">
+	<div class="reg">
+	<form action="resetpwd.php" method="post">
+		<div class="container">
 
-		<input type="password" class="w3-input" value="<?php if (isset($_COOKIE["pass"])){echo $_COOKIE["pass"];}?>" name="password" placeholder="New Password" autofocus><br>
-		<input type="password" class="w3-input" value="<?php if (isset($_COOKIE["pass"])){echo $_COOKIE["pass"];}?>" name="conp" placeholder="Confirm Password"><br>
+			<br><h1>Reset Password</h1>
+			<hr class="mb-3">
+			<label for="studentID"><b>New Password</b></label>
+			<input type="password" class="form-control" value="<?php if (isset($_COOKIE["pass"])){echo $_COOKIE["pass"];}?>" name="password" placeholder="New Password" autofocus><br>
+			<label for="studentID"><b>Confirm Password</b></label>
+			<input type="password" class="form-control" value="<?php if (isset($_COOKIE["pass"])){echo $_COOKIE["pass"];}?>" name="conp" placeholder="Confirm Password"><br>
 		
-		<button type="button" style="float:left" onclick="window.history.go(-1); return false;"><b>Cancel</b></button>
-		<b><input style="float:right" type="submit" value="Confirm" name="confirm"></b>
-		</div><br><br>
-		
+			<div class="row">
+				<div class="col-12" style="text-align:left;">
+				<b><input class="btn btn-primary"type="submit" value="Confirm" name="confirm"></b>
+				<button type="button" class="btn btn-danger" onclick="history.back()">Cancel</button>
+				</div>
+			</div>
+
+		</div>
 	</form>
-	</div>
-	</div>
+</div>
 </body>
 </html>

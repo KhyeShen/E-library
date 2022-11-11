@@ -13,9 +13,9 @@
 <body>
 	<div>
 	<?php
-	if(isset($_POST['submit']))
+	if(isset($_POST['studentID']))
 	{
-		$studentID = $_POST['studentID'];
+		$studentID = strtoupper($_POST['studentID']);
 		$_SESSION['task'] = 'resetpwd';
 		$_SESSION['studentID'] = $studentID;
 		
@@ -32,6 +32,9 @@
 		else{
 			echo '<script>alert("Account does not exist!");</script>';
 		}
+	}
+	else{
+		echo '<script>alert("Account does  exist!");</script>';
 	}
 	?>
 	</div>

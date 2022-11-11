@@ -35,7 +35,10 @@
 			}
 			else 
 			{
-				echo '<script>alert("'.$hashed_pass.','.$password.'")</script>'; 
+				echo '<script type="text/javascript">'; 
+				echo 'alert("Login Fail!");'; 
+				echo 'window.location.href = "../student/index.php";';
+				echo '</script>';
 			}	
 		}
 		else if(mysqli_num_rows($query) == 0){

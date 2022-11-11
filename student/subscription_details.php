@@ -314,7 +314,7 @@ $status = "";
                     <li><i class="fas fa-check"></i> &nbsp;Journal</li>
                     <li><i class="fas fa-check"></i> &nbsp;Exam Paper</li>
                     <!-- <li><i class="fas fa-eye"></i> &nbsp;Exam Paper</li> -->
-                </ul><a href="controller/cancel_subscription.php" class="view-more">Cancel Subscription</a>
+                </ul><a onclick="cancel()" href="controller/cancel_subscription.php" class="view-more">Cancel Subscription</a>
                 <p style="margin: 0; text-align:center;">Subscription Renew By <br/><?php echo $plan_end; ?></p>
             </div>
         </div>
@@ -350,6 +350,13 @@ $status = "";
   }
 ?>
 <?php include 'footer.php' ?>
-
+<script>
+  function cancel(){
+    var cancel = confirm('Are you sure you want to cancel the Premium subscription?');
+    if(cancel == false){
+      event.preventDefault();
+    }
+  }
+  </script>
   </body>
 </html>
