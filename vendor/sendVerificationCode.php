@@ -23,8 +23,8 @@
 
     //$mail->SMTPDebug  = 0;  
     $mail->SMTPAuth   = TRUE;
-    $mail->SMTPSecure = "ssl";
-    $mail->Port       = 465;
+    $mail->SMTPSecure = "tls";
+    $mail->Port       = 587;
     $mail->Host       = "smtp.gmail.com";
     $mail->Username   = "scpgelibrary@gmail.com"; //sender mail(gmail)
     $mail->Password   = "aybbhanxxdgndsal"; //sender gmail password
