@@ -1,12 +1,16 @@
 <?php 
 session_start();
+//check if student login
 if (!isset($_SESSION['studentID']) ||(trim ($_SESSION['studentID']) == '') || $_SESSION['loginstatus'] != 'active') {
 	$_SESSION['message'] = 'Please Login!!';
-	header('location:loginpage.php');
+	header('location:index.php');
 	exit();
 }
+
+//DB connection
 include('../controller/conn.php');
 
+//Variables
 $sql='';
 $type="";
 $value="";
@@ -19,15 +23,15 @@ if (!isset($_GET['type'])) {
     $value = $_GET['value'];
 } 
 
+//Select material
 if($type=="type"){
     $sql='SELECT * FROM material ORDER BY created_datetime DESC';
 }  
-
 $result = mysqli_query($conn, $sql);
-$number_of_results = mysqli_num_rows($result);
-$results_per_page = 8; 
 
 // determine number of total pages available
+$number_of_results = mysqli_num_rows($result);
+$results_per_page = 8; 
 $number_of_pages = ceil($number_of_results/$results_per_page);
 
 // determine which page number visitor is currently on
@@ -53,7 +57,7 @@ $count = mysqli_num_rows($pageresult);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Local CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../src/css/style.css">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <!-- MDB -->
@@ -62,11 +66,12 @@ $count = mysqli_num_rows($pageresult);
 <body>
     <?php include 'nav.php' ?>
     <div class="container" style="margin:20px auto;">
+        <!-- Header -->
         <div class="row">
-            <!-- <div class="col-5"> -->
-                <h2><b><?php echo $_GET['value']; ?></b></h2>
-            <!-- </div> -->
+            <h2><b><?php echo $_GET['value']; ?></b></h2>
         </div>
+
+        <!-- Materials Found -->
         <div class="row">
             <?php
                 while($row = mysqli_fetch_array($pageresult)) {
@@ -89,6 +94,7 @@ $count = mysqli_num_rows($pageresult);
             <?php } ?>
         </div>
         
+        <!-- Pagination Button -->
         <nav aria-label="Page navigation example" style="float:right;">
             <ul class="pagination pagination-circle">
                 <li class="page-item">
@@ -100,7 +106,7 @@ $count = mysqli_num_rows($pageresult);
                     </a>
                 </li>
                 <?php
-                    // display the links to the pages
+                    // display the number of navigation button
                     $last_five = $page+4;
                     if($last_five>=$number_of_pages)
                     {
@@ -124,7 +130,6 @@ $count = mysqli_num_rows($pageresult);
                     else
                     {
                         for ($page_num=$page;$page_num<=($page+4);$page_num++) {
-                            //echo '<a href="index.php?page=' . $page . '">' . $page . '</a> ';
                             if($page_num<=$number_of_pages)
                             {
                                 if($page_num == $page)
@@ -149,6 +154,8 @@ $count = mysqli_num_rows($pageresult);
             </ul>
         </nav>
     </div>
+
+    <!-- Footer -->
     <?php include 'footer.php' ?>
 </body>
 </html>

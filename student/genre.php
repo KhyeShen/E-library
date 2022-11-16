@@ -1,41 +1,47 @@
 <?php 
     session_start();
-    if (!isset($_SESSION['studentID']) ||(trim ($_SESSION['studentID']) == '') || $_SESSION['loginstatus'] != 'active') {
-        $_SESSION['message'] = 'Please Login!!';
-        header('location:loginpage.php');
-        exit();
-    }
+
+    //DB connection
     include('../controller/conn.php');
+
+    //Variables
     $search_value = "";
 
-    //determine what should be displayed
+    //Determine what should be displayed
     if(isset($_GET['type'])){
         $_SESSION['type'] = $_GET['type'];
     } 
     $filtervalues = $_SESSION['type'];
     $sql="SELECT * FROM material WHERE material_genre = '".$filtervalues."'";
 
+    //Materials Type
+    if($filtervalues != "High Quality Materials")
+    {
+        $title = $filtervalues." Books";
+    }else{
+        $title = $filtervalues;
+    }
+    
+    // determine number of total pages available
     $result = mysqli_query($conn, $sql);
     $number_of_results = mysqli_num_rows($result);
     $results_per_page = 8; 
+    $number_of_pages = ceil($number_of_results/$results_per_page);
 
-// determine number of total pages available
-$number_of_pages = ceil($number_of_results/$results_per_page);
+    // determine which page number visitor is currently on
+    if (!isset($_GET['page'])) {
+    $page = 1;
+    } else {
+    $page = $_GET['page'];
+    } 
 
-// determine which page number visitor is currently on
-if (!isset($_GET['page'])) {
-  $page = 1;
-} else {
-  $page = $_GET['page'];
-} 
+    // determine the sql LIMIT starting number for the results on the displaying page
+    $this_page_first_result = ($page-1)*$results_per_page;
 
-// determine the sql LIMIT starting number for the results on the displaying page
-$this_page_first_result = ($page-1)*$results_per_page;
-
-// retrieve selected results from database and display them on page
-$sql='SELECT * FROM material WHERE  material_genre = "'.$filtervalues.'" LIMIT ' . $this_page_first_result . ',' .  $results_per_page ;
-$pageresult = mysqli_query($conn, $sql);
-$count = mysqli_num_rows($pageresult);
+    // retrieve selected results from database and display them page by page
+    $sql='SELECT * FROM material WHERE  material_genre = "'.$filtervalues.'" LIMIT ' . $this_page_first_result . ',' .  $results_per_page ;
+    $pageresult = mysqli_query($conn, $sql);
+    $count = mysqli_num_rows($pageresult);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,19 +51,29 @@ $count = mysqli_num_rows($pageresult);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Local CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../src/css/style.css">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css" rel="stylesheet"/>
 </head>
 <body>
-    <?php include 'nav.php' ?>
+    <!-- Nav -->
+    <?php
+    if (isset($_SESSION['studentID']))
+    {
+        include 'nav.php';
+    }  
+    else
+    {
+        include 'index_nav.php';
+    }?>
+
+    <!-- Container -->
     <div class="container" style="margin:20px auto;">
+        <!-- Materials -->
         <div class="row">
-            <!-- <div class="col-5"> -->
-                <h2><b>Search Results: </b><?php echo $number_of_results; ?></h2>
-            <!-- </div> -->
+            <h2><b><?php echo $title; ?> </b>(<?php echo $number_of_results; ?>)</h2>
         </div>
         <div class="row">
             <?php
@@ -73,7 +89,6 @@ $count = mysqli_num_rows($pageresult);
                 {
                     while($row = mysqli_fetch_assoc($result)) {
                         $total_review++;
-
                         $total_user_rating = $total_user_rating + $row["score"];
                     }
                 }
@@ -103,6 +118,7 @@ $count = mysqli_num_rows($pageresult);
             <?php } ?>
         </div>
         
+        <!-- Pagination Button -->
         <nav aria-label="Page navigation example" style="float:right;">
             <ul class="pagination pagination-circle">
                 <li class="page-item">
@@ -141,7 +157,6 @@ $count = mysqli_num_rows($pageresult);
                     else
                     {
                         for ($page_num=$page;$page_num<=($page+4);$page_num++) {
-                            //echo '<a href="index.php?page=' . $page . '">' . $page . '</a> ';
                             if($page_num<=$number_of_pages)
                             {
                                 if($page_num == $page)
@@ -166,6 +181,8 @@ $count = mysqli_num_rows($pageresult);
             </ul>
         </nav>
     </div>
+
+    <!-- Footer -->
     <?php include 'footer.php' ?>
 </body>
 </html>

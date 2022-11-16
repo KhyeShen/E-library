@@ -1,5 +1,6 @@
 <?php
 	session_start();
+	//Clear session to logout
 	session_destroy();
  
 	if (isset($_COOKIE["studentID"]) AND isset($_COOKIE["password"])){

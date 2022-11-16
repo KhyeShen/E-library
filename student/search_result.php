@@ -1,30 +1,19 @@
 <?php 
 session_start();
-if (!isset($_SESSION['studentID']) ||(trim ($_SESSION['studentID']) == '') || $_SESSION['loginstatus'] != 'active') {
-	$_SESSION['message'] = 'Please Login!!';
-	header('location:loginpage.php');
-	exit();
-}
-include('../controller/conn.php');
-$search_value = "";
-// $sql='';
-// $type="";
-// $value="";
 
-// //determine what should be displayed
-// if (!isset($_GET['type'])) {
-//     $type = "All Materials";
-// } else if(isset($_GET['type']) & isset($_GET['value'])){
-//     $type = $_GET['type'];
-//     $value = $_GET['value'];
-// } 
+//DB connection
+include('../controller/conn.php');
+
+//Get search value
+$search_value = "";
 if(isset($_GET['search_value']))
 {
     $_SESSION['search_value'] = $_GET['search_value'];
 }
-    $filtervalues = $_SESSION['search_value'];
-    $sql="SELECT * FROM material WHERE CONCAT(material_title,author_name) LIKE '%$filtervalues%' ";
 
+//Select material
+$filtervalues = $_SESSION['search_value'];
+$sql="SELECT * FROM material WHERE CONCAT(material_title,author_name) LIKE '%$filtervalues%' ";
 $result = mysqli_query($conn, $sql);
 $number_of_results = mysqli_num_rows($result);
 $results_per_page = 8; 
@@ -55,20 +44,29 @@ $count = mysqli_num_rows($pageresult);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Local CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../src/css/style.css">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css" rel="stylesheet"/>
 </head>
 <body>
-    <?php include 'nav.php' ?>
+    <?php
+    if (isset($_SESSION['studentID']))
+    {
+        include 'nav.php';
+    }  
+    else
+    {
+        include 'index_nav.php';
+    }?>
     <div class="container" style="margin:20px auto;">
+        <!-- Search Results -->
         <div class="row">
-            <!-- <div class="col-5"> -->
-                <h2><b>Search Results: </b><?php echo $number_of_results; ?></h2>
-            <!-- </div> -->
+            <h2><b>Search Results: </b><?php echo $number_of_results; ?></h2>
         </div>
+
+        <!-- Material Cards -->
         <div class="row">
             <?php
                 while($row_search = mysqli_fetch_array($pageresult)) {
@@ -113,6 +111,7 @@ $count = mysqli_num_rows($pageresult);
             <?php } ?>
         </div>
         
+        <!-- Pagination Button -->
         <nav aria-label="Page navigation example" style="float:right;">
             <ul class="pagination pagination-circle">
                 <li class="page-item">
@@ -151,7 +150,6 @@ $count = mysqli_num_rows($pageresult);
                     else
                     {
                         for ($page_num=$page;$page_num<=($page+4);$page_num++) {
-                            //echo '<a href="index.php?page=' . $page . '">' . $page . '</a> ';
                             if($page_num<=$number_of_pages)
                             {
                                 if($page_num == $page)
@@ -176,6 +174,8 @@ $count = mysqli_num_rows($pageresult);
             </ul>
         </nav>
     </div>
+
+    <!-- Footer -->
     <?php include 'footer.php' ?>
 </body>
 </html>

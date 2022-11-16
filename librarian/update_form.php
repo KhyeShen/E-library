@@ -4,7 +4,11 @@
 // 	header('location:loginpage.php');
 // 	exit();
 // }
+
+//DB connection
 include('../controller/conn.php');
+
+//Get material's data
 if(isset($_GET['material_ID'])){
     $material_ID = $_GET['material_ID'];
     $update = mysqli_query($conn,"select * from `material` where material_ID=".$material_ID);
@@ -18,10 +22,6 @@ if(isset($_GET['material_ID'])){
         $description = $update_item['description'];
     };
 }
-//query
-$result = mysqli_query($conn,"select * from `material` order by download_times DESC LIMIT 5");
-	
-// Include configuration file  
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -42,19 +42,22 @@ $result = mysqli_query($conn,"select * from `material` order by download_times D
     <link rel="stylesheet" href="../src/css/styles.css">
 </head>
 <body>
-<div class="container" style="height: auto;">
-<div class="row">
+    <div class="container" style="height: auto;">
+        <div class="row">
             <div class="text-center" style="margin-bottom:20px;">
                     <b style="font-size: 28px;" >UPDATE MATERIAL FORM</b>
             </div>
         </div>
+        <!-- Material Input Form -->
         <div class="row">
-            <form action="controller/manage_material.php?material_ID=161" method="post" enctype="multipart/form-data">
+            <form action="../controller/manage_material.php?material_ID=161" method="post" enctype="multipart/form-data">
+                <!-- Cover Photo -->
                 <div class="col-md-3" style="margin-bottom:10px;">
                         <label for="coverImage">Choose Cover Image</label><br>
                         <img src="../src/image/placeholder.jpg" onclick="triggerClick()" id="coverDisplay" style="cursor: pointer;height:340px;width:228px;">
                         <input type="file" name="cover[]" accept=".jpg, .jpeg, .png" onchange="displayImage(this)" id="coverImage" style="display: none;">
                 </div>
+                <!-- Material File & Details -->
                 <div class="col-md-9" style="padding:0 30px;">
                     <div class="row" style="margin-bottom:10px;">
                         <label for="file">Material File (Only PDF Supported)</label><br>
@@ -130,16 +133,15 @@ $result = mysqli_query($conn,"select * from `material` order by download_times D
                                         <td>".$material['page_num']."</td>
                                         <td><a style='cursor:pointer;'>".$material['material_ID'].".pdf</a></td>
                                         <td>
-                                        <form action='controller/manage_material.php' method='post'>
+                                        <form action='../controller/manage_material.php' method='post'>
                                             <a class='btn btn-default fas fa-edit' href='update_form.php?material_ID=".$material['material_ID']."'></a>
-                                            <button type='submit' class='btn btn-default fas fa-trash-alt' name='delete' value='".$material['material_ID']."'></button>
+                                            <button type='submit' onclick='delete()' class='btn btn-default fas fa-trash-alt' name='delete' value='".$material['material_ID']."'></button>
                                         </form>
                                         </td>
                                     </tr>
                                 ";
                             }
                         ?>
-                            
                         </tbody>
                     </table>
                 </div>
@@ -170,8 +172,15 @@ $result = mysqli_query($conn,"select * from `material` order by download_times D
             }
         };
 
-        
+        //prompt confirmation box to delete material
+        function delete(){
+            var delete_material = confirm('Are you sure you want to this material?');
+            if(delete_material == false){
+            event.preventDefault();
+            }
+        }
     </script>
+    <!-- Cover Image Preview JS -->
     <script src="../src/js/cover_preview.js"></script>
 </body>
 </html>

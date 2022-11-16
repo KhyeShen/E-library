@@ -1,14 +1,12 @@
 <?php
+//DB connection
 include('../controller/conn.php');
-$search_value = "";
 
+//Get the search value
+$search_value = "";
 if(isset($_GET['search_value']))
 {
   $search_value = $_GET['search_value'];
-}
-else if(isset($_GET['type']))
-{
-  $search_value = $_GET['type'];
 }
 ?>
 <!DOCTYPE html>
@@ -31,7 +29,7 @@ else if(isset($_GET['type']))
           <div class="card-body text-center">
             <h3>My Profile</h3>
             <div class="mt-3 mb-4" style="margin:auto auto;">
-              <img src="../src/image/45.jpeg"
+              <img src="../src/image/profile.jpg"
                 class="rounded-circle" height="141" width="141"/>
             </div>
             <h6 class="mb-2"><?php echo $_SESSION['student_name']; ?></h6>
@@ -43,7 +41,9 @@ else if(isset($_GET['type']))
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark " style="margin:0 0; width: 100%;background: #a31f37; margin-bottom:30px;">
       <div class="container-fluid">
+        <!-- Institute Name -->
         <a class="navbar-brand" href="home.php" style="color:white; margin:0 3%;">SCPG E-library</a>
+        <!-- Menu Button -->
         <button
           class="navbar-toggler"
           type="button"
@@ -55,6 +55,7 @@ else if(isset($_GET['type']))
         >
           <i class="fas fa-bars" style="color:white;"></i>
         </button>
+        <!-- Search Bar -->
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item" style="margin-left:3%;">
@@ -77,9 +78,11 @@ else if(isset($_GET['type']))
             </li>
           </ul>
           <div class="row"  style="margin: 0 0 0 0;">
+            <!-- Home Button -->
             <div class="col-4">
-            <a class="fas fa-home" href="home.php" style="color:white;"></a>
+              <a class="fas fa-home" href="home.php" style="color:white;"></a>
             </div>
+            <!-- Genre Button -->
             <div class="col-4">
               <div class="dropdown">
                 <a
@@ -100,18 +103,24 @@ else if(isset($_GET['type']))
                     <a class="dropdown-item"><b>Genre</b></a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">Horror</a>
+                    <a class="dropdown-item" href="genre.php?type=Horror">Horror</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">Romance</a>
+                    <a class="dropdown-item" href="genre.php?type=Romance">Romance</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">High Quality Materials</a>
+                    <a class="dropdown-item" href="genre.php?type=Fantasy">Fantasy</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="genre.php?type=History">History`</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="genre.php?type=High Quality Materials">High Quality Materials</a>
                   </li>
                 </ul>
               </div>
-            
             </div>
+            <!-- Profile Button -->
             <div class="col-4">
               <div class="dropdown">
                 <a
@@ -147,7 +156,6 @@ else if(isset($_GET['type']))
                   </li>
                 </ul>
               </div>
-            
             </div>
           </div>
         </div>
@@ -173,9 +181,9 @@ else if(isset($_GET['type']))
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
+          if (event.target == modal) {
+              modal.style.display = "none";
+          }
         }
     </script>
   </body>

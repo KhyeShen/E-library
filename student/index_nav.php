@@ -1,15 +1,15 @@
 <?php
+//DB connection
 include('../controller/conn.php');
+//Login PHP
 include('../controller/login.php');
+//Variables
 $search_value = "";
 
+//Get the search value
 if(isset($_GET['search_value']))
 {
   $search_value = $_GET['search_value'];
-}
-else if(isset($_GET['type']))
-{
-  $search_value = $_GET['type'];
 }
 ?>
 <!DOCTYPE html>
@@ -18,20 +18,12 @@ else if(isset($_GET['type']))
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <!-- MDB icon -->
-    <!-- <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" /> -->
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <!-- Google Fonts Roboto -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
-    />
     <!-- MDB -->
     <link rel="stylesheet" href="../src/css/mdb.min.css"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../src/css/all.min.css"/>
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="../src/css/google_fonts_roboto.css"/>
   </head>
   <body>
     <!-- Forgot Password Modal -->
@@ -39,7 +31,7 @@ else if(isset($_GET['type']))
         <!-- Modal content -->
         <div class="modal-content" style="width:250px; margin: auto auto ; padding: 30px;">
             <form method="POST" action="../controller/forgotpwd.php">
-            <h2 style="margin:0 0 6% 0; text-align:center;">Forgot Password</h2>
+            <h4 style="margin:0 0 6% 0; text-align:center;">Verify Student ID</h4>
             <!-- Email input -->
             <div class="form-outline mb-4">
                 <input type="text" id="form1Example1" name="studentID" value="<?php if (isset($_COOKIE["student_ID"])){echo $_COOKIE["studentID"];}?>" name="student_ID" class="form-control" required/>
@@ -51,6 +43,8 @@ else if(isset($_GET['type']))
             </form>
         </div>
     </div>
+
+    <!-- Login Modal -->
     <div id="myModal" class="modal" style="padding-top: 10%; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0,0.4);">
         <!-- Modal content -->
         <div class="modal-content" style="width:250px; margin: auto auto ; padding: 30px;">
@@ -82,9 +76,14 @@ else if(isset($_GET['type']))
             </form>
         </div>
     </div>
+
+    <!-- Nav -->
     <nav class="navbar navbar-expand-lg navbar-dark " style="background: #a31f37; margin-bottom:30px;">
       <div class="container-fluid">
+        <!-- Institute Name -->
         <a class="navbar-brand" href="index.php" style="color:white; margin:0 3%;">SCPG E-library</a>
+
+        <!-- Menu Bar -->
         <button
           class="navbar-toggler"
           type="button"
@@ -96,8 +95,11 @@ else if(isset($_GET['type']))
         >
           <i class="fas fa-bars" style="color:white;"></i>
         </button>
+
+        <!-- Item in Nav -->
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <!-- Search Bar -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item" style="margin-left:3%;">
               <form class="d-flex input-group w-auto" method="POSt" action="../controller/search.php">
                 <input
@@ -117,11 +119,54 @@ else if(isset($_GET['type']))
               </form>
             </li>
           </ul>
+
           <div class="row"  style="margin: 0 3% 0 0;">
-            <div class="col-6">
-            <a class="fas fa-home" href="index.php" style="color:white;"></a>
+            <!-- Home Button -->
+            <div class="col-4">
+              <a class="fas fa-home" href="index.php" style="color:white;"></a>
             </div>
-            <div class="col-6" >
+
+            <!-- Genre Button -->
+            <div class="col-4">
+              <div class="dropdown">
+                <a
+                  class="text-reset me-3 dropdown-toggle hidden-arrow"
+                  href="#"
+                  id="navbarDropdownMenuLink"
+                  role="button"
+                  data-mdb-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-book-open" style="color:white;"></i>
+                </a>
+                <ul
+                  class="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="navbarDropdownMenuLink"
+                >
+                  <li>
+                    <a class="dropdown-item"><b>Genre</b></a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="genre.php?type=Horror">Horror</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="genre.php?type=Romance">Romance</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="genre.php?type=Fantasy">Fantasy</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="genre.php?type=History">History`</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="genre.php?type=High Quality Materials">High Quality Materials</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Login Button -->
+            <div class="col-4" >
             <button type="button" onclick="openModal()" href="#myBtn"class="btn btn-light btn-rounded" style="padding: 5px 8px;">Login</button>
             </div>
           </div>
@@ -131,8 +176,7 @@ else if(isset($_GET['type']))
 
     <!-- MDB -->
     <script type="text/javascript" src="../src/js/mdb.min.js"></script>
-    <!-- Custom scripts -->
-    <script type="text/javascript"></script>
+
     <script>
         // Get the modal
         var modal = document.getElementById("myModal");

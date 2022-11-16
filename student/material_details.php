@@ -1,48 +1,46 @@
 <?php 
 session_start();
+//check if user login
 if (!isset($_SESSION['studentID']) ||(trim ($_SESSION['studentID']) == '') || $_SESSION['loginstatus'] != 'active') {
 	$_SESSION['message'] = 'Please Login!!';
-	header('location:loginpage.php');
+	header('location:index.php');
 	exit();
 }
 
 include('../controller/conn.php');
 include('../controller/submit_review.php');
-//include('../controller/download.php');
+
 //query
 $query = mysqli_query($conn,"select * from material WHERE material_ID=".$_GET['material_ID']);
-if (mysqli_num_rows($query) != 0)
-		{
-			$row = mysqli_fetch_array($query);
-			$material_ID = $row['material_ID'];
-            $material_title = $row['material_title'];
-            $cover_name = $row['cover_name'];
-            $author_name = $row['author_name'];
-            $description = $row['description'];
-            $genre = $row['material_genre'];
-            $page_num = $row['page_num'];
-            $publish_year = $row['publish_year'];
-    }
+if (mysqli_num_rows($query) != 0){
+    $row = mysqli_fetch_array($query);
+    $material_ID = $row['material_ID'];
+    $material_title = $row['material_title'];
+    $cover_name = $row['cover_name'];
+    $author_name = $row['author_name'];
+    $description = $row['description'];
+    $genre = $row['material_genre'];
+    $page_num = $row['page_num'];
+    $publish_year = $row['publish_year'];
+}
 else if(mysqli_num_rows($query) == 0){
   header("Location: home.php");
-  //$_SESSION['message'] = "Invalid Account";
 }
+
+//get user's existing review
 $review_ID = 0;
 $comment = "";
 $score = 0;
 $review_before = false;
-//query
 $review = mysqli_query($conn,"select * from review WHERE material_ID=".$_GET['material_ID']." AND student_ID='".$_SESSION['studentID']."'");
 if (mysqli_num_rows($review) != 0)
-		{
-			$row = mysqli_fetch_array($review);
-            $review_ID = $row['review_ID'];
-			$score = $row['score'];
-            $comment = $row['comment'];
-            $review_before = true;
-        }
-
-// Include configuration file  
+{
+    $row = mysqli_fetch_array($review);
+    $review_ID = $row['review_ID'];
+    $score = $row['score'];
+    $comment = $row['comment'];
+    $review_before = true;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,6 +48,7 @@ if (mysqli_num_rows($review) != 0)
     <meta charset="utf-8">
     <title>Homepage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- Review Module -->
     <link rel="stylesheet" href="../src/css/4.0.0 bootstrap.min.css">
     <link rel="stylesheet" href="../src/css/all.css">
@@ -58,8 +57,13 @@ if (mysqli_num_rows($review) != 0)
     <script src="../src/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <!-- Nav -->
     <?php include 'nav.php' ?>
+
+    <!-- Scroll To Top Button -->
     <button onclick="topFunction()" class="fas fa-angle-double-up" id="myBtn" title="Go to top"></button>
+
+    <!-- Material Details -->
     <div class="container" style="margin:30px auto ;">
         <div class="row" style="margin-bottom:30px;">
           <div class="col-md-1">
@@ -88,7 +92,7 @@ if (mysqli_num_rows($review) != 0)
                   <div class="info-agents color-a">
                       <p>
                       <strong>Author: </strong>
-                      <span class="color-text-a"><a href="#"><?php echo $author_name; ?></a></span>
+                      <span class="color-text-a"><a href="author.php?author=<?php echo $author_name; ?>"><?php echo $author_name; ?></a></span>
                       </p>
                       <p>
                       <strong>Genre: </strong>
@@ -109,6 +113,8 @@ if (mysqli_num_rows($review) != 0)
             </div>
           </div>
         </div>
+
+        <!-- Score Card -->
         <div class="card" style="background-color:#e6e6e6;">
             <div class="card-body">
                 <div class="row">
@@ -174,8 +180,11 @@ if (mysqli_num_rows($review) != 0)
                 </div>
             </div>
         </div>
+
+        <!-- List of Review -->
     	<div class="mt-5" id="review_content"></div>
         
+        <!-- Review Modal -->
         <div id="review_modal" class="modal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -204,7 +213,10 @@ if (mysqli_num_rows($review) != 0)
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
     <?php include 'footer.php' ?>
+
     <style>
     .progress
     {
@@ -260,7 +272,7 @@ if (mysqli_num_rows($review) != 0)
     </style>
     
     <script>
-
+    //load page
     $(document).ready(function(){
         var review_before = false;
         var review_before = "<?= $review_before ?>";
@@ -269,10 +281,12 @@ if (mysqli_num_rows($review) != 0)
         var rating_data = 1;
         var user_rating = 0;
         
+        //close modal
         $('#close').click(function(){
             $('#review_modal').modal('hide');
         });
 
+        //open review modal
         $('#add_review').click(function(){
                 if(review_before == true)
                 {
@@ -288,6 +302,7 @@ if (mysqli_num_rows($review) != 0)
                 $('#review_modal').modal('show');
         });
 
+        //click the star to rate the material
         $(document).on('mouseenter', '.submit_star', function(){
 
             var rating = $(this).data('rating');
@@ -303,6 +318,7 @@ if (mysqli_num_rows($review) != 0)
 
         });
 
+        //clear all the star
         function reset_background()
         {
             for(var count = 1; count <= 5; count++)
@@ -315,6 +331,7 @@ if (mysqli_num_rows($review) != 0)
             }
         }
 
+        //hover the star
         $(document).on('mouseleave', '.submit_star', function(){
 
             reset_background();
@@ -335,6 +352,7 @@ if (mysqli_num_rows($review) != 0)
 
         });
 
+        //submit review
         $('#save_review').click(function(){
 
             //var user_name = $('#user_name').val();
@@ -362,9 +380,9 @@ if (mysqli_num_rows($review) != 0)
                     }
                 })
             }
-
         });
 
+        //load the review's data
         load_rating_data();
 
         function load_rating_data()
@@ -377,6 +395,7 @@ if (mysqli_num_rows($review) != 0)
                 dataType:"JSON",
                 success:function(data)
                 {
+                    //Display score card
                     $('#average_score').text(data.average_rating);
                     $('#download_times').text(data.download_times);
                     $('#average_rating').text(data.average_rating);
@@ -413,14 +432,13 @@ if (mysqli_num_rows($review) != 0)
 
                     $('#one_star_progress').css('width', (data.one_star_review/data.total_review) * 100 + '%');
 
+                    //Display the list of review
                     if(data.review_data.length > 0)
                     {
                         var html = '';
 
                         for(var count = 0; count < data.review_data.length; count++)
                         {
-                            // review_before = data.review_data[count].review_before;
-                            
                             html += '<div class="row mb-3"">';
 
                             html += '<div class="col-sm-12">';
@@ -495,10 +513,5 @@ if (mysqli_num_rows($review) != 0)
       document.documentElement.scrollTop = 0;
     }
     </script>
-    <?php if($_SESSION['message'] != "")
-{
-  echo '<script>alert("'.$_SESSION['message'].'")</script>';
-    $_SESSION['message'] = "";
-}?>
 </body>
 </html>

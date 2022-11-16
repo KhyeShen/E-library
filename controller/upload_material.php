@@ -1,0 +1,66 @@
+<?php 
+    session_start();
+
+    //DB connection
+    include('conn.php');
+    //Upload file PHP
+    include('../vendor/az.multi.upload.class.php');
+    
+    //Upload button
+    if(isset($_POST['btn']))
+    {
+        //Validate material file
+        if(!empty(array_filter($_FILES['files']['name'])))
+        {
+            $flag   =   0;
+            $title = $_POST['material_title'];
+            $author = $_POST['author'];
+            $publish_year = $_POST['publish_year'];
+            $genre = $_POST['genre'];
+            $page_num = $_POST['pages'];
+            $description = $_POST['description'];
+            $covername = implode($_FILES['cover']['name']);
+            $extension = pathinfo($covername, PATHINFO_EXTENSION);
+            $cover_name = "";
+            $material_ID = 1;
+            $flag   =   1;
+
+            //Determine the material ID for the material
+            $result = mysqli_query($conn,"select * from `material` order by material_ID desc LIMIT 1");
+            if (mysqli_num_rows($result) > 0) {
+                $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+                $material_ID = $row['material_ID'];
+                $material_ID++;
+            }
+
+            //Validate the cover page
+            if(!empty(array_filter($_FILES['cover']['name'])))
+            {
+                //Upload cover page
+                $cover_name = $material_ID.'.'.$extension;
+                $uploadcover =   new ImageUploadAndResize();
+                $uploadcover->uploadMultiFiles('cover', '../material/cover', $material_ID, 0755);
+            }
+            else{
+                $cover_name = "N/A";
+            }
+                
+            //Upload material file
+            $uploadfile =   new ImageUploadAndResize();
+            $uploadfile->uploadMultiFiles('files', '../material/file', $material_ID, 0756);
+            $sql = "INSERT INTO material (librarian_ID, material_title,author_name,publish_year,material_genre,page_num,cover_name,description,created_datetime,updated_datetime) 
+            VALUES (4, '".$title."', '".$author."', '".$publish_year."', '".$genre."', '".$page_num."', '".$cover_name."', '".$description."', now(), now())";
+
+            //Check if upload successfull
+            if ($conn->query($sql) === TRUE) {
+                header('Location: ../librarian/upload_form.php');
+            }
+            else{
+                echo '<script>alert("Update Failure")</script>';
+            }
+        }
+        else{
+            echo '<script>alert("File Corrupted")</script>';
+        }
+    }
+?>

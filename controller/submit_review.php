@@ -1,12 +1,11 @@
 <?php
-
-//submit_rating.php
-// session_start();
-//$connect = new PDO("mysql:host=my;dbname=bscfypwb_E-library", "bscfypwb_khyeshen", "G^MPB##NaAf7");
-// $connect = new PDO("mysql:host=localhost;dbname=elibrary", "root", "");
+//DB connection
 include('conn.php');
+
+//submit review
 if(isset($_POST["rating_data"]))
 {
+	//Variables
 	$currentDT = date("Y-m-d h:i:s");
 	$data = array(
 		':student_ID'		=>	$_POST['student_ID'],
@@ -16,7 +15,10 @@ if(isset($_POST["rating_data"]))
 		':datetime'			=>	$currentDT
 	);
 	
+	//check if user review before
 	$review = mysqli_query($conn,"select * from review WHERE material_ID=".$_POST['material_ID']." AND student_ID='".$_POST['student_ID']."'");
+
+	//update review
 	if (mysqli_num_rows($review) != 0)
 	{
 		$row = mysqli_fetch_array($review);
@@ -27,25 +29,23 @@ if(isset($_POST["rating_data"]))
 			echo "Review updated successfully!";
 		}
 	}
+	//insert review
 	else{
 		$query = "INSERT INTO review (student_ID, material_ID, score, comment, created_datetime, updated_datetime) 
 		VALUES ('".$_POST['student_ID']."', ".$_POST['material_ID'].", ".$_POST['rating_data'].", '".$_POST['user_reviews']."', '".$currentDT."', '".$currentDT."')";
 
-	// $statement = $connect->prepare($query);
-
-	// $statement->execute($data);
-	if (mysqli_query($conn, $query)) {
-		echo "Thanks for your review!";
-	  } else {
-		echo "Error: " . $query . "<br>" . mysqli_error($conn);
-	  }
+		if (mysqli_query($conn, $query)) {
+			echo "Thanks for your review!";
+		} else {
+			echo "Error: " . $query . "<br>" . mysqli_error($conn);
+		}
 	}
-	
-
 }
 
+//reload review data
 if(isset($_POST["action"]))
 {
+	//Variables
 	$user_rating = 0;
 	$average_rating = 0;
 	$download_times = 0;
@@ -57,24 +57,27 @@ if(isset($_POST["action"]))
 	$one_star_review = 0;
 	$total_user_rating = 0;
 	$review_content = array();
-
 	
-	$query1 = "
-	SELECT * FROM review 
- 	WHERE material_ID = ".$_POST['material_ID']." AND student_ID = '".$_POST['student_ID']."'";
+	//extract user's review data
+	$query1 = "SELECT * FROM review WHERE material_ID = ".$_POST['material_ID']." AND student_ID = '".$_POST['student_ID']."'";
 	$result = mysqli_query($conn, $query1);
 
 	if (mysqli_num_rows($result) > 0)
 	{
 		$row = mysqli_fetch_array($result);
 
+		//Compound review data
 		$review_content[] = array(
 			'student_ID'	=>	$row["student_ID"],
-			'rating'			=>	$row["score"],
-			'user_review'		=>	$row["comment"],
+			'rating'		=>	$row["score"],
+			'user_review'	=>	$row["comment"],
 			'datetime'		=>	$row["updated_datetime"]
 		);
+
+		//User rating
 		$user_rating = $row["score"];
+
+		//Accumulate the amount for different score
 		if($row["score"] == '5')
 			{
 				$five_star_review++;
@@ -100,13 +103,14 @@ if(isset($_POST["action"]))
 				$one_star_review++;
 			}
 
+			//Accumulate the amount of review
 			$total_review++;
-
+			//Calculate the total rating
 			$total_user_rating = $total_user_rating + $row["score"];
 	}
 
+	//extract the others' review data
 	$query = "SELECT * FROM review 	WHERE material_ID = '".$_POST['material_ID']."' AND student_ID != '".$_POST['student_ID']."' ORDER BY review_id DESC";
-	
 	$result = mysqli_query($conn, $query);
 
 	if (mysqli_num_rows($result) > 0) {
@@ -114,11 +118,12 @@ if(isset($_POST["action"]))
 		while($row = mysqli_fetch_assoc($result)) {
 			$review_content[] = array(
 				'student_ID'	=>	$row["student_ID"],
-				'rating'			=>	$row["score"],
-				'user_review'		=>	$row["comment"],
+				'rating'		=>	$row["score"],
+				'user_review'	=>	$row["comment"],
 				'datetime'		=>	$row["updated_datetime"]
 			);
 
+			//Accumulate the amount for different score
 			if($row["score"] == '5')
 			{
 				$five_star_review++;
@@ -144,22 +149,25 @@ if(isset($_POST["action"]))
 				$one_star_review++;
 			}
 
+			//Accummulate the amount of review
 			$total_review++;
-
+			//Calculate the total rating
 			$total_user_rating = $total_user_rating + $row["score"];
 		}
 	}
 
+	//Calculate average rating
 	if($total_user_rating > 0)
 	{
 		$average_rating = $total_user_rating / $total_review;
 	}
 	
-
+	//Get the times of downloaded
 	$query_download = "SELECT * FROM download WHERE material_ID = '".$_POST['material_ID']."'";
 	$download = mysqli_query($conn, $query_download);
 	$download_times = mysqli_num_rows($download);
 
+	//Compound all the data into output
 	$output = array(
 		'average_rating'	=>	number_format($average_rating, 1),
 		'download_times'	=>	$download_times,
@@ -174,6 +182,5 @@ if(isset($_POST["action"]))
 	);
 
 	echo json_encode($output);
-
 }
 ?>

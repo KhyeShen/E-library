@@ -1,0 +1,6 @@
+<?php 
+$currency = "MYR";  
+
+define('STRIPE_API_KEY', 'sk_test_51HmWyTEYRt4577ibGiP7HcuM6niqmvZLTsgGkGGo6B1Jawtvm3nViYm6ZR0jIQ781wGOzsPj3DLxdwB5aNaI0rlu00P8wUny5e'); 
+define('STRIPE_PUBLISHABLE_KEY', 'pk_test_51HmWyTEYRt4577ib9CYthVwDdcU1N66PC2UYOBnHxwFxlFNhSerUGXIQ8uEoIwZT9bQHoNFr3wNjCl1DEw5YVoWC00pXPIqH8p');
+?>

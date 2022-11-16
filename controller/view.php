@@ -1,7 +1,10 @@
 <?php  
 session_start();
+
+//DB connection
 include('conn.php');
 
+//Get the material details that wanted to view
 if(!empty($_GET['materialID']))
 {
 	$material_ID = basename($_GET['materialID']);
