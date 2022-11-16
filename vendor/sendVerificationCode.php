@@ -59,8 +59,8 @@
     
     //$mail->SMTPDebug  = 0;  
     $mail->SMTPAuth   = TRUE;
-    $mail->SMTPSecure = "ssl";
-    $mail->Port       = 465;
+    $mail->SMTPSecure = "tls";
+    $mail->Port       = 587;
     $mail->Host       = "smtp.gmail.com";
     $mail->Username   = "scpgelibrary@gmail.com"; //sender mail(gmail)
     $mail->Password   = "aybbhanxxdgndsal"; //sender gmail password
@@ -78,7 +78,7 @@
       $_SESSION['send'] = "yes";
       header('location:../student/verification.php');
     } else {
-      echo '<script>alert("Fail to send email!")</script>';
+      echo '<script>alert("Fail to Resend OTP!")</script>';
     }
     $mail->smtpClose();
   }

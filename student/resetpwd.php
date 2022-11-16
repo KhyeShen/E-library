@@ -1,15 +1,15 @@
 <?php
 	session_start();
 
-  //Check if valid to reset password
-	if($_SESSION['task'] != 'resetpwd')
-	{
-		header('location:index.php');
-	}
-	unset($_SESSION['task']);
+  // //Check if valid to reset password
+	// if($_SESSION['task'] != 'resetpwd')
+	// {
+	// 	header('location:index.php');
+	// }
+	// unset($_SESSION['task']);
 
-  //DB connection
-	include('../controller/conn.php');
+  // //DB connection
+	// include('../controller/conn.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -29,8 +29,8 @@
   //submit student ID to verify
 	if(isset($_POST['confirm']))
 	{
-		$password	= $_POST['password'];
-		$conp		= $_POST['conp'];
+		$password	    = $_POST['password'];
+		$conp		      = $_POST['conp'];
 		$studentID 		= $_SESSION['studentID'];
     
 		if($password == $conp)
