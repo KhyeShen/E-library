@@ -119,7 +119,7 @@ include('../controller/conn.php');
                                         <td>
                                         <form action='../controller/manage_material.php' method='post'>
                                             <a class='btn btn-default fas fa-edit' href='update_form.php?material_ID=".$material['material_ID']."'></a>
-                                            <button type='submit' onclick='delete()' class='btn btn-default fas fa-trash-alt' name='delete' value='".$material['material_ID']."'></button>
+                                            <button type='submit' onclick='delete_material()' class='btn btn-default fas fa-trash-alt' name='delete' value='".$material['material_ID']."'></button>
                                         </form>
                                         </td>
                                     </tr>
@@ -157,7 +157,7 @@ include('../controller/conn.php');
         };
 
         //prompt confirmation box to delete material
-        function delete(){
+        function delete_material(){
             var delete_material = confirm('Are you sure you want to this material?');
             if(delete_material == false){
             event.preventDefault();

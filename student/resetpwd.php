@@ -1,15 +1,14 @@
 <?php
 	session_start();
+  
+  //Check if valid to reset password
+	if($_SESSION['task'] != 'resetpwd')
+	{
+		header('location:index.php');
+	}
 
-  // //Check if valid to reset password
-	// if($_SESSION['task'] != 'resetpwd')
-	// {
-	// 	header('location:index.php');
-	// }
-	// unset($_SESSION['task']);
-
-  // //DB connection
-	// include('../controller/conn.php');
+  //DB connection
+	include('../controller/conn.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,7 +40,7 @@
 			$hash = password_hash($conp, PASSWORD_DEFAULT);
 			
 			$sql = "update student set password='$hash',updated_datetime='$current' where student_ID ='$studentID'";
-	
+      
 			if(!mysqli_query($conn,$sql))
 			{
 			  echo '<script>alert("Reset Password Fail, please try again")</script>'; 
@@ -49,13 +48,16 @@
 			else if(mysqli_query($conn,$sql))
 			{
 				$_SESSION['message'] = 'Password has been reset';
-				session_destroy();
+				unset($_SESSION['tasl']);
  
 				if (isset($_COOKIE["email"]) AND isset($_COOKIE["password"])){
 					setcookie("email", '', time() - (3600));
 					setcookie("password", '', time() - (3600));
 				}
-				echo "<script>alert(Your Password Sucessfully Updated, Please Login Now');</script>";
+        echo '<script type="text/javascript">'; 
+        echo 'alert("Your Password Sucessfully Updated, Please Login Now!");'; 
+        echo 'window.location.href = "../student/index.php";';
+        echo '</script>';
 			}
 		}
 		

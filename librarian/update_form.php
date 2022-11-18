@@ -134,8 +134,8 @@ if(isset($_GET['material_ID'])){
                                         <td><a style='cursor:pointer;'>".$material['material_ID'].".pdf</a></td>
                                         <td>
                                         <form action='../controller/manage_material.php' method='post'>
-                                            <a class='btn btn-default fas fa-edit' href='update_form.php?material_ID=".$material['material_ID']."'></a>
-                                            <button type='submit' onclick='delete()' class='btn btn-default fas fa-trash-alt' name='delete' value='".$material['material_ID']."'></button>
+                                            <a class='btn btn-default fas fa-edit' href='update_form.php?material_ID='".$material['material_ID']."'></a>
+                                            <button type='submit' onclick='delete()' class='btn btn-default fas fa-trash-alt' name='delete' value=''".$material['material_ID']."></button>
                                         </form>
                                         </td>
                                     </tr>

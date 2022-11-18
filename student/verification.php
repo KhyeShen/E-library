@@ -46,7 +46,7 @@ if(isset($_POST['verify']))
 			header('location:index.php');
 		}
 	}
-	else
+	else if($_SESSION['otp'] != $otp)
 	{
 		echo '<script>alert("Invalid OTP Code")</script>'; 
 	}
@@ -61,7 +61,7 @@ if(isset($_POST['verify']))
 			<hr class="mb-3">
 			<label for="studentID"><b>OTP Code</b></label>
 			
-			<input class="form-control" id="otp"  type="password" name="otp" required><br/>
+			<input class="form-control" id="otp"  type="number" name="otp" required><br/>
 			<div class="row">
 				<div class="col-6" style="text-align:left;">
 					<input class="btn btn-primary" type="submit" id="verify" name="verify" value="Verify">
