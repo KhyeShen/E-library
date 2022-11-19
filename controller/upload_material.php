@@ -25,6 +25,10 @@
             $material_ID = 1;
             $flag   =   1;
 
+            //Current Date Time
+            date_default_timezone_set("Asia/Kuala_Lumpur");
+            $currentDT = date("Y-m-d h:i:s");
+
             //Determine the material ID for the material
             $result = mysqli_query($conn,"select * from `material` order by material_ID desc LIMIT 1");
             if (mysqli_num_rows($result) > 0) {
@@ -49,7 +53,7 @@
             $uploadfile =   new ImageUploadAndResize();
             $uploadfile->uploadMultiFiles('files', '../material/file', $material_ID, 0756);
             $sql = "INSERT INTO material (librarian_ID, material_title,author_name,publish_year,material_genre,page_num,cover_name,description,created_datetime,updated_datetime) 
-            VALUES (4, '".$title."', '".$author."', '".$publish_year."', '".$genre."', '".$page_num."', '".$cover_name."', '".$description."', now(), now())";
+            VALUES (4, '".$title."', '".$author."', '".$publish_year."', '".$genre."', '".$page_num."', '".$cover_name."', '".$description."', '".$currentDT."', '".$currentDT."')";
 
             //Check if upload successfull
             if ($conn->query($sql) === TRUE) {
