@@ -148,7 +148,7 @@ include('../controller/conn.php');
             var currentYear = (new Date()).getFullYear();
 
             //Loop and add the Year values to DropDownList.
-            for (var i = currentYear; i >= 1930 ; i--) {
+            for (var i = currentYear; i >= 1600 ; i--) {
                 var option = document.createElement("OPTION");
                 option.innerHTML = i;
                 option.value = i;
