@@ -24,7 +24,7 @@
             $publish_year = $_POST['publish_year'];
             $genre = $_POST['genre'];
             $page_num = $_POST['pages'];
-            $description = $_POST['description'];
+            $description = str_replace("'", "\'",$_POST['description']);
             $covername = implode($_FILES['cover']['name']);
             $extension = pathinfo($covername, PATHINFO_EXTENSION);
             $cover_name = "";
