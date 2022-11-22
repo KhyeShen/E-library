@@ -78,7 +78,7 @@ include('../controller/conn.php');
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>Kevin Anderson</h6>
-              <span>Administrator</span>
+              <span>Librarian</span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -112,26 +112,14 @@ include('../controller/conn.php');
 
   <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-        <a class="nav-link collapsed" href="dashboard.php">
-            <span>Dashboard</span>
-        </a>
-        </li><!-- End Dashboard Nav -->
-
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="transaction.php">
-            <span>Transaction</span>
+        <a class="nav-link collapsed" href="upload_form.php">
+            <span>Material</span>
         </a>
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
-        <a class="nav-link collapsed" href="subscription.php">
+        <a class="nav-link collapsed" href="subscription_list.php">
             <span>Subscription</span>
-        </a>
-        </li><!-- End Profile Page Nav -->
-
-        <li class="nav-item">
-        <a class="nav-link" href="manage_librarian.php">
-            <span>Librarian</span>
         </a>
         </li><!-- End Profile Page Nav -->
 
@@ -235,6 +223,7 @@ include('../controller/conn.php');
   <script src="../src/js/tinymce.min.js"></script>
   <script src="../src/js/validate.js"></script> -->
 
+  <script src="../src/js/bootstrap.bundle.min.js"></script> 
   <script>
         //prompt confirmation box to delete material
         function remove_librarian(){

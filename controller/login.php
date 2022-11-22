@@ -42,7 +42,7 @@
 				else 
 				{
 					echo '<script type="text/javascript">'; 
-					echo 'alert("Login Fail, Incorrect Password!");'; 
+					echo 'alert("Invalid Password!");'; 
 					echo 'window.location.href = "../student/index.php";';
 					echo '</script>';
 				}	

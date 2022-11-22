@@ -1,5 +1,4 @@
 <?php 
-session_start();
 // if (!isset($_SESSION['studentID']) ||(trim ($_SESSION['studentID']) == '') || $_SESSION['loginstatus'] != 'active') {
 // 	$_SESSION['message'] = 'Please Login!!';
 // 	header('location:loginpage.php');
@@ -25,46 +24,12 @@ if(isset($_GET['material_ID'])){
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" dir="ltr">
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Dashboard</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  
-  <!-- Favicons -->
-  <link href="../src/image/segi_logo.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="../src/css/bootstrap_dashboard.css" rel="stylesheet">
-  <link href="../src/css/bootstrap-icons.css" rel="stylesheet">
-  <!-- <link href="../src/css/boxicons.min.css" rel="stylesheet">
-  <link href="../src/css/quill.snow.css" rel="stylesheet">
-  <link href="../src/css/quill.bubble.css" rel="stylesheet">
-  <link href="../src/css/remixicon.css" rel="stylesheet">
-  <link href="../src/css/style.css" rel="stylesheet"> -->
-
-  
-  <!-- Template Main CSS File -->
-  <link href="../src/css/dashboard.css" rel="stylesheet">
-
-  
-  <!-- Font Awesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
-  <!-- datatables -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-
+    <meta charset="utf-8">
+    <title>Homepage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <!-- datatables -->
@@ -73,97 +38,11 @@ if(isset($_GET['material_ID'])){
     <script src="../src/js/jquery.dataTables.js"></script>    
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../src/css/bootstrap.min.css">
-  
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="../src/css/styles.css">
 </head>
-
 <body>
-
-  <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
-
-    <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
-            <img src="../src/image/segi_logo.png" alt="">
-            <span class="d-none d-lg-block">SCPG E-Library</span>
-        </a>
-        <i class="fas fa-bars toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
-
-
-    <nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center">
-
-        <li class="nav-item dropdown pe-3">
-
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <span class="d-none d-md-block dropdown-toggle ps-2">Admin</span>
-          </a><!-- End Profile Iamge Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Administrator</span>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                <span>Change Password</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
-                <span>Sign Out</span>
-              </a>
-            </li>
-
-          </ul><!-- End Profile Dropdown Items -->
-        </li><!-- End Profile Nav -->
-
-      </ul>
-    </nav><!-- End Icons Navigation -->
-
-  </header><!-- End Header -->
-
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
-
-  <ul class="sidebar-nav" id="sidebar-nav">
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="upload_form.php">
-            <span>Material</span>
-        </a>
-        </li><!-- End Profile Page Nav -->
-
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="subscription_list.php">
-            <span>Subscription</span>
-        </a>
-        </li><!-- End Profile Page Nav -->
-
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="manage_student.php">
-            <span>Student</span>
-        </a>
-        </li><!-- End Profile Page Nav -->  
-
-    </ul>
-
-  </aside><!-- End Sidebar-->
-
-  <main id="main" class="main">
-
-    <div class="pagetitle">
-      <h1>Material Management</h1>
-    </div><!-- End Page Title -->
-
-    <section class="section dashboard">
+    <div class="container" style="height: auto;">
         <div class="row">
             <div class="text-center" style="margin-bottom:20px;">
                     <b style="font-size: 28px;" >UPDATE MATERIAL FORM</b>
@@ -202,14 +81,11 @@ if(isset($_GET['material_ID'])){
                         <input class="form-control" type="text" name="description" placeholder="Description" style="margin-top: 3px;" value="<?php echo $description ?>" required>
                     </div>
                     <div class="row">
-                        <div class="col-md-2" style="padding:0;">
-                        <select id="ddlYears" name="publish_year" class="btn btn-secondary dropdown-toggle" style="border:1px solid grey;" required>
+                        <select id="ddlYears" name="publish_year" class="btn btn-secondary dropdown-toggle" style="border:1px solid grey;width:26%;" required>
                         <option value="">-YEARS-</option>
                         <option value="Unknown">Unknown</option>
                         </select>
-                        </div>
-                        <div class="col-md-3" style="padding:0;">
-                        <select id="type" name="genre" class="btn btn-secondary dropdown-toggle" style="border:1px solid grey;" required>
+                        <select id="type" name="genre" class="btn btn-secondary dropdown-toggle" style="border:1px solid grey;width:26%;" required>
                             <option value="">-GENRE-</option>
                             <option value="Horror">Horror</option>
                             <option value="Romance">Romance</option>
@@ -217,11 +93,9 @@ if(isset($_GET['material_ID'])){
                             <option value="Historical">Historical</option>
                             <option value="High Quality Material">High Quality Material</option>
                         </select>
-                        </div>
-                        <div class="col-7" style="padding:0;">
-                        <button class="btn btn-primary" onclick="window.location.href='upload_form.php';" style="padding-top: 5px;background: grey;float:right; margin-left:3px;">BACK</button>
-                        <button class="btn btn-primary" type="submit" name="update" value="<?php echo $material_ID; ?>" style="padding-top: 5px;background: blue;float:right;">UPDATE</button>
-                        </div>
+                        <button class="btn btn-primary" onclick="window.location.href='upload_form.php';" style="padding-top: 5px;background: #a31f37;float:right; margin-left:3px;">BACK</button>
+                        <button class="btn btn-primary" type="submit" name="update" value="<?php echo $material_ID; ?>" style="padding-top: 5px;background: #1aff1a;float:right;">UPDATE</button>
+                        
                     </div>
                 </div>
             </form>
@@ -229,7 +103,7 @@ if(isset($_GET['material_ID'])){
         <hr>
 
         <!-- material list -->
-        <div class="row" style="margin-top: 17px;background: #f1f7fc; margin:20px 0; padding:5px 5px;">
+        <div class="row" style="margin-top: 17px;background: #f1f7fc; margin:20px 0; padding:5px 5px;"">
             <div class="col">
                 <div class="table-responsive">
                     <h3>Material List</h3>
@@ -248,7 +122,7 @@ if(isset($_GET['material_ID'])){
                         </thead>
                         <tbody>
                         <?php
-                            $sql_material = "SELECT * FROM material ORDER BY material_ID ASC";
+                            $sql_material = "SELECT * FROM material ORDER BY material_ID DESC";
 
                             $query_material = mysqli_query($conn, $sql_material);
 
@@ -261,11 +135,11 @@ if(isset($_GET['material_ID'])){
                                         <td>".$material['publish_year']."</td>
                                         <td>".$material['material_genre']."</td>
                                         <td>".$material['page_num']."</td>
-                                        <td><a href='../controller/download.php?materialID=".$material['material_ID']."&title=".$material['material_title']."&librarian=yes'>".$material['material_ID'].".pdf</a></td>
+                                        <td><a style='cursor:pointer;'>".$material['material_ID'].".pdf</a></td>
                                         <td>
                                         <form action='../controller/manage_material.php' method='post'>
-                                            <a class='btn btn-default fas fa-edit' href='update_form.php?material_ID=".$material['material_ID']."'></a>
-                                            <button type='submit' onclick='delete_material()' class='btn btn-default fas fa-trash-alt' name='delete' value='".$material['material_ID']."'></button>
+                                            <a class='btn btn-default fas fa-edit' href='update_form.php?material_ID='".$material['material_ID']."'></a>
+                                            <button type='submit' onclick='delete_material()' class='btn btn-default fas fa-trash-alt' name='delete' value=''".$material['material_ID']."></button>
                                         </form>
                                         </td>
                                     </tr>
@@ -277,24 +151,8 @@ if(isset($_GET['material_ID'])){
                 </div>
             </div>
         </div>
-    </section>
-
-  </main><!-- End #main -->
-
-  <!-- Vendor JS Files -->
-  <!-- <script src="../src/js/bootstrap.bundle.min.js"></script>
-  <script src="../src/js/apexcharts.min.js"></script>
-  <script src="../src/js/chart.min.js"></script>
-  <script src="../src/js/echarts.min.js"></script>
-  <script src="../src/js/quill.min.js"></script>
-  <script src="../src/js/simple-datatables.js"></script>
-  <script src="../src/js/tinymce.min.js"></script>
-  <script src="../src/js/validate.js"></script> -->
-
-  <script src="../src/js/bootstrap.bundle.min.js"></script> 
-  <!-- Cover Image Preview JS -->
-  <script src="../src/js/cover_preview.js"></script>
-  <script>
+    </div>
+    <script>
         //material list
         let material_list = new DataTable('#material_list', {
             pageLength : 5,
@@ -326,10 +184,7 @@ if(isset($_GET['material_ID'])){
             }
         }
     </script>
-
-  <!-- Template Main JS File -->
-  <script src="../src/js/main.js"></script>
-
+    <!-- Cover Image Preview JS -->
+    <script src="../src/js/cover_preview.js"></script>
 </body>
-
 </html>

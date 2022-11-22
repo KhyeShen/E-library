@@ -111,6 +111,10 @@ $count = mysqli_num_rows($pageresult);
                     if($last_five>=$number_of_pages)
                     {
                         $first_num=$number_of_pages-4;
+                        if($first_num<=0)
+                        {
+                            $first_num = 1;
+                        }
                         for ($page_num=$first_num;$page_num<=$number_of_pages;$page_num++)
                         {
                             if($page_num!=0)

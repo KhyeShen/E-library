@@ -8,11 +8,6 @@ if (!isset($_SESSION['studentID']) ||(trim ($_SESSION['studentID']) == '') || $_
 	header('location:index.php');
 	exit();
 }
-
-if(isset($_SESSION['message']))
-{
-    echo "<script>alert('".$_SESSION['message']."');</script>";
-}
 //DB connection
 include('../controller/conn.php');
 

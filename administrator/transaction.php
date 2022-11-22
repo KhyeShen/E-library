@@ -161,56 +161,31 @@ include('../controller/conn.php');
                     <table id="student_list" class="table table-bordered table-striped" style="width:100%">
                         <thead>
                             <tr>
+                                <th>Payment ID</th>
                                 <th>Student ID</th>
-                                <th>Student Name</th>
-                                <th>Email Address</th>
-                                <th>Course Name</th>
-                                <th>Gender</th>
-                                <th>Age</th>
+                                <th>Stripe Subscription ID</th>
+                                <th>Amount</th>
+                                <th>Date Time</th>
                                 <th>Status</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                         <?php
-                            $sql_material = "SELECT * FROM student ORDER BY student_ID ASC";
+                            $sql_material = "SELECT * FROM payment ORDER BY payment_ID ASC";
 
                             $query_material = mysqli_query($conn, $sql_material);
 
                             while ($material = mysqli_fetch_array($query_material)) {
-                                if($material['gender']=1)
-                                { $gender = "Male"; }
-                                else
-                                { $gender = "Female"; }
-
-                                
                                 echo "
                                     <tr>
+                                        <td>".$material['payment_ID']."</td>
                                         <td>".$material['student_ID']."</td>
-                                        <td>".$material['student_name']."</td>
-                                        <td>".$material['email']."</td>
-                                        <td>".$material['course_name']."</td>
-                                        <td>".$gender."</td>
-                                        <td>".$material['age']."</td>
+                                        <td>".$material['stripe_subscription_ID']."</td>
+                                        <td>".$material['amount']."</td>
+                                        <td>".$material['payment_datetime']."</td>
                                         <td>".$material['status']."</td>
-                                        <td>
-                                        <form action='../controller/manage_material.php' method='post' style='width: 80px;'>";
-                                        if($material['status']=="Frozen")
-                                        { 
-                                            echo  "<button type='submit' onclick='remove_librarian()' class='btn btn-default fas fa-check' name='delete' value='' style='background-color:#00ff00;'></button>
-                                            </form>
-                                            </td>
                                             </tr>
                                             ";
-                                        }
-                                        else if($material['status']=="Active")
-                                        { 
-                                            echo "<button type='submit' onclick='remove_librarian()' class='btn btn-default fas fa-ban' name='delete' value='' style='background-color:red;'></button>
-                                            </form>
-                                            </td>
-                                            </tr>
-                                            ";
-                                        }
                                         
                             }
                         ?>

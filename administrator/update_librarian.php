@@ -8,6 +8,18 @@ session_start();
 
 //DB connection
 include('../controller/conn.php');
+
+//Get material's data
+if(isset($_GET['librarian_ID'])){
+    $librarian_ID = $_GET['librarian_ID'];
+    $update = mysqli_query($conn,"select * from `librarian` where librarian_ID=".$librarian_ID);
+    while ($update_item = mysqli_fetch_array($update)) {
+        $librarian_name = $update_item['librarian_name'];
+        $librarian_email = $update_item['email'];
+        $hash = $update_item['password'];
+        $password = password_hash($hash, PASSWORD_DEFAULT);
+    };
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +32,11 @@ include('../controller/conn.php');
   <meta content="" name="description">
   <meta content="" name="keywords">
 
-  
+  <!-- datatables -->
+  <link rel="stylesheet" href="../src/css/jquery.dataTables.css">
+    <script src="../src/js/jquery-3.5.1.js"></script>
+    <script src="../src/js/jquery.dataTables.js"></script>  
+
   <!-- Favicons -->
   <link href="../src/image/segi_logo.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -38,18 +54,11 @@ include('../controller/conn.php');
   <link href="../src/css/remixicon.css" rel="stylesheet">
   <link href="../src/css/style.css" rel="stylesheet"> -->
 
-  
   <!-- Template Main CSS File -->
   <link href="../src/css/dashboard.css" rel="stylesheet">
 
-  
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
-  <!-- datatables -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-  
 </head>
 
 <body>
@@ -110,7 +119,7 @@ include('../controller/conn.php');
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
 
-  <ul class="sidebar-nav" id="sidebar-nav">
+    <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
         <a class="nav-link collapsed" href="dashboard.php">
             <span>Dashboard</span>
@@ -156,66 +165,76 @@ include('../controller/conn.php');
 
         <!-- Left side columns -->
         <div class="col-lg-12">
+          <div class="row">
+            <form action="../controller/librarian_control.php" method="post" enctype="multipart/form-data">
+                <div class="" style="margin-top: 17px;">
+                    <b>Librarian Name</b>
+                    <div class="col">
+                        <input class="form-control" type="text" name="librarian_name" placeholder="Librarian Name" value="<?php echo $librarian_name ?>" style="margin-top: 3px;" required>
+                    </div>
+                </div>
+                <div class="" style="margin-top: 17px;">
+                    <b>Email Address</b>
+                    <div class="col">
+                        <input class="form-control" type="text" name="librarian_email" placeholder="Librarian Email" value="<?php echo $librarian_email ?>" style="margin-top: 3px;" required>
+                    </div>
+                </div>
+                <div class="" style="margin-top: 17px;">
+                    <b>Password</b>
+                    <div class="col">
+                        <input class="form-control" type="password" name="password" placeholder="Password" style="margin-top: 3px;" required>
+                    </div>
+                </div>
+                <div class="" style="margin-top: 14px; text-align:right;">
+                    <div class="col text-end" style="padding-top: 11px;">
+                        <button class="btn btn-primary" onclick="window.location.href='manage_librarian.php';" style="padding-top: 5px;background:black;float:right; margin-left:3px;">BACK</button>
+                        <button class="btn btn-primary" type="submit" name="update" value="<?php echo $librarian_ID; ?>" style="padding-top: 5px;background: blue;float:right;">UPDATE</button>
+                    </div>
+                </div>
+            </form>
+          </div>
+          
+          <hr>
+
           <!-- librarian list -->
-          <div class="table-responsive">
-                    <table id="student_list" class="table table-bordered table-striped" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Student ID</th>
-                                <th>Student Name</th>
-                                <th>Email Address</th>
-                                <th>Course Name</th>
-                                <th>Gender</th>
-                                <th>Age</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                            $sql_material = "SELECT * FROM student ORDER BY student_ID ASC";
+          <div class="row" style="background: #f1f7fc; margin:20px 0; padding:5px 5px;">
+                <div class="col">
+                    <div class="table-responsive">
+                        <h3 style="margin-top:0;">Librarian List</h3>
+                        <table id="librarian_list" class="table table-bordered table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Librarian ID</th>
+                                    <th>Librarian Name</th>
+                                    <th>Email Address</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    $sql_material = "SELECT * FROM librarian ORDER BY librarian_ID ASC";
 
-                            $query_material = mysqli_query($conn, $sql_material);
+                                    $query_material = mysqli_query($conn, $sql_material);
 
-                            while ($material = mysqli_fetch_array($query_material)) {
-                                if($material['gender']=1)
-                                { $gender = "Male"; }
-                                else
-                                { $gender = "Female"; }
-
-                                
-                                echo "
-                                    <tr>
-                                        <td>".$material['student_ID']."</td>
-                                        <td>".$material['student_name']."</td>
-                                        <td>".$material['email']."</td>
-                                        <td>".$material['course_name']."</td>
-                                        <td>".$gender."</td>
-                                        <td>".$material['age']."</td>
-                                        <td>".$material['status']."</td>
-                                        <td>
-                                        <form action='../controller/manage_material.php' method='post' style='width: 80px;'>";
-                                        if($material['status']=="Frozen")
-                                        { 
-                                            echo  "<button type='submit' onclick='remove_librarian()' class='btn btn-default fas fa-check' name='delete' value='' style='background-color:#00ff00;'></button>
-                                            </form>
-                                            </td>
+                                    while ($material = mysqli_fetch_array($query_material)) {
+                                        echo "
+                                            <tr>
+                                            <td style='width: 130px;'>".$material['librarian_ID']."</td>
+                                                <td>".$material['librarian_name']."</td>
+                                                <td>".$material['email']."</td>
+                                                <td style='width: 50px; padding:4px 0px 0px 0px;'>
+                                                <form action='../controller/manage_material.php' method='post'>
+                                                    <a class='btn btn-default fas fa-edit' href='update_librarian.php?librarian_ID=".$material['librarian_ID']."'></a>
+                                                    <button type='submit' onclick='remove_librarian()' class='btn btn-default fas fa-trash-alt' name='delete' value='".$material['librarian_ID']."'></button>
+                                                </form>
+                                                </td>
                                             </tr>
-                                            ";
-                                        }
-                                        else if($material['status']=="Active")
-                                        { 
-                                            echo "<button type='submit' onclick='remove_librarian()' class='btn btn-default fas fa-ban' name='delete' value='' style='background-color:red;'></button>
-                                            </form>
-                                            </td>
-                                            </tr>
-                                            ";
-                                        }
-                                        
-                            }
-                        ?>
-                        </tbody>
-                    </table>
+                                        ";
+                                    }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div><!-- End Left side columns -->
@@ -236,16 +255,8 @@ include('../controller/conn.php');
   <script src="../src/js/validate.js"></script> -->
 
   <script>
-        //prompt confirmation box to delete material
-        function remove_librarian(){
-                var delete_material = confirm('Are you sure you want to remove this librarian?');
-                if(delete_material == false){
-                event.preventDefault();
-                }
-            }
-
         //librarian list
-        let student_list = new DataTable('#student_list', {
+        let student_list = new DataTable('#librarian_list', {
             pageLength : 5,
             lengthMenu: [[5, 10, 20], [5, 10, 20]]
         });
