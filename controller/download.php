@@ -21,36 +21,38 @@ if(!empty($_GET['materialID']) && !$_GET['librarian'])
         {
             echo '<script type="text/javascript">'; 
             echo 'alert("Please subscribe premium plan to download High Quality Material.");'; 
-            echo 'window.location.href = "../student/index.php";';
+            echo 'history.back();';
             echo '</script>';
         }
     }
+    else
+    {
+        if(!empty($file) && file_exists($filepath)){
 
-	if(!empty($file) && file_exists($filepath)){
+            //Define Headers
+            header("Cache-Control: public");
+            header("Content-Description: FIle Transfer");
+            header("Content-Disposition: attachment; filename=$filename");
+            header("Content-Type: application/zip");
+            header("Content-Transfer-Emcoding: binary");
 
-        //Define Headers
-		header("Cache-Control: public");
-		header("Content-Description: FIle Transfer");
-		header("Content-Disposition: attachment; filename=$filename");
-		header("Content-Type: application/zip");
-		header("Content-Transfer-Emcoding: binary");
-
-        //Download material file
-		$download = readfile($filepath);
-        if($download == true)
-        {
-            $query = "INSERT INTO download (student_ID, material_ID, datetime) 
-		    VALUES ('".$_SESSION['studentID']."', ".$material_ID.", '".$currentDT."')";
-            if (mysqli_query($conn, $query)) {
-                echo "Download Complete!";
-              } else {
-                echo "Error: " . $query . "<br>" . mysqli_error($conn);
-              }
+            //Download material file
+            $download = readfile($filepath);
+            if($download == true)
+            {
+                $query = "INSERT INTO download (student_ID, material_ID, datetime) 
+                VALUES ('".$_SESSION['studentID']."', ".$material_ID.", '".$currentDT."')";
+                if (mysqli_query($conn, $query)) {
+                    echo "Download Complete!";
+                } else {
+                    echo "Error: " . $query . "<br>" . mysqli_error($conn);
+                }
+            }
         }
-	}
-    else{
-        $_SESSION['message'] = "Sorry, the file is corrupted.";
-        header('location:../student/material_details.php?material_ID='.$material_ID);
+        else{
+            $_SESSION['message'] = "Sorry, the file is corrupted.";
+            header('location:../student/material_details.php?material_ID='.$material_ID);
+        }
     }
 }
 

@@ -20,16 +20,18 @@ if(!empty($_GET['materialID']))
         {
             echo '<script type="text/javascript">'; 
             echo 'alert("Please subscribe premium plan to access High Quality Material.");'; 
-            echo 'window.location.href = "../student/index.php";';
+            echo 'history.back();';
             echo '</script>';
         }
     }
-
-	if(!empty($file) && file_exists($filepath)){
-        header('location:../material/file/'.$material_ID.'.pdf');
-	}
-    else{
-        $_SESSION['message'] = "Sorry, the file is corrupted.";
-        header('location:../student/material_details.php?material_ID='.$material_ID);
+    else
+    {
+        if(!empty($file) && file_exists($filepath)){
+            header('location:../material/file/'.$material_ID.'.pdf');
+        }
+        else{
+            $_SESSION['message'] = "Sorry, the file is corrupted.";
+            header('location:../student/material_details.php?material_ID='.$material_ID);
+        }
     }
 }
