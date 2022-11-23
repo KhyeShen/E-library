@@ -13,8 +13,8 @@
         if(!empty(array_filter($_FILES['files']['name'])))
         {
             $flag   =   0;
-            $title = $_POST['material_title'];
-            $author = $_POST['author'];
+            $title = str_replace("'", "\'",$_POST['material_title']);
+            $author = str_replace("'", "\'",$_POST['author']);
             $publish_year = $_POST['publish_year'];
             $genre = $_POST['genre'];
             $page_num = $_POST['pages'];
