@@ -12,6 +12,20 @@ if(!empty($_GET['materialID']) && !$_GET['librarian'])
     $file = $material_ID.'.pdf';
 	$filepath = '../material/file/' . $file;
     $filename = $_GET['title'].'.pdf';
+
+    //Check if High Quality Material
+    $genre_sql = mysqli_query($conn,"SELECT * from `material` WHERE material_ID = '".$material_ID."'");
+    if (mysqli_num_rows($genre_sql) > 0) {
+        $genre = mysqli_fetch_assoc($genre_sql); 
+        if($genre['material_genre'] == "High Quality Material")
+        {
+            echo '<script type="text/javascript">'; 
+            echo 'alert("Please subscribe premium plan to download High Quality Material.");'; 
+            echo 'window.location.href = "../student/index.php";';
+            echo '</script>';
+        }
+    }
+
 	if(!empty($file) && file_exists($filepath)){
 
         //Define Headers

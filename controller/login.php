@@ -31,30 +31,32 @@
 					echo 'window.location.href = "../student/index.php";';
 					echo '</script>';
 				}
-
-				if(password_verify($password, $hashed_pass)) 
+				else
 				{
-					$_SESSION['studentID'] 		= $row['student_ID'];
-					$_SESSION['student_name'] 	= $row['student_name'];
-					$_SESSION['student_email'] 	= $row['email'];
-					$_SESSION['loginstatus'] 	= "active"; 
-
-					if(isset($_SESSION['page']) && $_SESSION['page'] != "")
+					if(password_verify($password, $hashed_pass)) 
 					{
-						header("Location: ../student/".$_SESSION['page']);
+						$_SESSION['studentID'] 		= $row['student_ID'];
+						$_SESSION['student_name'] 	= $row['student_name'];
+						$_SESSION['student_email'] 	= $row['email'];
+						$_SESSION['loginstatus'] 	= "active"; 
+
+						if(isset($_SESSION['page']) && $_SESSION['page'] != "")
+						{
+							header("Location: ../student/".$_SESSION['page']);
+						}
+						else{
+							header("Location: ../student/home.php");
+							echo '<script>alert("Welcome")</script>';
+						}
 					}
-					else{
-						header("Location: ../student/home.php");
-						echo '<script>alert("Welcome")</script>';
-					}
+					else 
+					{
+						echo '<script type="text/javascript">'; 
+						echo 'alert("Invalid Password!");'; 
+						echo 'window.location.href = "../student/index.php";';
+						echo '</script>';
+					}	
 				}
-				else 
-				{
-					echo '<script type="text/javascript">'; 
-					echo 'alert("Invalid Password!");'; 
-					echo 'window.location.href = "../student/index.php";';
-					echo '</script>';
-				}	
 			}
 			else if(mysqli_num_rows($query) == 0){
 				echo '<script type="text/javascript">'; 
