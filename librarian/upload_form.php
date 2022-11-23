@@ -167,6 +167,8 @@ include('../controller/conn.php');
                             <option value="">-GENRE-</option>
                             <option value="Horror">Horror</option>
                             <option value="Romance">Romance</option>
+                            <option value="Horror">Fantasy</option>
+                            <option value="Romance">Historical</option>
                             <option value="High Quality Material">High Quality Material</option>
                         </select>
                         </div>
