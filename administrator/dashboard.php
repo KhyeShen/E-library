@@ -62,11 +62,10 @@ $historical_download = mysqli_num_rows($historical_download_sql);
 $hqm_download = mysqli_num_rows($hqm_download_sql);
 
 //Student Pie Chart
-$subscribed_sql = mysqli_query($conn,"select * from subscription where subscription = 1");
+$subscribed_sql = mysqli_query($conn,"select * from student where subscription = 1");
 $subscribed = mysqli_num_rows($subscribed_sql);
-$unsubscribed_sql = mysqli_query($conn,"select * from subscription where subscription = 0");
+$unsubscribed_sql = mysqli_query($conn,"select * from student where subscription = 0");
 $unsubscribed = mysqli_num_rows($unsubscribed_sql);
-$unsubscribe = $student - $subscribed;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -349,7 +348,7 @@ $unsubscribe = $student - $subscribed;
       var data = google.visualization.arrayToDataTable([
         ['Task', 'Hours per Day'],
         ['Subscribed',     <?php echo json_encode($subscribed); ?>],
-        ['Unsubscribed',    <?php echo json_encode($unsubscribe); ?>]
+        ['Unsubscribed',    <?php echo json_encode($unsubscribed); ?>]
       ]);
 
       var options = {
