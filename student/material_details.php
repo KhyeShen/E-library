@@ -70,7 +70,7 @@ if (mysqli_num_rows($review) != 0)
           </div>
           <div class="col-md-3" style="text-align:center; padding-bottom:20px;">
             <div class="product-image">
-                <img src="../material/cover/<?php echo $cover_name; ?>" alt="" class="agent-avatar img-fluid" style="height:330px;width: 220px;">
+                <img src="../material/cover/<?php echo $cover_name; ?>" onerror=this.src="../src/image/HQM.jpg" alt="" class="agent-avatar img-fluid" style="height:330px;width: 220px;">
             </div>
             <b id="average_score"></b>&nbsp;<i class="fas fa-star" style="color:#e6e600;">&nbsp;&nbsp;</i>
             <b id="download_times"></b>&nbsp;<i class="fas fa-cloud-download-alt" ></i>

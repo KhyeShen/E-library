@@ -80,7 +80,7 @@ $count = mysqli_num_rows($pageresult);
                 <div class="" style="margin-bottom:15px;">
                     <div class="product-image" style="height: 459px;">
                         <a href="material_details.php?material_ID=<?php echo $row['material_ID'];?>" target="_blank">
-                            <img class="product-thumb" src="../material/cover/<?php echo $row['cover_name'];?>" alt="">
+                            <img class="product-thumb" src="../material/cover/<?php echo $row['cover_name'];?>" onerror=this.src="../src/image/HQM.jpg" alt="">
                         </a>
                     </div>
                     <div class="product-info">

@@ -68,15 +68,6 @@ $trending = mysqli_query($conn,"select * from `material` INNER JOIN download ON 
                 {
                     $average_rating = $total_user_rating / $total_review;
                 }
-
-                if($row_recent['material_genre'] = "High Quality Material")
-                {
-                    $cover_name = "HQM.jpg";
-                }
-                else
-                {
-                    $cover_name = $row['cover_name'];
-                }
                 $query_download = "SELECT * FROM download WHERE material_ID = '".$row_recent['material_ID']."'";
                 $download = mysqli_query($conn, $query_download);
                 $download_times = mysqli_num_rows($download);
@@ -86,7 +77,7 @@ $trending = mysqli_query($conn,"select * from `material` INNER JOIN download ON 
             <div class="product-card <?php echo $actives;?>">
                 <div class="product-image" style="height:375px;">
                     <a href="material_details.php?material_ID=<?php echo $row_recent['material_ID']; ?>" target="_blank">
-                    <img class="product-thumb" src="../material/cover/<?php echo $cover_name;?>" onerror=this.src="../src/image/placeholder.jpg" alt="">
+                    <img class="product-thumb" src="../material/cover/<?php echo $cover_name;?>" onerror=this.src="../src/image/HQM.jpg" alt="">
                     </a>
                 </div>
                 <div class="product-info">
@@ -147,7 +138,7 @@ $trending = mysqli_query($conn,"select * from `material` INNER JOIN download ON 
             <div class="product-card <?php echo $actives;?>">
                 <div class="product-image" style="height:375px;">
                     <a href="material_details.php?material_ID=<?php echo $row_trending['material_ID']; ?>" target="_blank">
-                        <img class="product-thumb" src="../material/cover/<?php echo $row_trending['cover_name'];?>" onerror=this.src="../src/image/placeholder.jpg" alt="">
+                        <img class="product-thumb" src="../material/cover/<?php echo $row_trending['cover_name'];?>" onerror=this.src="../src/image/HQM.jpg" alt="">
                     </a>
                 </div>
                 <div class="product-info">
