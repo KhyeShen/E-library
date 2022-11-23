@@ -14,7 +14,7 @@
 			$password 	= $_POST['password'];
 			
 			//Select student's data
-			$query = mysqli_query($conn,"select * from `admin` where email='$email'");
+			$query = mysqli_query($conn,"select * from `librarian` where email='$email'");
 			
 			//Verify if student exist
 			if (mysqli_num_rows($query) != 0)
@@ -25,26 +25,25 @@
 				
 				if(password_verify($password, $hashed_pass)) 
 				{
-					$_SESSION['admin_email'] 		= $row['email'];
-					$_SESSION['admin_name'] 	= $row['admin_name'];
-					$_SESSION['admin_ID'] 	= $row['admin_ID'];
-					$_SESSION['loginstatus'] 	= "active"; 
+					$_SESSION['librarian_email'] 	        = $row['email'];
+					$_SESSION['librarian_name'] 	        = $row['librarian_name'];
+					$_SESSION['librarian_ID'] 	            = $row['librarian_ID'];
+					$_SESSION['librarian_loginstatus'] 	    = "active"; 
 
-					header("Location: ../administrator/dashboard.php");
-					echo '<script>alert("Welcome")</script>';
+					header("Location: ../librarian/upload_form.php");
 				}
 				else 
 				{
 					echo '<script type="text/javascript">'; 
-					echo 'alert("Invalid Email Address or Invalid Password!");'; 
-					echo 'window.location.href = "../administrator/index.php";';
+					echo 'alert("Invalid Password!");'; 
+					echo 'window.location.href = "../librarian/index.php";';
 					echo '</script>';
 				}	
 			}
 			else{
 				echo '<script type="text/javascript">'; 
 				echo 'alert("Invalid Email Address or Invalid Password!");'; 
-				echo 'window.location.href = "../administrator/index.php";';
+				echo 'window.location.href = "../librarian/index.php";';
 				echo '</script>';
 			}
 		}

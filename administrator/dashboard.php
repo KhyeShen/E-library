@@ -14,11 +14,11 @@ date_default_timezone_set("Asia/Kuala_Lumpur");
 $current_year = date("Y");
 
 //Monthly Sales
-$jan_sql = mysqli_query($conn,"select * from payment WHERE MONTH(payment_datetime) = 1 and YEAR(payment_datetime) = $current_year");
-$feb_sql = mysqli_query($conn,"select * from payment WHERE MONTH(payment_datetime) = 2 and YEAR(payment_datetime) = $current_year");
-$mar_sql = mysqli_query($conn,"select * from payment WHERE MONTH(payment_datetime) = 3 and YEAR(payment_datetime) = $current_year");
+$jan_sql  = mysqli_query($conn,"select * from payment WHERE MONTH(payment_datetime) = 1 and YEAR(payment_datetime) = $current_year");
+$feb_sql  = mysqli_query($conn,"select * from payment WHERE MONTH(payment_datetime) = 2 and YEAR(payment_datetime) = $current_year");
+$mar_sql  = mysqli_query($conn,"select * from payment WHERE MONTH(payment_datetime) = 3 and YEAR(payment_datetime) = $current_year");
 $april_sql = mysqli_query($conn,"select * from payment WHERE MONTH(payment_datetime) = 4 and YEAR(payment_datetime) = $current_year");
-$may_sql = mysqli_query($conn,"select * from payment WHERE MONTH(payment_datetime) = 5 and YEAR(payment_datetime) = $current_year");
+$may_sql  = mysqli_query($conn,"select * from payment WHERE MONTH(payment_datetime) = 5 and YEAR(payment_datetime) = $current_year");
 $june_sql = mysqli_query($conn,"select * from payment WHERE MONTH(payment_datetime) = 6 and YEAR(payment_datetime) = $current_year");
 $july_sql = mysqli_query($conn,"select * from payment WHERE MONTH(payment_datetime) = 7 and YEAR(payment_datetime) = $current_year");
 $aug_sql = mysqli_query($conn,"select * from payment WHERE MONTH(payment_datetime) = 8 and YEAR(payment_datetime) = $current_year");
@@ -38,6 +38,7 @@ $sep_sales = mysqli_num_rows($sep_sql);
 $oct_sales = mysqli_num_rows($oct_sql);
 $nov_sales = mysqli_num_rows($nov_sql);
 $dec_sales = mysqli_num_rows($dec_sql);
+
 //Total of *
 $download_sql = mysqli_query($conn,"select * from download");
 $download = mysqli_num_rows($download_sql);
@@ -69,59 +70,45 @@ $unsubscribe = $student - $subscribed;
 <html lang="en">
 
 <head>
+  <title>SCPG E-library</title>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Dashboard</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
-  <!-- Favicons -->
+  <!-- Tab icon -->
   <link href="../src/image/segi_logo.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
+  <!-- Bootstrap CSS -->
   <link href="../src/css/bootstrap_dashboard.css" rel="stylesheet">
-  <link href="../src/css/bootstrap-icons.css" rel="stylesheet">
-  <link href="../src/css/boxicons.min.css" rel="stylesheet">
-  <link href="../src/css/quill.snow.css" rel="stylesheet">
-  <link href="../src/css/quill.bubble.css" rel="stylesheet">
-  <link href="../src/css/remixicon.css" rel="stylesheet">
-  <link href="../src/css/style.css" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
+  <!-- Dashboard CSS -->
   <link href="../src/css/dashboard.css" rel="stylesheet">
-
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
 </head>
 
 <body>
-
-  <!-- ======= Header ======= -->
+  <!-- Header -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
+    <!-- Logo -->
     <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
+        <a href="dashboard.php" class="logo d-flex align-items-center">
             <img src="../src/image/segi_logo.png" alt="">
             <span class="d-none d-lg-block">SCPG E-Library</span>
         </a>
         <i class="fas fa-bars toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
+    </div>
 
-
+    <!-- Dropdown Menu -->
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-
         <li class="nav-item dropdown pe-3">
-
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <span class="d-none d-md-block dropdown-toggle ps-2">Admin</span>
-          </a><!-- End Profile Iamge Icon -->
+          </a>
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
@@ -147,67 +134,63 @@ $unsubscribe = $student - $subscribed;
               </a>
             </li>
 
-          </ul><!-- End Profile Dropdown Items -->
-        </li><!-- End Profile Nav -->
-
+          </ul>
+        </li>
       </ul>
-    </nav><!-- End Icons Navigation -->
+    </nav>
 
-  </header><!-- End Header -->
+  </header>
 
-  <!-- ======= Sidebar ======= -->
+  <!-- Nav -->
   <aside id="sidebar" class="sidebar">
-
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
         <a class="nav-link " href="dashboard.php">
           <span>Dashboard</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="transaction.php">
-          <span>Transaction</span>
+        <a class="nav-link collapsed" href="payment.php">
+          <span>Payment</span>
         </a>
-      </li><!-- End Profile Page Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="subscription.php">
           <span>Subscription</span>
         </a>
-      </li><!-- End Profile Page Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="manage_librarian.php">
           <span>Librarian</span>
         </a>
-      </li><!-- End Profile Page Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="manage_student.php">
           <span>Student</span>
         </a>
-      </li><!-- End Profile Page Nav -->
+      </li>
     </ul>
+  </aside>
 
-  </aside><!-- End Sidebar-->
-
+  <!-- Main Contents -->
   <main id="main" class="main">
 
     <div class="pagetitle">
       <h1>Dashboard</h1>
       <nav>
       </nav>
-    </div><!-- End Page Title -->
+    </div>
 
     <section class="section dashboard">
-    <div class="row">
-      <!-- Left side columns -->
-      <div class="col-lg-12">
+      <div class="row">
+        <div class="col-lg-12">
           <div class="row">
-
-            <!-- Sales Card -->
+            <!-- Total Download Times -->
             <div class="col-xxl-3 col-md-6">
               <div class="card info-card sales-card">
                 <div class="card-body">
@@ -219,9 +202,9 @@ $unsubscribe = $student - $subscribed;
                   </div>
                 </div>
               </div>
-            </div><!-- End Sales Card -->
+            </div>
 
-            <!-- Sales Card -->
+            <!-- Total Reviews -->
             <div class="col-xxl-3 col-md-6">
               <div class="card info-card sales-card">
                 <div class="card-body">
@@ -233,9 +216,9 @@ $unsubscribe = $student - $subscribed;
                   </div>
                 </div>
               </div>
-            </div><!-- End Sales Card -->
+            </div>
 
-            <!-- Sales Card -->
+            <!-- Total Subscriptions -->
             <div class="col-xxl-3 col-md-6">
               <div class="card info-card sales-card">
                 <div class="card-body">
@@ -247,8 +230,9 @@ $unsubscribe = $student - $subscribed;
                   </div>
                 </div>
               </div>
-            </div><!-- End Sales Card -->
-            <!-- Sales Card -->
+            </div>
+
+            <!-- Total Students -->
             <div class="col-xxl-3 col-md-6">
               <div class="card info-card sales-card">
                 <div class="card-body">
@@ -260,32 +244,31 @@ $unsubscribe = $student - $subscribed;
                   </div>
                 </div>
               </div>
-            </div><!-- End Sales Card -->
+            </div>
           </div>
-      </div>
-    </div>  
-        <div class="row">
-            <!-- Sales Card -->
-            <div class="col-xxl-4">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Data Comparison</h5>
-
-                  <!-- Pie Chart -->
-                  <!-- End Pie CHart -->
-
-                  <div id="piechart1"></div>
-                  <div id="piechart2"></div>
-                </div>
-              </div>
-            </div><!-- End Sales Card -->
-
-            <div class="col-lg-8">
+        </div>
+      </div>  
+      <div class="row">
+        <!-- Pie Chart -->
+        <div class="col-xxl-4">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Monthly Sales</h5>
+              <h5 class="card-title">Data Comparison</h5>
+              <!-- Download Times Pie Chart -->
+              <div id="download_piechart"></div>
+              <!-- Student by Subscription Pie Chart -->
+              <div id="student_subscription_piechart"></div>
+            </div>
+          </div>
+        </div>
 
-              <!-- Bar Chart -->
+        <!-- Bar Chart -->
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Monthly Revenue</h5>
+
+              <!-- Monthly Revenue Bar Chart -->
               <div id="barChart"></div>
 
               <script>
@@ -318,102 +301,64 @@ $unsubscribe = $student - $subscribed;
                   }).render();
                 });
               </script>
-              <!-- End Bar Chart -->
-
             </div>
           </div>
         </div>
-            
-        </div><!-- End Left side columns -->
-
-        
+      </div>
     </section>
+  </main>
 
-  </main><!-- End #main -->
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
+  <!-- Bar Chart JS Files -->
   <script src="../src/js/apexcharts.min.js"></script>
+  <!-- Bootstrap JS Files -->
   <script src="../src/js/bootstrap.bundle.min.js"></script> 
-  <!-- Template Main JS File -->
+  <!-- UI JS File -->
   <script src="../src/js/main.js"></script>
-
+  <!-- Google Pie Chart JS File -->
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Horror',     <?php echo json_encode($horror_download); ?>],
-          ['Fantasy',      <?php echo json_encode($fantasy_download); ?>],
-          ['Historical',  <?php echo json_encode($historical_download); ?>],
-          ['Romance', <?php echo json_encode($romance_download); ?>],
-          ['High Quality Material',    <?php echo json_encode($hqm_download); ?>]
-        ]);
 
-        var options = {
-          title: 'Download Times By Genre',
-          is3D: true,
-        };
+  <script type="text/javascript">
+    //Download Times By Genre Pie Chart
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Task', 'Hours per Day'],
+        ['Horror',     <?php echo json_encode($horror_download); ?>],
+        ['Fantasy',      <?php echo json_encode($fantasy_download); ?>],
+        ['Historical',  <?php echo json_encode($historical_download); ?>],
+        ['Romance', <?php echo json_encode($romance_download); ?>],
+        ['High Quality Material',    <?php echo json_encode($hqm_download); ?>]
+      ]);
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechart1'));
-        chart.draw(data, options);
-      }
-
-      google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawChart2);
-      function drawChart2() {
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Subscribed',     <?php echo json_encode($subscribed); ?>],
-          ['Unsubscribed',    <?php echo json_encode($unsubscribe); ?>]
-        ]);
-
-        var options = {
-          title: 'Students',
-          is3D: true,
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
-        chart.draw(data, options);
-      }
-    </script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawStuff);
-
-      function drawStuff() {
-        var data = new google.visualization.arrayToDataTable([
-          ['Opening Move', 'Percentage'],
-          ["King's pawn (e4)", 44],
-          ["Queen's pawn (d4)", 31],
-          ["Knight to King 3 (Nf3)", 12],
-          ["Queen's bishop pawn (c4)", 10],
-          ['Other', 3]
-        ]);
-
-        var options = {
-          title: 'Chess opening moves',
-          width: 900,
-          legend: { position: 'none' },
-          chart: { title: 'Chess opening moves',
-                   subtitle: 'popularity by percentage' },
-          bars: 'horizontal', // Required for Material Bar Charts.
-          axes: {
-            x: {
-              0: { side: 'top', label: 'Percentage'} // Top x-axis.
-            }
-          },
-          bar: { groupWidth: "90%" }
-        };
-
-        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
-        chart.draw(data, options);
+      var options = {
+        title: 'Download Times By Genre',
+        is3D: true,
       };
-    </script>
+
+      var chart = new google.visualization.PieChart(document.getElementById('download_piechart'));
+      chart.draw(data, options);
+    }
+
+    //Students Pie Chart
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart2);
+    function drawChart2() {
+      var data = google.visualization.arrayToDataTable([
+        ['Task', 'Hours per Day'],
+        ['Subscribed',     <?php echo json_encode($subscribed); ?>],
+        ['Unsubscribed',    <?php echo json_encode($unsubscribe); ?>]
+      ]);
+
+      var options = {
+        title: 'Students',
+        is3D: true,
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('student_subscription_piechart'));
+      chart.draw(data, options);
+    }
+  </script>
 </body>
 
 </html>

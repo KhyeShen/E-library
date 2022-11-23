@@ -1,15 +1,17 @@
 <?php
+session_start();
+
 //DB connection
 include('../controller/conn.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>SCPG E-library</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
+    <title>SCPG E-library</title>
     <!-- Tab icon -->
     <link href="../src/image/segi_logo.png" rel="icon">
     <!-- MDB -->
@@ -29,7 +31,7 @@ include('../controller/conn.php');
       </div>
         <!-- Modal content -->
         <div class="modal-content" style="width:250px; margin: auto auto ; padding: 30px;">
-            <form method="POST" action="../controller/authenticate_admin.php">
+            <form method="POST" action="../controller/authenticate_librarian.php">
             <h4 style="margin:0 0 6% 0; text-align:center;">Enter Password</h4>
 
             <!-- Password input -->

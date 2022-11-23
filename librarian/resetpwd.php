@@ -2,9 +2,9 @@
 	session_start();
   
   //Check if valid to reset password
-	if($_SESSION['task'] != 'admin resetpwd')
+	if($_SESSION['task'] != 'librarian resetpwd')
 	{
-		header('location:../administrator/index.php');
+		header('location:../librarian/index.php');
 	}
 
   //DB connection
@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>SCPG E-library</title>
+    <title>SCPG E-library</title>
     <!-- Tab icon -->
     <link href="../src/image/segi_logo.png" rel="icon">
     <!-- Font Awesome -->
@@ -32,16 +32,17 @@
 	{
 		$password	    = $_POST['password'];
 		$conp		      = $_POST['conp'];
-		$admin_ID 		= $_SESSION['admin_ID'];
+		$librarian_ID 		= $_SESSION['librarian_ID'];
     
     //Verify password
 		if($password == $conp)
 		{
 			date_default_timezone_set("Asia/Kuala_Lumpur");
 			$current = date("Y-m-d h:i:s");
+				
 			$hash = password_hash($conp, PASSWORD_DEFAULT);
 			
-			$sql = "update admin set password='$hash',updated_datetime='$current' where admin_ID ='$admin_ID'";
+			$sql = "update librarian set password='$hash',updated_datetime='$current' where librarian_ID ='$librarian_ID'";
       
 			if(!mysqli_query($conn,$sql))
 			{
@@ -49,6 +50,7 @@
 			}
 			else if(mysqli_query($conn,$sql))
 			{
+				$_SESSION['message'] = 'Password has been reset';
 				unset($_SESSION['task']);
  
 				if (isset($_COOKIE["email"]) AND isset($_COOKIE["password"])){
@@ -57,7 +59,7 @@
 				}
         echo '<script type="text/javascript">'; 
         echo 'alert("Your Password Sucessfully Updated, Please Login Now!");'; 
-        echo 'window.location.href = "../administrator/index.php";';
+        echo 'window.location.href = "../librarian/index.php";';
         echo '</script>';
 			}
 		}

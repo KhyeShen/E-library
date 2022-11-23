@@ -33,18 +33,23 @@
     $mail->AddAddress($recieveEmail); //receive user email , user name
     $mail->SetFrom("scpgelibrary@gmail.com","SEGi College Penang E-library"); // set sender email
     $mail->Subject = "Verify Your Account With OTP Code";
-    $mail->Body = "<p>Dear user, </p> <h3>Your OTP code is $otp</h3>
+    $mail->Body = "<p>Dear librarian, </p> <h3>Your OTP code is $otp</h3>
     <br>
     <p>With regards,</p>
     <b>SEGi Penang E-library Team</b>";
     
     if($mail->Send()) {
       $_SESSION['send'] = "yes";
-      header('location:../student/verification.php?');
+      echo '<script type="text/javascript">'; 
+			echo 'alert("Please enter the OTP code received by '.$_SESSION['email'].' to verify your account.");'; 
+			echo 'window.location.href = "../librarian/verification.php";';
+			echo '</script>';
       
-      //var_dump($mail);
     } else {
-      echo '<script>alert("Fail to send email!")</script>';
+      echo '<script type="text/javascript">'; 
+			echo 'alert("Fail to send email!");'; 
+			echo 'history.back();';
+			echo '</script>';
     }
     $mail->smtpClose();
   }
@@ -69,22 +74,16 @@
     $mail->AddAddress($email); //receive user email , user name
     $mail->SetFrom("scpgelibrary@gmail.com","SEGi College Penang E-library"); // set sender email
     $mail->Subject = "Verify Your Account With OTP Code";
-    $mail->Body = "<p>Dear user, </p> <h3>Your OTP code is ".$_SESSION['otp']."</h3>
+    $mail->Body = "<p>Dear admin, </p> <h3>Your OTP code is ".$_SESSION['otp']."</h3>
     <br>
     <p>With regards,</p>
     <b>SEGi Penang E-library Team</b>";
     
     if($mail->Send()) {
       $_SESSION['send'] = "yes";
-      echo '<script type="text/javascript">'; 
-			echo 'alert("Please enter the OTP code received by '.$_SESSION['email'].' to verify your account.");'; 
-			echo 'window.location.href = "../student/verification.php";';
-			echo '</script>';
+      header('location:../librarian/verification.php');
     } else {
-      echo '<script type="text/javascript">'; 
-			echo 'alert("Fail to send email!");'; 
-			echo 'history.back();';
-			echo '</script>';
+      echo '<script>alert("Fail to Resend OTP!")</script>';
     }
     $mail->smtpClose();
   }

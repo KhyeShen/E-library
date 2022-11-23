@@ -30,133 +30,102 @@ if(isset($_GET['material_ID'])){
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Dashboard</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
-  
-  <!-- Favicons -->
+  <title>SCPG E-library</title>
+  <!-- Tab icon -->
   <link href="../src/image/segi_logo.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
+  <!-- Bootstrap CSS -->
   <link href="../src/css/bootstrap_dashboard.css" rel="stylesheet">
-  <link href="../src/css/bootstrap-icons.css" rel="stylesheet">
-  <!-- <link href="../src/css/boxicons.min.css" rel="stylesheet">
-  <link href="../src/css/quill.snow.css" rel="stylesheet">
-  <link href="../src/css/quill.bubble.css" rel="stylesheet">
-  <link href="../src/css/remixicon.css" rel="stylesheet">
-  <link href="../src/css/style.css" rel="stylesheet"> -->
-
-  
-  <!-- Template Main CSS File -->
+  <!-- Dashboard CSS -->
   <link href="../src/css/dashboard.css" rel="stylesheet">
-
-  
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
   <!-- datatables -->
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
-    <!-- datatables -->
-    <link rel="stylesheet" href="../src/css/jquery.dataTables.css">
-    <script src="../src/js/jquery-3.5.1.js"></script>
-    <script src="../src/js/jquery.dataTables.js"></script>    
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../src/css/bootstrap.min.css">
-  
+  <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 </head>
 
 <body>
-
-  <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
-
+<!-- Header -->
+<header id="header" class="header fixed-top d-flex align-items-center">
+    <!-- Logo -->
     <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
-            <img src="../src/image/segi_logo.png" alt="">
-            <span class="d-none d-lg-block">SCPG E-Library</span>
-        </a>
-        <i class="fas fa-bars toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
+      <a href="upload_form.php" class="logo d-flex align-items-center">
+          <img src="../src/image/segi_logo.png" alt="">
+          <span class="d-none d-lg-block">SCPG E-Library</span>
+      </a>
+      <i class="fas fa-bars toggle-sidebar-btn"></i>
+    </div>
 
-
+    <!-- Drop Down Menu -->
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-
         <li class="nav-item dropdown pe-3">
-
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <span class="d-none d-md-block dropdown-toggle ps-2">Admin</span>
-          </a><!-- End Profile Iamge Icon -->
-
+            <span class="d-none d-md-block dropdown-toggle ps-2">Librarian</span>
+          </a>
+          <!-- Profile -->
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Administrator</span>
+              <h6><?php echo $_SESSION['librarian_name']; ?></h6>
+              <span>Librarian</span>
             </li>
+
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="authentication.php">
                 <span>Change Password</span>
               </a>
             </li>
+
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="../controller/librarian_logout.php">
                 <span>Sign Out</span>
               </a>
             </li>
-
-          </ul><!-- End Profile Dropdown Items -->
-        </li><!-- End Profile Nav -->
-
+          </ul>
+        </li>
       </ul>
-    </nav><!-- End Icons Navigation -->
+    </nav>
+  </header>
 
-  </header><!-- End Header -->
-
-  <!-- ======= Sidebar ======= -->
+  <!-- Nav -->
   <aside id="sidebar" class="sidebar">
-
-  <ul class="sidebar-nav" id="sidebar-nav">
+    <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-        <a class="nav-link collapsed" href="upload_form.php">
+        <a class="nav-link" href="upload_form.php">
             <span>Material</span>
         </a>
-        </li><!-- End Profile Page Nav -->
+        </li>
 
         <li class="nav-item">
         <a class="nav-link collapsed" href="subscription_list.php">
             <span>Subscription</span>
         </a>
-        </li><!-- End Profile Page Nav -->
+        </li>
 
         <li class="nav-item">
         <a class="nav-link collapsed" href="manage_student.php">
             <span>Student</span>
         </a>
-        </li><!-- End Profile Page Nav -->  
-
+        </li>
     </ul>
+  </aside>
 
-  </aside><!-- End Sidebar-->
-
+  <!-- Main Content -->
   <main id="main" class="main">
 
     <div class="pagetitle">
@@ -182,7 +151,7 @@ if(isset($_GET['material_ID'])){
                 <div class="col-md-9" style="padding:0 30px;">
                     <div class="row" style="margin-bottom:10px;">
                         <label for="file">Material File (Only PDF Supported)</label><br>
-                        <input type="file" required name="files[]" accept=".pdf" class="form-control" id="file" placeholder="Material File" required/>
+                        <input type="file" name="files[]" accept=".pdf" class="form-control" id="file" placeholder="Material File"/>
                     </div>
                     
                     <div class="row" style="margin-bottom:10px;">
@@ -278,22 +247,15 @@ if(isset($_GET['material_ID'])){
             </div>
         </div>
     </section>
+  </main>
 
-  </main><!-- End #main -->
-
-  <!-- Vendor JS Files -->
-  <!-- <script src="../src/js/bootstrap.bundle.min.js"></script>
-  <script src="../src/js/apexcharts.min.js"></script>
-  <script src="../src/js/chart.min.js"></script>
-  <script src="../src/js/echarts.min.js"></script>
-  <script src="../src/js/quill.min.js"></script>
-  <script src="../src/js/simple-datatables.js"></script>
-  <script src="../src/js/tinymce.min.js"></script>
-  <script src="../src/js/validate.js"></script> -->
-
+  <!-- Bootstrap JS Files -->
   <script src="../src/js/bootstrap.bundle.min.js"></script> 
+  <!-- UI JS File -->
+  <script src="../src/js/main.js"></script>
   <!-- Cover Image Preview JS -->
   <script src="../src/js/cover_preview.js"></script>
+  
   <script>
         //material list
         let material_list = new DataTable('#material_list', {
@@ -326,10 +288,6 @@ if(isset($_GET['material_ID'])){
             }
         }
     </script>
-
-  <!-- Template Main JS File -->
-  <script src="../src/js/main.js"></script>
-
 </body>
 
 </html>

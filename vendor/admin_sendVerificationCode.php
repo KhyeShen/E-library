@@ -40,7 +40,7 @@
     
     if($mail->Send()) {
       $_SESSION['send'] = "yes";
-      header('location:../student/verification.php?');
+      header('location:../administrator/verification.php');
       
       //var_dump($mail);
     } else {
@@ -69,7 +69,7 @@
     $mail->AddAddress($email); //receive user email , user name
     $mail->SetFrom("scpgelibrary@gmail.com","SEGi College Penang E-library"); // set sender email
     $mail->Subject = "Verify Your Account With OTP Code";
-    $mail->Body = "<p>Dear user, </p> <h3>Your OTP code is ".$_SESSION['otp']."</h3>
+    $mail->Body = "<p>Dear admin, </p> <h3>Your OTP code is ".$_SESSION['otp']."</h3>
     <br>
     <p>With regards,</p>
     <b>SEGi Penang E-library Team</b>";
@@ -78,7 +78,7 @@
       $_SESSION['send'] = "yes";
       echo '<script type="text/javascript">'; 
 			echo 'alert("Please enter the OTP code received by '.$_SESSION['email'].' to verify your account.");'; 
-			echo 'window.location.href = "../student/verification.php";';
+			echo 'window.location.href = "../administrator/verification.php";';
 			echo '</script>';
     } else {
       echo '<script type="text/javascript">'; 

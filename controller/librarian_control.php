@@ -54,8 +54,8 @@
     //Update material
     if(isset($_POST['update']))
     {
-        $librarian_ID = $_POST['librarian_name'];
-        $librarian_email = $_POST['librarian_name'];
+        $librarian_ID = $_POST['update'];
+        $librarian_name = $_POST['librarian_name'];
         $librarian_email = $_POST['librarian_email'];
         $password = $_POST['password'];
         $hash = password_hash($password, PASSWORD_DEFAULT);

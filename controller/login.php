@@ -22,7 +22,16 @@
 				//Verify password
 				$row = mysqli_fetch_array($query);
 				$hashed_pass = $row['password'];
+				$status = $row['status'];
 				
+				if($status == "Frozen")
+				{
+					echo '<script type="text/javascript">'; 
+					echo 'alert("Your Account Has Been Frozen, Please Email to scpgelibrary@gmail.com for more information.");'; 
+					echo 'window.location.href = "../student/index.php";';
+					echo '</script>';
+				}
+
 				if(password_verify($password, $hashed_pass)) 
 				{
 					$_SESSION['studentID'] 		= $row['student_ID'];

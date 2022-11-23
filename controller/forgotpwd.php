@@ -14,11 +14,10 @@
 		$_SESSION['studentID'] = $studentID;
 		
 		//Check if student exist
-		$acc = mysqli_query($conn,"select * from `student_acc` where student_ID='$studentID'");
 		$student = mysqli_query($conn,"select email from `student` where student_ID='$studentID'");
 		$row = mysqli_fetch_assoc($student);
 		
-		if (mysqli_num_rows($acc) >= 1)
+		if (mysqli_num_rows($student) >= 1)
 		{
 			$email = $row['email'];
 			sendEMail($email);
