@@ -118,7 +118,7 @@ if(!empty($_POST['stripeToken'])){
                     
                     // Insert transaction data into payment table 
                     $sql2 = "INSERT INTO payment(student_ID,stripe_subscription_ID,amount,payment_datetime,status) VALUES
-					('".$_SESSION['studentID']."','sub_1LvY5UEYRt4577ibifZxWEHt',".$planAmount.",'".$current."','Suceed')";
+					('".$_SESSION['studentID']."','".$subscrID."',".$planAmount.",'".$current."','Suceed')";
                     $insert_payment = $conn->query($sql2); 
 					
                     //Payment Status
