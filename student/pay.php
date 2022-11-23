@@ -110,13 +110,15 @@ if(!empty($_POST['stripeToken'])){
                     // Insert transaction data into subscription table 
                     $sql = "INSERT INTO subscription(stripe_subscription_ID,student_ID,monthly_price,billing_email,plan_start,plan_end,status,created_datetime, updated_datetime) VALUES
 					('".$subscrID."','".$_SESSION['studentID']."',".$planAmount.",'".$email."','".$current_period_start."','".$current_period_end."','".$status."','".$current."','".$current."')";
-                    
                     $insert_subsription = $conn->query($sql); 
+
+                    //Update student details
+                    $update_student = "UPDATE student set subscription=1, updated_datetime='$current' WHERE student_ID = '".$_SESSION['studentID']."'";
+                    mysqli_query($conn,$update_student);
                     
                     // Insert transaction data into payment table 
                     $sql2 = "INSERT INTO payment(student_ID,stripe_subscription_ID,amount,payment_datetime,status) VALUES
 					('".$_SESSION['studentID']."','sub_1LvY5UEYRt4577ibifZxWEHt',".$planAmount.",'".$current."','Suceed')";
-                    
                     $insert_payment = $conn->query($sql2); 
 					
                     //Payment Status

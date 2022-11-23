@@ -38,7 +38,7 @@ try {
 //update subscription status in DB
 if(empty($api_error) && $subscription){ 
     $update = "UPDATE subscription set status='last', updated_datetime='$currentDT' WHERE student_ID = '".$_SESSION['studentID']."'";
-    mysqli_query($conn,$update);
+    mysqli_query($conn,$update_student);
 }
 header('location:../student/subscription_details.php');
 //}

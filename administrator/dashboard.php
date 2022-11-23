@@ -46,8 +46,8 @@ $review_sql = mysqli_query($conn,"select * from review");
 $review = mysqli_num_rows($review_sql);
 $subscription_sql = mysqli_query($conn,"select * from subscription");
 $subscription = mysqli_num_rows($subscription_sql);
-$student_sql = mysqli_query($conn,"select * from student");
-$student = mysqli_num_rows($student_sql);
+$material_sql = mysqli_query($conn,"select * from material");
+$material = mysqli_num_rows($material_sql);
 
 //Download Times Genre
 $horror_download_sql = mysqli_query($conn,"select * from download join material on download.material_ID=material.material_ID where material.material_genre = 'horror' and download.material_ID =  material.material_ID");
@@ -237,10 +237,10 @@ $unsubscribed = mysqli_num_rows($unsubscribed_sql);
             <div class="col-xxl-3 col-md-6">
               <div class="card info-card sales-card">
                 <div class="card-body">
-                  <h5 class="card-title">Total Student</h5>
+                  <h5 class="card-title">Total Material</h5>
                   <div class="d-flex align-items-center">
                     <div class="ps-3">
-                      <h6><?php echo $student; ?></h6>
+                      <h6><?php echo $material; ?></h6>
                     </div>
                   </div>
                 </div>

@@ -40,7 +40,9 @@ try {
 //Update subscription status
 if(empty($api_error) && $subscription){ 
     $update = "UPDATE subscription set status='active', updated_datetime='$currentDT' WHERE student_ID = '".$_SESSION['studentID']."'";
+    $update_student = "UPDATE student set subscription=1, updated_datetime='$currentDT' WHERE student_ID = '".$_SESSION['studentID']."'";
     mysqli_query($conn,$update);
+    mysqli_query($conn,$update_student);
 }
 header('location:../student/subscription_details.php');
 ?>
