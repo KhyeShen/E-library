@@ -16,7 +16,7 @@ if(!empty($_GET['materialID']))
     $genre_sql = mysqli_query($conn,"SELECT * from `material` WHERE material_ID = '".$material_ID."'");
     if (mysqli_num_rows($genre_sql) > 0) {
         $genre = mysqli_fetch_assoc($genre_sql); 
-        if($genre['material_genre'] == "High Quality Material")
+        if($genre['material_genre'] == "High Quality Material" && $_SESSION['student_subscribed'] == 0)
         {
             echo '<script type="text/javascript">'; 
             echo 'alert("Please subscribe premium plan to access High Quality Material.");'; 

@@ -39,6 +39,7 @@
 						$_SESSION['student_name'] 	= $row['student_name'];
 						$_SESSION['student_email'] 	= $row['email'];
 						$_SESSION['loginstatus'] 	= "active"; 
+						$_SESSION['student_subscribed'] = $row['subscription'];
 
 						if(isset($_SESSION['page']) && $_SESSION['page'] != "")
 						{
