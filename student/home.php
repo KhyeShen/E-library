@@ -77,7 +77,7 @@ $trending = mysqli_query($conn,"select * from `material` INNER JOIN download ON 
             <div class="product-card <?php echo $actives;?>">
                 <div class="product-image" style="height:375px;">
                     <a href="material_details.php?material_ID=<?php echo $row_recent['material_ID']; ?>" target="_blank">
-                    <img class="product-thumb" src="../material/cover/<?php echo $cover_name;?>" onerror=this.src="../src/image/HQM.jpg" alt="">
+                    <img class="product-thumb" src="../material/cover/<?php echo $row_recent['cover_name']; ?>" onerror=this.src="../src/image/HQM.jpg" alt="">
                     </a>
                 </div>
                 <div class="product-info">
