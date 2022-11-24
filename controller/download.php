@@ -15,7 +15,7 @@ if(!empty($_GET['materialID']) && !$_GET['librarian'])
 
     //Check if student subscribed
     $student_sql = mysqli_query($conn,"SELECT * from `student` WHERE student_ID = '".$_SESSION['studentID']."'");
-    $subscribed = mysqli_fetch_assoc($genre_sql); 
+    $subscribed = mysqli_fetch_assoc($student_sql); 
     $student_subscribed = $subscribed['subscription'];
     
     //Check if High Quality Material
