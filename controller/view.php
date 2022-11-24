@@ -32,7 +32,8 @@ if(!empty($_GET['materialID']))
         else
         {
             if(!empty($file) && file_exists($filepath)){
-                header('location:../material/file/'.$material_ID.'.pdf');
+                // header('location:../material/file/'.$material_ID.'.pdf');
+                echo '<script>alert("Please subscribe'.$_SESSION['student_subscribed'].'ssa  '.$genre['material_genre'].'")</script>'; 
             }
             else{
                 $_SESSION['message'] = "Sorry, the file is corrupted.";
