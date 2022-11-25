@@ -34,7 +34,7 @@ include('../controller/conn.php');
             <h2 style="margin:0 0 6% 0; text-align:center;">Login Form</h2>
             <!-- Email input -->
             <div class="form-outline mb-4">
-                <input type="email" id="form1Example1" value="<?php if (isset($_COOKIE["email"])){echo $_COOKIE["email"];}?>" name="email" class="form-control" required/>
+                <input type="email" id="form1Example1" value="<?php if (isset($_COOKIE["email"])){echo $_COOKIE["email"];}?>"  required/>
                 <label class="form-label" for="form1Example1">Email</label>
             </div>
 
