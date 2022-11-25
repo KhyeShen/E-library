@@ -7,6 +7,13 @@
 	//student login
     if(isset($_POST['login']))
 	{
+		if (isset($_COOKIE['email'])) {
+			unset($_COOKIE['email']); 
+			return true;
+		} else {
+			return false;
+		}
+
 		if(isset($_POST['email']))
 		{
 			//Variables

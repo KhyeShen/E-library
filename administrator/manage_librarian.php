@@ -147,7 +147,7 @@ include('../controller/conn.php');
                 <div class="" style="margin-top: 17px;">
                     <b>Email Address</b>
                     <div class="col">
-                        <input class="form-control" type="text" name="librarian_email" placeholder="Librarian Email" style="margin-top: 3px;" required>
+                        <input class="form-control" type="email" name="librarian_email" placeholder="Librarian Email" style="margin-top: 3px;" required>
                     </div>
                 </div>
                 <div class="" style="margin-top: 17px;">
