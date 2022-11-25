@@ -143,8 +143,7 @@ include('../controller/conn.php');
                       <th>Student Name</th>
                       <th>Email Address</th>
                       <th>Course Name</th>
-                      <th>Gender</th>
-                      <th>Age</th>
+                      <th>Subcsription</th>
                       <th>Status</th>
                       <th>Action</th>
                   </tr>
@@ -167,8 +166,7 @@ include('../controller/conn.php');
                               <td>".$material['student_name']."</td>
                               <td>".$material['email']."</td>
                               <td>".$material['course_name']."</td>
-                              <td>".$gender."</td>
-                              <td>".$material['age']."</td>
+                              <td>".$material['subscription']."</td>
                               <td>".$material['status']."</td>
                               <td>
                               <form action='../controller/student_control.php' method='post' style='width: 80px;'>";
