@@ -9,9 +9,6 @@
 	{
 		if (isset($_COOKIE['email'])) {
 			unset($_COOKIE['email']); 
-			return true;
-		} else {
-			return false;
 		}
 
 		if(isset($_POST['email']))
