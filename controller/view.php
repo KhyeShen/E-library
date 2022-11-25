@@ -22,7 +22,7 @@ if(!empty($_GET['materialID']))
     if (mysqli_num_rows($genre_sql) > 0) {
         $genre = mysqli_fetch_assoc($genre_sql); 
         //echo '<script>alert("Please subscribe'.$_SESSION['student_subscribed'].'")</script>'; 
-        if($genre['material_genre'] == "High Quality Material" && $_SESSION['student_subscribed'] == "None")
+        if($genre['material_genre'] == "High Quality Material" && $student_subscribed == "None")
         {
             echo '<script type="text/javascript">'; 
             echo 'alert("Please subscribe premium plan to access High Quality Material.");'; 
