@@ -153,7 +153,7 @@ include('../controller/conn.php');
                 <div class="" style="margin-top: 17px;">
                     <b>Password</b>
                     <div class="col">
-                        <input class="form-control" type="password" name="password" placeholder="Password" style="margin-top: 3px;" autocomplete="new-password" required>
+                        <input class="form-control" type="password" name="password" placeholder="Password" style="margin-top: 3px;" autocomplete="off" autocomplete="new-password" required>
                     </div>
                 </div>
                 <div class="" style="margin-top: 14px; text-align:right;">
