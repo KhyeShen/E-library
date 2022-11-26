@@ -1,8 +1,8 @@
 <?php
 //DB connection
-include('../controller/conn.php');
+require('../controller/conn.php');
 //Login PHP
-include('../controller/login.php');
+require('../controller/login.php');
 //Variables
 $search_value = "";
 

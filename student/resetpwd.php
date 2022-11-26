@@ -8,7 +8,7 @@
 	}
 
   //DB connection
-	include('../controller/conn.php');
+	require('../controller/conn.php');
 ?>
 <!DOCTYPE html>
 <html>

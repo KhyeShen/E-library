@@ -14,9 +14,8 @@
 <link rel="stylesheet" href="../src/css/google_fonts_roboto.css"/>
 
 </head>
-<body style="margin-bottom:0px;">
 <!-- Footer -->
-<footer class="bg-dark text-center text-white">
+<footer class="bg-dark text-center text-white" style="position:relative;bottom:0;width: 100%;height:auto;">
   <!-- Section: Social media -->
   <section class="mb-4 border-bottom" style="margin:50px 0; padding: 20px 0;">
 
@@ -142,5 +141,4 @@
   <!-- Copyright -->
 </footer>
 <!-- Footer -->
-</body>
 </html>

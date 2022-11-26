@@ -1,15 +1,10 @@
 <?php 
 session_start();
 
-//Check if student login
-if (!isset($_SESSION['studentID']) ||(trim ($_SESSION['studentID']) == '') || $_SESSION['loginstatus'] != 'active') {
-	$_SESSION['message'] = 'Please Login!!';
-    $_SESSION['page'] = 'home.php';
-	header('location:index.php');
-	exit();
-}
+//Check login status
+require('../controller/login_status.php');
 //DB connection
-include('../controller/conn.php');
+require('../controller/conn.php');
 
 //Select material
 $recent_added = mysqli_query($conn,"select * from `material` order by created_datetime DESC LIMIT 15");
@@ -31,13 +26,13 @@ $trending = mysqli_query($conn,"select * from `material` INNER JOIN download ON 
 </head>
 <body>
     <!-- Navigation Bar -->
-    <?php include 'nav.php' ?>
+    <?php require 'nav.php' ?>
 
     <!-- Recently Added Material -->
-    <section class="product" style="margin-top:14px;"> 
+    <section class="product" style="margin-top:14px;height:auto;"> 
         <h2 class="product-category" style="display: inline-block;padding-right:10px;"><b>recently added</b></h2>
         <a href="more_materials.php?type=type&value=Recent Added" style="display: inline-block;">(View All)</a>
-        <div class="product-container">
+        <div class="product-container" style="height:auto;">
             <button class="pre-btn"><img src="../src/image/arrow.png" alt=""></button>
             <button class="nxt-btn"><img src="../src/image/arrow.png" alt=""></button>
             
@@ -74,16 +69,15 @@ $trending = mysqli_query($conn,"select * from `material` INNER JOIN download ON 
             ?>
             
             <!-- Material Card -->
-            <div class="product-card <?php echo $actives;?>">
+            <div class="product-card <?php echo $actives;?>" style="height:500px;">
                 <div class="product-image" style="height:375px;">
                     <a href="material_details.php?material_ID=<?php echo $row_recent['material_ID']; ?>" target="_blank">
                     <img class="product-thumb" src="../material/cover/<?php echo $row_recent['cover_name']; ?>" onerror=this.src="../src/image/HQM.jpg" alt="">
                     </a>
                 </div>
                 <div class="product-info">
-                    <b><?php echo $row_recent['material_title'];?></b>
+                    <b><?php echo substr($row_recent['material_title'],0,65);?></b>
                     <p class="product-short-description"><?php echo $row_recent['author_name'];?></p>
-                    <!-- <span class="price">4.0</span> downloaded -->
                     <b><?php echo number_format($average_rating, 1); ?>&nbsp;<i class="fas fa-star" style="color:#e6e600;"></i></b>
                     <b>&nbsp;&nbsp;<?php echo $download_times;?>&nbsp;<i class="fas fa-cloud-download-alt" ></i></b>
                 </div>
@@ -135,14 +129,14 @@ $trending = mysqli_query($conn,"select * from `material` INNER JOIN download ON 
             ?>
 
             <!-- Material Card -->
-            <div class="product-card <?php echo $actives;?>">
+            <div class="product-card <?php echo $actives;?>" style="height:500px;">
                 <div class="product-image" style="height:375px;">
                     <a href="material_details.php?material_ID=<?php echo $row_trending['material_ID']; ?>" target="_blank">
                         <img class="product-thumb" src="../material/cover/<?php echo $row_trending['cover_name'];?>" onerror=this.src="../src/image/HQM.jpg" alt="">
                     </a>
                 </div>
                 <div class="product-info">
-                    <b><?php echo $row_trending['material_title'];?></b>
+                    <b><?php echo substr($row_recent['material_title'],0,65);?></b>
                     <p class="product-short-description"><?php echo $row_trending['author_name'];?></p>
                     <!-- <span class="price">4.0</span> downloaded -->
                     <b><?php echo number_format($average_rating, 1); ?>&nbsp;<i class="fas fa-star" style="color:#e6e600;"></i></b>

@@ -2,7 +2,7 @@
     session_start();
 
     //DB connection
-    include('../controller/conn.php');
+    require('../controller/conn.php');
 
     //Variables
     $search_value = "";
@@ -57,16 +57,16 @@
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css" rel="stylesheet"/>
 </head>
-<body>
+<body >
     <!-- Nav -->
     <?php
     if (isset($_SESSION['studentID']))
     {
-        include 'nav.php';
+        require 'nav.php';
     }  
     else
     {
-        include 'index_nav.php';
+        require 'index_nav.php';
     }?>
 
     <!-- Container -->
@@ -75,7 +75,7 @@
         <div class="row">
             <h2><b><?php echo $title; ?> </b>(<?php echo $number_of_results; ?>)</h2>
         </div>
-        <div class="row">
+        <div class="row" style="min-height: 30vh;">
             <?php
                 while($row_search = mysqli_fetch_array($pageresult)) {
                 $average_rating = 0;
@@ -118,6 +118,10 @@
             <?php } ?>
         </div>
         
+        <?php
+        if($number_of_results>0)
+        {
+        ?>
         <!-- Pagination Button -->
         <nav aria-label="Page navigation example" style="float:right;">
             <ul class="pagination pagination-circle">
@@ -180,6 +184,9 @@
                 </li>
             </ul>
         </nav>
+        <?php
+        }
+        ?>
     </div>
 
     <!-- Footer -->

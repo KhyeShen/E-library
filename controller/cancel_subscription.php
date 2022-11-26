@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Include Stripe PHP library 
 require_once '../vendor/stripe/stripe-php/init.php'; 
 require_once '../vendor/stripe/config.php'; 
@@ -37,7 +38,7 @@ try {
 
 //update subscription status in DB
 if(empty($api_error) && $subscription){ 
-    $update = "UPDATE subscription set status='last', updated_datetime='$currentDT' WHERE student_ID = '".$_SESSION['studentID']."'";
+    $update_student = "UPDATE subscription set status='last', updated_datetime='$currentDT' WHERE stripe_subscription_ID = '".$subscription_ID."'";
     mysqli_query($conn,$update_student);
 }
 header('location:../student/subscription_details.php');

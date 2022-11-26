@@ -1,13 +1,11 @@
 <?php 
 session_start();
-//check if user login
-if (!isset($_SESSION['studentID']) ||(trim ($_SESSION['studentID']) == '') || $_SESSION['loginstatus'] != 'active') {
-	$_SESSION['message'] = 'Please Login!!';
-	header('location:index.php');
-	exit();
-}
 
-include('../controller/conn.php');
+//Check login status
+require('../controller/login_status.php');
+//DB connection
+require('../controller/conn.php');
+//Submit Review PHP
 include('../controller/submit_review.php');
 
 //query
@@ -296,6 +294,7 @@ if (mysqli_num_rows($review) != 0)
                     {
 
                         $('#submit_star_'+count).addClass('text-warning');
+                        rating_data = <?= $score ?>;
 
                     }
                 }

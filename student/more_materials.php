@@ -1,14 +1,8 @@
 <?php 
 session_start();
-//check if student login
-if (!isset($_SESSION['studentID']) ||(trim ($_SESSION['studentID']) == '') || $_SESSION['loginstatus'] != 'active') {
-	$_SESSION['message'] = 'Please Login!!';
-	header('location:index.php');
-	exit();
-}
 
 //DB connection
-include('../controller/conn.php');
+require('../controller/conn.php');
 
 //Variables
 $sql='';
@@ -64,7 +58,7 @@ $count = mysqli_num_rows($pageresult);
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css" rel="stylesheet"/>
 </head>
 <body>
-    <?php include 'nav.php' ?>
+    <?php require 'nav.php' ?>
     <div class="container" style="margin:20px auto;">
         <!-- Header -->
         <div class="row">
@@ -72,7 +66,7 @@ $count = mysqli_num_rows($pageresult);
         </div>
 
         <!-- Materials Found -->
-        <div class="row">
+        <div class="row" style="min-height: 30vh;">
             <?php
                 while($row = mysqli_fetch_array($pageresult)) {
             ?>
@@ -94,6 +88,10 @@ $count = mysqli_num_rows($pageresult);
             <?php } ?>
         </div>
         
+        <?php
+        if($number_of_results>0)
+        {
+        ?>
         <!-- Pagination Button -->
         <nav aria-label="Page navigation example" style="float:right;">
             <ul class="pagination pagination-circle">
@@ -157,6 +155,9 @@ $count = mysqli_num_rows($pageresult);
                 </li>
             </ul>
         </nav>
+        <?php
+        }
+        ?>
     </div>
 
     <!-- Footer -->

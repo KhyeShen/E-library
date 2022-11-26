@@ -1,7 +1,6 @@
 <?php
 //DB connection
-include('../controller/conn.php');
-
+require('../controller/conn.php');
 //send email php
 include __DIR__.'/../vendor/sendVerificationCode.php';
 

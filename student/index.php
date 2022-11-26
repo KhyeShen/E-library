@@ -23,7 +23,7 @@ $trending = mysqli_query($conn,"select * from `material` INNER JOIN download ON 
 </head>
 <body>
     <!-- Navigation Bar -->
-    <?php include 'index_nav.php' ?>
+    <?php require 'index_nav.php' ?>
 
     <!-- Recently Added Material -->
     <section class="product" style="margin-top:14px;"> 

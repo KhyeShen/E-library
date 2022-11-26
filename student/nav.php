@@ -1,6 +1,6 @@
 <?php
 //DB connection
-include('../controller/conn.php');
+require('../controller/conn.php');
 
 //Get the search value
 $search_value = "";
@@ -112,10 +112,10 @@ if(isset($_GET['search_value']))
                     <a class="dropdown-item" href="genre.php?type=Fantasy">Fantasy</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="genre.php?type=History">History`</a>
+                    <a class="dropdown-item" href="genre.php?type=Historical">Historical</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="genre.php?type=High Quality Materials">High Quality Materials</a>
+                    <a class="dropdown-item" href="genre.php?type=High Quality Material">High Quality Materials</a>
                   </li>
                 </ul>
               </div>

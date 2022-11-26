@@ -2,7 +2,7 @@
 	session_start();
 
 	//DB connection
-	include('conn.php');
+	require('conn.php');
 
 	//student login
     if(isset($_POST['login']))

@@ -1,15 +1,10 @@
 <?php 
 session_start();
-//check if student login
-if (!isset($_SESSION['studentID']) ||(trim ($_SESSION['studentID']) == '') || $_SESSION['loginstatus'] != 'active') {
-	$_SESSION['message'] = 'Please Login!!';
-	header('location:index.php');
-	exit();
-}
 
+//Check login status
+require('../controller/login_status.php');
 //DB connection
-include('../controller/conn.php');
-
+require('../controller/conn.php');
 // Include configuration file  
 require_once '../vendor/stripe/config.php'; 
  

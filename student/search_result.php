@@ -2,7 +2,7 @@
 session_start();
 
 //DB connection
-include('../controller/conn.php');
+require('../controller/conn.php');
 
 //Get search value
 $search_value = "";
@@ -54,11 +54,11 @@ $count = mysqli_num_rows($pageresult);
     <?php
     if (isset($_SESSION['studentID']))
     {
-        include 'nav.php';
+        require 'nav.php';
     }  
     else
     {
-        include 'index_nav.php';
+        require 'index_nav.php';
     }?>
     <div class="container" style="margin:20px auto;">
         <!-- Search Results -->
@@ -67,7 +67,7 @@ $count = mysqli_num_rows($pageresult);
         </div>
 
         <!-- Material Cards -->
-        <div class="row">
+        <div class="row" style="min-height: 30vh;">
             <?php
                 while($row_search = mysqli_fetch_array($pageresult)) {
                 $average_rating = 0;
@@ -111,6 +111,10 @@ $count = mysqli_num_rows($pageresult);
             <?php } ?>
         </div>
         
+        <?php
+        if($number_of_results>0)
+        {
+        ?>
         <!-- Pagination Button -->
         <nav aria-label="Page navigation example" style="float:right;">
             <ul class="pagination pagination-circle">
@@ -173,6 +177,9 @@ $count = mysqli_num_rows($pageresult);
                 </li>
             </ul>
         </nav>
+        <?php
+        }
+        ?>
     </div>
 
     <!-- Footer -->
