@@ -156,10 +156,10 @@ if(isset($_GET['search_value']))
                     <a class="dropdown-item" href="genre.php?type=Fantasy">Fantasy</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="genre.php?type=History">History`</a>
+                    <a class="dropdown-item" href="genre.php?type=Historical">Historical</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="genre.php?type=High Quality Materials">High Quality Materials</a>
+                    <a class="dropdown-item" href="genre.php?type=High Quality Material">High Quality Material</a>
                   </li>
                 </ul>
               </div>
