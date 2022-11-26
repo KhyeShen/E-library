@@ -65,14 +65,14 @@ $trending = mysqli_query($conn,"select * from `material` INNER JOIN download ON 
             ?>
 
             <!-- Material Card -->
-            <div class="product-card <?php echo $actives;?>">
+            <div class="product-card <?php echo $actives;?> style="height:500px;">
                 <div class="product-image" style="height:375px;">
                     <a href="material_details.php?material_ID=<?php echo $row_recent['material_ID']; ?>" target="_blank">
                         <img class="product-thumb" src="../material/cover/<?php echo $row_recent['cover_name'];?>" onerror=this.src="../src/image/HQM.jpg" alt="">
                     </a>
                 </div>
                 <div class="product-info">
-                    <b><?php echo $row_recent['material_title'];?></b>
+                    <b><?php echo substr($row_trending['material_title'],0,65);?></b>
                     <p class="product-short-description"><?php echo $row_recent['author_name'];?></p>
                     <b><?php echo number_format($average_rating, 1); ?>&nbsp;<i class="fas fa-star" style="color:#e6e600;"></i></b>
                     <b>&nbsp;&nbsp;<?php echo $download_times;?>&nbsp;<i class="fas fa-cloud-download-alt" ></i></b>
@@ -125,14 +125,14 @@ $trending = mysqli_query($conn,"select * from `material` INNER JOIN download ON 
             ?>
 
             <!-- Material Card -->
-            <div class="product-card <?php echo $actives;?>">
+            <div class="product-card <?php echo $actives;?> style="height:500px;">
                 <div class="product-image" style="height:375px;">
                     <a href="material_details.php?material_ID=<?php echo $row_trending['material_ID']; ?>" target="_blank">
                         <img class="product-thumb" src="../material/cover/<?php echo $row_trending['cover_name'];?>" onerror=this.src="../src/image/HQM.jpg" alt="">
                     </a>
                 </div>
                 <div class="product-info">
-                    <b><?php echo $row_trending['material_title'];?></b>
+                    <b><?php echo substr($row_trending['material_title'],0,65);?></b>
                     <p class="product-short-description"><?php echo $row_trending['author_name'];?></p>
                     <b><?php echo number_format($average_rating, 1); ?>&nbsp;<i class="fas fa-star" style="color:#e6e600;"></i></b>
                     <b>&nbsp;&nbsp;<?php echo $download_times;?>&nbsp;<i class="fas fa-cloud-download-alt" ></i></b>

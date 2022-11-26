@@ -75,7 +75,7 @@
         <div class="row">
             <h2><b><?php echo $title; ?> </b>(<?php echo $number_of_results; ?>)</h2>
         </div>
-        <div class="row" style="min-height: 30vh;">
+        <div class="row">
             <?php
                 while($row_search = mysqli_fetch_array($pageresult)) {
                 $average_rating = 0;
@@ -101,14 +101,14 @@
                 $download_times = mysqli_num_rows($download);
             ?>
             <div class="col-md-3">
-                <div class="" style="margin-bottom:15px;">
+                <div class="" style="margin-bottom:15px;height:600px;">
                     <div class="product-image" style="height: 459px;">
                         <a href="material_details.php?material_ID=<?php echo $row_search['material_ID'];?>" target="_blank">
                             <img class="product-thumb" src="../material/cover/<?php echo $row_search['cover_name'];?>" onerror=this.src="../src/image/HQM.jpg" alt="">
                         </a>
                     </div>
                     <div class="product-info">
-                        <b><?php echo $row_search['material_title'];?></b>
+                        <b><?php echo substr($row_search['material_title'],0,100);?></b>
                         <p class="product-short-description"><?php echo $row_search['author_name'];?></p>
                         <b><?php echo number_format($average_rating, 1); ?>&nbsp;<i class="fas fa-star" style="color:#e6e600;"></i></b>
                         <b>&nbsp;&nbsp;<?php echo $download_times;?>&nbsp;<i class="fas fa-cloud-download-alt" ></i></b>

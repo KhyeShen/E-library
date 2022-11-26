@@ -71,14 +71,14 @@ $count = mysqli_num_rows($pageresult);
                 while($row = mysqli_fetch_array($pageresult)) {
             ?>
             <div class="col-md-3">
-                <div class="" style="margin-bottom:15px;">
+                <div class="" style="margin-bottom:15px;height:600px;">
                     <div class="product-image" style="height: 459px;">
                         <a href="material_details.php?material_ID=<?php echo $row['material_ID'];?>" target="_blank">
                             <img class="product-thumb" src="../material/cover/<?php echo $row['cover_name'];?>" onerror=this.src="../src/image/HQM.jpg" alt="">
                         </a>
                     </div>
                     <div class="product-info">
-                        <b><?php echo $row['material_title'];?></b>
+                        <b><?php echo substr($row['material_title'],0,100);?></b>
                         <p class="product-short-description"><?php echo $row['author_name'];?></p>
                         <b>4.0&nbsp;<i class="fas fa-star" style="color:#e6e600;"></i></b>
                         <b>&nbsp;<?php echo $row['download_times'];?>&nbsp;<i class="fas fa-cloud-download-alt" ></i></b>
