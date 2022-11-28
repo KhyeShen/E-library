@@ -69,6 +69,27 @@ $count = mysqli_num_rows($pageresult);
         <div class="row" style="min-height: 30vh;">
             <?php
                 while($row = mysqli_fetch_array($pageresult)) {
+                    $total_user_rating = 0;
+                    //Get the times of downloaded
+                    $query_download = "SELECT * FROM download WHERE material_ID = '".$row['material_ID']."'";
+                    $download = mysqli_query($conn, $query_download);
+                    $download_times = mysqli_num_rows($download);
+
+                    //extract the others' review data
+                    $review_query = "SELECT * FROM review WHERE material_ID = '".$row['material_ID']."'";
+                    $review_result = mysqli_query($conn, $review_query);
+                    $total_reviews = mysqli_num_rows($review_result);
+                    while($review_row = mysqli_fetch_assoc($review_result)) {
+                    $total_user_rating = $total_user_rating + $review_row["score"];
+                    }
+                    if($total_reviews > 0)
+                    {
+                        $average_rating = $total_user_rating / $total_reviews;
+                    }
+                    else
+                    {
+                        $average_rating = 0;
+                    }
             ?>
             <div class="col-md-3">
                 <div class="" style="margin-bottom:15px;height:600px;">
@@ -80,8 +101,8 @@ $count = mysqli_num_rows($pageresult);
                     <div class="product-info">
                         <b><?php echo substr($row['material_title'],0,100);?></b>
                         <p class="product-short-description"><?php echo $row['author_name'];?></p>
-                        <b>4.0&nbsp;<i class="fas fa-star" style="color:#e6e600;"></i></b>
-                        <b>&nbsp;<?php echo $row['download_times'];?>&nbsp;<i class="fas fa-cloud-download-alt" ></i></b>
+                        <b><?php echo $average_rating; ?>&nbsp;<i class="fas fa-star" style="color:#e6e600;"></i></b>
+                        <b>&nbsp;<?php echo $download_times;?>&nbsp;<i class="fas fa-cloud-download-alt" ></i></b>
                     </div>
                 </div>
             </div>
