@@ -18,9 +18,15 @@ if (!isset($_GET['type'])) {
 } 
 
 //Select material
-if($type=="type"){
+if($value=="Recent Added"){
     $sql='SELECT * FROM material ORDER BY created_datetime DESC';
 }  
+else if($value=="Trending"){
+    $sql='select * from `material` INNER JOIN download ON material.material_ID=download.material_ID group by material.material_ID ORDER by COUNT(download.material_ID) DESC'; 
+}  
+else{
+    $sql='SELECT * FROM material';
+}
 $result = mysqli_query($conn, $sql);
 
 // determine number of total pages available
@@ -39,7 +45,7 @@ if (!isset($_GET['page'])) {
 $this_page_first_result = ($page-1)*$results_per_page;
 
 // retrieve selected results from database and display them on page
-$sql='SELECT * FROM material ORDER BY created_datetime DESC LIMIT ' . $this_page_first_result . ',' .  $results_per_page ;
+$sql=$sql.' LIMIT ' . $this_page_first_result . ',' .  $results_per_page ;
 $pageresult = mysqli_query($conn, $sql);
 $count = mysqli_num_rows($pageresult);
 ?>
@@ -69,7 +75,11 @@ $count = mysqli_num_rows($pageresult);
         <div class="row" style="min-height: 30vh;">
             <?php
                 while($row = mysqli_fetch_array($pageresult)) {
+                    $average_rating = 0;
+                    $download_times = 0;
+                    $total_review = 0;
                     $total_user_rating = 0;
+
                     //Get the times of downloaded
                     $query_download = "SELECT * FROM download WHERE material_ID = '".$row['material_ID']."'";
                     $download = mysqli_query($conn, $query_download);
@@ -85,10 +95,7 @@ $count = mysqli_num_rows($pageresult);
                     if($total_reviews > 0)
                     {
                         $average_rating = $total_user_rating / $total_reviews;
-                    }
-                    else
-                    {
-                        $average_rating = 0;
+                        $average_rating = number_format($average_rating, 1);
                     }
             ?>
             <div class="col-md-3">
