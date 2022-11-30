@@ -15,6 +15,8 @@ if(isset($_POST["rating_data"]))
 		':datetime'			=>	$currentDT
 	);
 	
+	$user_reviews = str_replace("'", "\'",$_POST['user_reviews']);
+
 	//check if user review before
 	$review = mysqli_query($conn,"select * from review WHERE material_ID=".$_POST['material_ID']." AND student_ID='".$_POST['student_ID']."'");
 
@@ -24,7 +26,7 @@ if(isset($_POST["rating_data"]))
 		$row = mysqli_fetch_array($review);
 		$review_ID = $row['review_ID'];
 
-		$sql = "UPDATE review SET score=".$_POST["rating_data"].", comment='".$_POST["user_reviews"]."' WHERE review_ID=".$review_ID;
+		$sql = "UPDATE review SET score=".$_POST["rating_data"].", comment='".$user_reviews."' WHERE review_ID=".$review_ID;
 		if ($conn->query($sql) === TRUE) {
 			echo "Review updated successfully!";
 		}
@@ -32,7 +34,7 @@ if(isset($_POST["rating_data"]))
 	//insert review
 	else{
 		$query = "INSERT INTO review (student_ID, material_ID, score, comment, created_datetime, updated_datetime) 
-		VALUES ('".$_POST['student_ID']."', ".$_POST['material_ID'].", ".$_POST['rating_data'].", '".$_POST['user_reviews']."', '".$currentDT."', '".$currentDT."')";
+		VALUES ('".$_POST['student_ID']."', ".$_POST['material_ID'].", ".$_POST['rating_data'].", '".$user_reviews."', '".$currentDT."', '".$currentDT."')";
 
 		if (mysqli_query($conn, $query)) {
 			echo "Thanks for your review!";
