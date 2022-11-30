@@ -35,8 +35,8 @@
             $hash = password_hash($password, PASSWORD_DEFAULT);
 
             //Upload material file
-            $sql = "INSERT INTO librarian (librarian_name,email,password,created_datetime,updated_datetime) 
-            VALUES ('".$librarian_name."', '".$librarian_email."', '".$hash."', '".$currentDT."', '".$currentDT."')";
+            $sql = "INSERT INTO librarian (librarian_name,admin_ID,email,password,created_datetime,updated_datetime) 
+            VALUES ('".$librarian_name."', 1, '".$librarian_email."', '".$hash."', '".$currentDT."', '".$currentDT."')";
 
             //Check if upload successfull
             if (mysqli_query($conn, $sql)) {

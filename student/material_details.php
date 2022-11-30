@@ -290,11 +290,12 @@ if (mysqli_num_rows($review) != 0)
                 {
                     reset_background();
 
-                    for(var count = 1; count <= user_rating; count++)
+                    rating_data = user_rating;
+                    for(var count = 1; count <= rating_data; count++)
                     {
 
                         $('#submit_star_'+count).addClass('text-warning');
-                        rating_data = <?= $score ?>;
+                        
 
                     }
                 }
