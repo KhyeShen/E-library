@@ -108,7 +108,7 @@ if(!empty($_POST['stripeToken'])){
                     $insert_subsription = $conn->query($sql); 
 
                     //Update student details
-                    $update_student = "UPDATE student set subscription=1, updated_datetime='$current' WHERE student_ID = '".$_SESSION['studentID']."'";
+                    $update_student = "UPDATE student set subscription='Premium', updated_datetime='$current' WHERE student_ID = '".$_SESSION['studentID']."'";
                     mysqli_query($conn,$update_student);
                     
                     // Insert transaction data into payment table 
