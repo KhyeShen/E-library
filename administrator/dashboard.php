@@ -62,9 +62,9 @@ $historical_download = mysqli_num_rows($historical_download_sql);
 $hqm_download = mysqli_num_rows($hqm_download_sql);
 
 //Student Pie Chart
-$subscribed_sql = mysqli_query($conn,"select * from student where subscription = 1");
+$subscribed_sql = mysqli_query($conn,"select * from student where subscription = Premium");
 $subscribed = mysqli_num_rows($subscribed_sql);
-$unsubscribed_sql = mysqli_query($conn,"select * from student where subscription = 0");
+$unsubscribed_sql = mysqli_query($conn,"select * from student where subscription = None");
 $unsubscribed = mysqli_num_rows($unsubscribed_sql);
 ?>
 <!DOCTYPE html>
