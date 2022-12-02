@@ -9,8 +9,10 @@ $trending = mysqli_query($conn,"select * from `material` INNER JOIN download ON 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>SCPG E-library</title>
+    <!-- Tab icon -->
+    <link href="../src/image/segi_logo.png" rel="icon">
     <meta charset="utf-8">
-    <title>Homepage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Local CSS -->
