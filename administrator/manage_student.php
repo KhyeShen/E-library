@@ -1,13 +1,10 @@
 <?php 
-session_start();
-// if (!isset($_SESSION['studentID']) ||(trim ($_SESSION['studentID']) == '') || $_SESSION['loginstatus'] != 'active') {
-// 	$_SESSION['message'] = 'Please Login!!';
-// 	header('location:loginpage.php');
-// 	exit();
-// }
+    session_start();
 
-//DB connection
-include('../controller/conn.php');
+    //Check login status
+    require('../controller/admin_login_status.php');
+    //DB connection
+    include('../controller/conn.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">

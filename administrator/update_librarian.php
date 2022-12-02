@@ -1,25 +1,22 @@
 <?php 
-session_start();
-// if (!isset($_SESSION['studentID']) ||(trim ($_SESSION['studentID']) == '') || $_SESSION['loginstatus'] != 'active') {
-// 	$_SESSION['message'] = 'Please Login!!';
-// 	header('location:loginpage.php');
-// 	exit();
-// }
+    session_start();
 
-//DB connection
-include('../controller/conn.php');
+    //Check login status
+    require('../controller/admin_login_status.php');
+    //DB connection
+    include('../controller/conn.php');
 
-//Get material's data
-if(isset($_GET['librarian_ID'])){
-    $librarian_ID = $_GET['librarian_ID'];
-    $update = mysqli_query($conn,"select * from `librarian` where librarian_ID=".$librarian_ID);
-    while ($update_item = mysqli_fetch_array($update)) {
-        $librarian_name = $update_item['librarian_name'];
-        $librarian_email = $update_item['email'];
-        $hash = $update_item['password'];
-        $password = password_hash($hash, PASSWORD_DEFAULT);
-    };
-}
+    //Get material's data
+    if(isset($_GET['librarian_ID'])){
+        $librarian_ID = $_GET['librarian_ID'];
+        $update = mysqli_query($conn,"select * from `librarian` where librarian_ID=".$librarian_ID);
+        while ($update_item = mysqli_fetch_array($update)) {
+            $librarian_name = $update_item['librarian_name'];
+            $librarian_email = $update_item['email'];
+            $hash = $update_item['password'];
+            $password = password_hash($hash, PASSWORD_DEFAULT);
+        };
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">

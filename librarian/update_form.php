@@ -1,28 +1,25 @@
 <?php 
-session_start();
-// if (!isset($_SESSION['studentID']) ||(trim ($_SESSION['studentID']) == '') || $_SESSION['loginstatus'] != 'active') {
-// 	$_SESSION['message'] = 'Please Login!!';
-// 	header('location:loginpage.php');
-// 	exit();
-// }
+    session_start();
 
-//DB connection
-include('../controller/conn.php');
+    //Check login status
+    require('../controller/librarian_login_status.php');
+    //DB connection
+    include('../controller/conn.php');
 
-//Get material's data
-if(isset($_GET['material_ID'])){
-    $material_ID = $_GET['material_ID'];
-    $update = mysqli_query($conn,"select * from `material` where material_ID=".$material_ID);
-    while ($update_item = mysqli_fetch_array($update)) {
-        $current_cover = $update_item['cover_name'];
-        $current_title = $update_item['material_title'];
-        $current_author = $update_item['author_name'];
-        $current_pages = $update_item['page_num'];
-        $current_py = $update_item['publish_year'];
-        $current_genre = $update_item['material_genre'];
-        $description = $update_item['description'];
-    };
-}
+    //Get material's data
+    if(isset($_GET['material_ID'])){
+        $material_ID = $_GET['material_ID'];
+        $update = mysqli_query($conn,"select * from `material` where material_ID=".$material_ID);
+        while ($update_item = mysqli_fetch_array($update)) {
+            $current_cover = $update_item['cover_name'];
+            $current_title = $update_item['material_title'];
+            $current_author = $update_item['author_name'];
+            $current_pages = $update_item['page_num'];
+            $current_py = $update_item['publish_year'];
+            $current_genre = $update_item['material_genre'];
+            $description = $update_item['description'];
+        };
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
