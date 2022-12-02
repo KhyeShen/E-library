@@ -18,8 +18,8 @@
         {
             if($subscription['status'] == "last")
             {
-                $update = "UPDATE subscription SET status='expired' WHERE stripe_subscription_ID='".$subscription_ID."'";
-                $update_student = "UPDATE student set subscription=0, updated_datetime='$currentDT' WHERE student_ID = '".$_SESSION['studentID']."'";
+                $update = "UPDATE subscription SET status='expired', updated_datetime='".$currentDT."' WHERE stripe_subscription_ID='".$subscription_ID."'";
+                $update_student = "UPDATE student set subscription='None', updated_datetime='$currentDT' WHERE student_ID = '".$_SESSION['studentID']."'";
                 mysqli_query($conn,$update);
                 mysqli_query($conn,$update_student);
             }
@@ -30,9 +30,9 @@
                 $amount = $subscription['monthly_price'];
                 $new = "INSERT INTO payment(student_ID,stripe_subscription_ID,amount,payment_datetime,status) VALUES
                         ('".$_SESSION['studentID']."','".$subscription_ID."','".$amount."','".$currentDT."','Suceed')";
-                $insert = $conn->query($new); 
+                mysqli_query($conn,$new);
                 $update = "UPDATE subscription SET status='active',plan_end='".$newexpiry."' WHERE stripe_subscription_ID='".$subscription_ID."'";
-                $update_student = "UPDATE student set subscription=1, updated_datetime='$currentDT' WHERE student_ID = '".$_SESSION['studentID']."'";
+                $update_student = "UPDATE student set subscription='Premium', updated_datetime='$currentDT' WHERE student_ID = '".$_SESSION['studentID']."'";
                 mysqli_query($conn,$update);
                 mysqli_query($conn,$update_student);
             }
