@@ -5,8 +5,6 @@
         echo 'alert("Please Login Your Account");'; 
         echo 'window.location.href = "../student/index.php";';
         echo '</script>';
-
-        header('location:index.php');
         exit();
     }
 ?>
