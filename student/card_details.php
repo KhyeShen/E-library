@@ -12,10 +12,12 @@ require_once '../vendor/stripe/config.php';
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>SCPG E-library</title>
+    <!-- Tab icon -->
+    <link href="../src/image/segi_logo.png" rel="icon">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Material Design for Bootstrap</title>
     <script src="https://js.stripe.com/v3/"></script>
     
     <!-- Font Awesome -->

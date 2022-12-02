@@ -14,7 +14,9 @@ echo '<script>alert("Please enter the OTP code received by '.$_SESSION['email'].
 <!DOCTYPE html>
 <html>
 <head>
-	<title>User Registration</title>
+	<title>SCPG E-library</title>
+    <!-- Tab icon -->
+    <link href="../src/image/segi_logo.png" rel="icon">
 	<!-- Font Awesome -->
     <link rel="stylesheet" href="../src/css/all.min.css"/>
     <!-- Google Fonts Roboto -->

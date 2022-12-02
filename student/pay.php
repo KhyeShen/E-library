@@ -138,6 +138,9 @@ if(!empty($_POST['stripeToken'])){
 <!DOCTYPE html>
 <html>
 <head>
+    <title>SCPG E-library</title>
+    <!-- Tab icon -->
+    <link href="../src/image/segi_logo.png" rel="icon">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
     <!-- Google Fonts Roboto -->

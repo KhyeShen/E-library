@@ -13,7 +13,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Reset Password</title>
+    <title>SCPG E-library</title>
+    <!-- Tab icon -->
+    <link href="../src/image/segi_logo.png" rel="icon">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../src/css/all.min.css"/>
     <!-- Google Fonts Roboto -->
