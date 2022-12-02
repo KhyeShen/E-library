@@ -53,7 +53,7 @@
             $uploadfile =   new ImageUploadAndResize();
             $uploadfile->uploadMultiFiles('files', '../material/file', $material_ID, 0756);
             $sql = "INSERT INTO material (librarian_ID, material_title,author_name,publish_year,material_genre,page_num,cover_name,description,created_datetime,updated_datetime) 
-            VALUES (1, '".$title."', '".$author."', '".$publish_year."', '".$genre."', '".$page_num."', '".$cover_name."', '".$description."', '".$currentDT."', '".$currentDT."')";
+            VALUES (".$_SESSION['librarian_ID'].", '".$title."', '".$author."', '".$publish_year."', '".$genre."', '".$page_num."', '".$cover_name."', '".$description."', '".$currentDT."', '".$currentDT."')";
 
             //Check if upload successfull
             if ($conn->query($sql) === TRUE) {
