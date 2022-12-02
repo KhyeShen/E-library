@@ -21,6 +21,7 @@ if(isset($_GET['material_ID'])){
         $current_py = $update_item['publish_year'];
         $current_genre = $update_item['material_genre'];
         $description = $update_item['description'];
+        $description = str_replace('"', '\"',$description);
     };
 }
 ?>
