@@ -137,8 +137,8 @@
                         <input type="file" required name="files[]" accept=".pdf" class="form-control" id="file" placeholder="Material File" required/>
                     </div>
                     <div class="row" style="margin-bottom:10px;">
-                        <b>Material Name</b>
-                        <input class="form-control" type="text" name="material_title" placeholder="Material Name" style="margin-top: 3px;" required>
+                        <b>Material Title</b>
+                        <input class="form-control" type="text" name="material_title" placeholder="Material Title" style="margin-top: 3px;" required>
                     </div>
                     <div class="row" style="margin-bottom:10px;">
                         <b>Author Name</b>
