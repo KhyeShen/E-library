@@ -152,7 +152,6 @@
                                         <td>".$gender."</td>
                                         <td>".$material['age']."</td>
                                         <td>".$material['status']."</td>
-                                        <td>
                                     </tr>";
                             }
                         ?>
