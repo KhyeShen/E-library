@@ -145,13 +145,12 @@
                                 
                                 echo "
                                     <tr>
-                                        <td>".$material['student_ID']."</td>
-                                        <td>".$material['student_name']."</td>
-                                        <td>".$material['email']."</td>
-                                        <td>".$material['course_name']."</td>
-                                        <td>".$gender."</td>
-                                        <td>".$material['age']."</td>
-                                        <td>".$material['status']."</td>
+                                      <td>".$material['student_ID']."</td>
+                                      <td>".$material['student_name']."</td>
+                                      <td>".$material['email']."</td>
+                                      <td>".$material['course_name']."</td>
+                                      <td>".$material['subscription']."</td>
+                                      <td>".$material['status']."</td>
                                     </tr>";
                             }
                         ?>
