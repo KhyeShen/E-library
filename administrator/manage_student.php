@@ -151,7 +151,7 @@
 
                   $query_student = mysqli_query($conn, $sql_student);
 
-                  while ($student = mysqli_fetch_array($query_material)) {
+                  while ($student = mysqli_fetch_array($query_student)) {
                       if($student['gender']=1)
                       { $gender = "Male"; }
                       else
