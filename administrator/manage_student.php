@@ -147,37 +147,37 @@
               </thead>
               <tbody>
               <?php
-                  $sql_material = "SELECT * FROM student ORDER BY student_ID ASC";
+                  $sql_student = "SELECT * FROM student ORDER BY student_ID ASC";
 
-                  $query_material = mysqli_query($conn, $sql_material);
+                  $query_student = mysqli_query($conn, $sql_student);
 
-                  while ($material = mysqli_fetch_array($query_material)) {
-                      if($material['gender']=1)
+                  while ($student = mysqli_fetch_array($query_material)) {
+                      if($student['gender']=1)
                       { $gender = "Male"; }
                       else
                       { $gender = "Female"; }
 
                       echo "
                           <tr>
-                              <td>".$material['student_ID']."</td>
-                              <td>".$material['student_name']."</td>
-                              <td>".$material['email']."</td>
-                              <td>".$material['course_name']."</td>
-                              <td>".$material['subscription']."</td>
-                              <td>".$material['status']."</td>
+                              <td>".$student['student_ID']."</td>
+                              <td>".$student['student_name']."</td>
+                              <td>".$student['email']."</td>
+                              <td>".$student['course_name']."</td>
+                              <td>".$student['subscription']."</td>
+                              <td>".$student['status']."</td>
                               <td>
                               <form action='../controller/student_control.php' method='post' style='width: 80px;'>";
-                              if($material['status']=="Frozen")
+                              if($student['status']=="Frozen")
                               { 
-                                  echo  "<button type='submit' onclick='activate_acc()' class='btn btn-default fas fa-check' name='activate' value='".$material['student_ID']."' style='background-color:#00ff00;'></button>
+                                  echo  "<button type='submit' onclick='activate_acc()' class='btn btn-default fas fa-check' name='activate' value='".$student['student_ID']."' style='background-color:#00ff00;'></button>
                                   </form>
                                   </td>
                                   </tr>
                                   ";
                               }
-                              else if($material['status']=="Active")
+                              else if($student['status']=="Active")
                               { 
-                                  echo "<button type='submit' onclick='freeze_acc()' class='btn btn-default fas fa-ban' name='freeze' value='".$material['student_ID']."' style='background-color:red;'></button>
+                                  echo "<button type='submit' onclick='freeze_acc()' class='btn btn-default fas fa-ban' name='freeze' value='".$student['student_ID']."' style='background-color:red;'></button>
                                   </form>
                                   </td>
                           </tr>
