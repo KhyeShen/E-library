@@ -4,7 +4,7 @@
     //DB connection
     include('conn.php');
 
-    //Upload button
+    //Activate button
     if(isset($_POST['activate']))
     {
         $student_ID = $_POST['activate'];
@@ -13,7 +13,7 @@
         date_default_timezone_set("Asia/Kuala_Lumpur");
         $currentDT = date("Y-m-d h:i:s");
 
-        //Update material details
+        //Update student details
         $sql = "UPDATE student SET 
                 student_ID = '".$student_ID."', 
                 status = 'Active',
@@ -27,13 +27,13 @@
         }
         else if (!mysqli_query($conn, $sql)){
             echo '<script type="text/javascript">'; 
-            echo 'alert("Update Fail!");'; 
+            echo 'alert("Activate Fail!");'; 
             echo 'window.location.href = "../administrator/manage_student.php";';
             echo '</script>';
         }
     }
 
-    //Upload button
+    //Freeze button
     if(isset($_POST['freeze']))
     {
         $student_ID = $_POST['freeze'];
@@ -42,7 +42,7 @@
         date_default_timezone_set("Asia/Kuala_Lumpur");
         $currentDT = date("Y-m-d h:i:s");
 
-        //Update material details
+        //Update student details
         $sql = "UPDATE student SET 
                 student_ID = '".$student_ID."', 
                 status = 'Frozen',
@@ -56,7 +56,7 @@
         }
         else if (!mysqli_query($conn, $sql)){
             echo '<script type="text/javascript">'; 
-            echo 'alert("Update Fail!");'; 
+            echo 'alert("Freeze Fail!");'; 
             echo 'window.location.href = "../administrator/manage_student.php";';
             echo '</script>';
         }

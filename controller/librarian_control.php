@@ -11,7 +11,7 @@
         header('location: ../librarian/update_form.php');
     }
 
-    //Upload button
+    //Add button
     if(isset($_POST['add']))
     {
         $librarian_name = $_POST['librarian_name'];
@@ -22,7 +22,7 @@
         date_default_timezone_set("Asia/Kuala_Lumpur");
         $currentDT = date("Y-m-d h:i:s");
 
-        //Determine the material ID for the material
+        //Check if email has been used
         $result = mysqli_query($conn,"select * from `librarian` where email = '$librarian_email'");
         if (mysqli_num_rows($result) > 0) {
             echo '<script type="text/javascript">'; 
@@ -34,11 +34,11 @@
         {
             $hash = password_hash($password, PASSWORD_DEFAULT);
 
-            //Upload material file
+            //Add Librarian
             $sql = "INSERT INTO librarian (librarian_name,admin_ID,email,password,created_datetime,updated_datetime) 
             VALUES ('".$librarian_name."', 1, '".$librarian_email."', '".$hash."', '".$currentDT."', '".$currentDT."')";
 
-            //Check if upload successfull
+            //Check if add successfull
             if (mysqli_query($conn, $sql)) {
                 header('Location: ../administrator/manage_librarian.php');
             }
@@ -51,7 +51,7 @@
         }
     }
 
-    //Update material
+    //Update libarian
     if(isset($_POST['update']))
     {
         $librarian_ID = $_POST['update'];
@@ -64,7 +64,7 @@
         date_default_timezone_set("Asia/Kuala_Lumpur");
         $currentDT = date("Y-m-d h:i:s");
 
-        //Update material details
+        //Update librarian details
         $sql = "UPDATE librarian SET 
                 librarian_name = '".$librarian_name."', 
                 email = '".$librarian_email."',
@@ -85,10 +85,9 @@
         }
     }
 
-    //Delete material
+    //Delete librarian
     if(isset($_POST['delete']))
     {
-        //Delete Cover Image & Material File
         $librarian_ID = $_POST['delete'];
         $sql = "SELECT * FROM librarian WHERE librarian_ID=".$librarian_ID;
         $result = mysqli_query($conn, $sql);
