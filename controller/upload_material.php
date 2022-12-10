@@ -28,41 +28,35 @@
             //Current Date Time
             date_default_timezone_set("Asia/Kuala_Lumpur");
             $currentDT = date("Y-m-d h:i:s");
-            
-            $sql = "INSERT INTO material (librarian_ID, material_title,author_name,publish_year,material_genre,page_num,description,created_datetime,updated_datetime) 
-            VALUES (".$_SESSION['librarian_ID'].", '".$title."', '".$author."', '".$publish_year."', '".$genre."', '".$page_num."', '".$description."', '".$currentDT."', '".$currentDT."')";
 
             //Determine the material ID for the material
             $result = mysqli_query($conn,"select * from `material` order by material_ID desc LIMIT 1");
             if (mysqli_num_rows($result) > 0) {
                 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
                 $material_ID = $row['material_ID'];
+                $material_ID++;
             }
-            
+
             //Validate the cover page
             if(!empty(array_filter($_FILES['cover']['name'])))
             {
+                //Upload cover page
                 $cover_name = $material_ID.'.'.$extension;
+                $uploadcover =   new ImageUploadAndResize();
+                $uploadcover->uploadMultiFiles('cover', '../material/cover', $material_ID, 0755);
             }
             else{
                 $cover_name = "N/A";
             }
-
-            $cover_name_sql =  "UPDATE material SET 
-                                cover_name = '".$cover_name."'
-                                WHERE material_ID = '".$material_ID."'
-                                ";
-
-            //Upload material file & cover page
-            $uploadcover =   new ImageUploadAndResize();
-            $uploadcover->uploadMultiFiles('cover', '../material/cover', $material_ID, 0755);
+                
+            //Upload material file
             $uploadfile =   new ImageUploadAndResize();
             $uploadfile->uploadMultiFiles('files', '../material/file', $material_ID, 0756);
-            
-            
+            $sql = "INSERT INTO material (librarian_ID, material_title,author_name,publish_year,material_genre,page_num,cover_name,description,created_datetime,updated_datetime) 
+            VALUES (".$_SESSION['librarian_ID'].", '".$title."', '".$author."', '".$publish_year."', '".$genre."', '".$page_num."', '".$cover_name."', '".$description."', '".$currentDT."', '".$currentDT."')";
+
             //Check if upload successfull
-            if ($conn->query($sql) === TRUE && $conn->query($cover_name_sql) === TRUE) {
-                
+            if ($conn->query($sql) === TRUE) {
                 header('Location: ../librarian/upload_form.php');
             }
             else{
