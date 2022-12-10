@@ -102,5 +102,12 @@
                 header('Location: ../librarian/upload_form.php');
             }
         }
+        else
+        {
+            echo '<script type="text/javascript">'; 
+            echo 'alert("Delete Fail");'; 
+            echo 'history.back();';
+            echo '</script>';
+        }
     }
 ?>
