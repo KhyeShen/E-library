@@ -1,1 +1,34 @@
 Database Password: G^MPB##NaAf7
+
+Admin Account:
+Email-scpgelibrarycontrol@gmail.com
+Password-Admin@123
+
+Librarian Account:
+Email-scpgelibrary@gmail.com
+Password-Librarian@123
+
+Student Account:
+Email-scpgelibraryuser@gmail.com
+Password-Student@123
+
+Bank Card Number (Test Mode): 4242 4242 4242 4242
+
+Admin Index Page:
+https://khyeshen.bscfyp2022.xyz/E-library/administrator/index.php
+Dashboard Page:
+https://khyeshen.bscfyp2022.xyz/E-library/administrator/dashboard.php
+Manage Librarian’s Account URL:
+https://khyeshen.bscfyp2022.xyz/E-library/administrator/manage_librarian.php
+Manage Student’s Account URL:
+https://khyeshen.bscfyp2022.xyz/E-library/administrator/manage_student.php
+Librarian Index Page:
+https://khyeshen.bscfyp2022.xyz/E-library/librarian/index.php
+Add Material Page:
+https://khyeshen.bscfyp2022.xyz/E-library/librarian/upload_form.php
+Student Index Page:
+https://khyeshen.bscfyp2022.xyz/E-library/student/index.php
+Material’s Details Page:
+https://khyeshen.bscfyp2022.xyz/E-library/student/material_details.php?material_ID=215
+Subscription Details Page: 
+https://khyeshen.bscfyp2022.xyz/E-library/student/subscription_details.php
