@@ -87,7 +87,10 @@
         $coverpath = "../material/cover/".$row['cover_name'];
         if(!unlink($filepath) || !unlink($coverpath))
         {
-            echo "Delete Fail!";
+            echo '<script type="text/javascript">'; 
+			echo 'alert("File Not Exist");'; 
+			echo 'history.back();';
+			echo '</script>';
         }
         else
         {
