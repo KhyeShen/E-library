@@ -105,7 +105,7 @@
         else
         {
             echo '<script type="text/javascript">'; 
-            echo 'alert("Delete Fail");'; 
+            echo 'alert("Delete Fail ");'; 
             echo 'history.back();';
             echo '</script>';
         }
