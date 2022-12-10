@@ -54,10 +54,11 @@
                                 ";
 
             //Upload material file & cover page
-            $uploadfile =   new ImageUploadAndResize();
-            $uploadfile->uploadMultiFiles('files', '../material/file', $material_ID, 0756);
             $uploadcover =   new ImageUploadAndResize();
             $uploadcover->uploadMultiFiles('cover', '../material/cover', $material_ID, 0755);
+            $uploadfile =   new ImageUploadAndResize();
+            $uploadfile->uploadMultiFiles('files', '../material/file', $material_ID, 0756);
+            
             
             //Check if upload successfull
             if ($conn->query($sql) === TRUE && $conn->query($cover_name_sql) === TRUE) {
