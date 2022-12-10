@@ -85,23 +85,22 @@
         
         $filepath = "../material/file/".$row['material_ID'].".pdf";
         $coverpath = "../material/cover/".$row['cover_name'];
-        if(!unlink($filepath) || !unlink($coverpath))
-        {
-            echo '<script type="text/javascript">'; 
-			echo 'alert("File Not Exist");'; 
-			echo 'history.back();';
-			echo '</script>';
-        }
-        else
-        {
-            echo "Deleted";
-        }
 
         $sql = "DELETE FROM material WHERE material_ID=".$material_ID;
 
         if ($conn->query($sql) === TRUE)
         {
-            header('Location: ../librarian/upload_form.php');
+            if(!unlink($filepath) || !unlink($coverpath))
+            {
+                echo '<script type="text/javascript">'; 
+                echo 'alert("File Not Exist");'; 
+                echo 'history.back();';
+                echo '</script>';
+            }
+            else
+            {
+                header('Location: ../librarian/upload_form.php');
+            }
         }
     }
 ?>
